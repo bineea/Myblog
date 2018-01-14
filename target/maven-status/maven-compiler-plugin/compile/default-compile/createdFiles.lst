@@ -1,6 +1,0 @@
-myblog\web\WelcomeController.class
-myblog\common\entity\BaseEntity.class
-myblog\config\web\MyWebAppInitializer.class
-myblog\config\web\WebConfig.class
-myblog\common\repo\jpa\MyRespository.class
-myblog\config\manager\AppConfig.class
