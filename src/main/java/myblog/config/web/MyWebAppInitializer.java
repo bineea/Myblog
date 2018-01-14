@@ -2,12 +2,14 @@ package myblog.config.web;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import myblog.config.manager.AppConfig;
+
 //≈‰÷√web.xml
 public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer  
 {
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return null;
+		return new Class[] {AppConfig.class};
 	}
 
 	@Override
