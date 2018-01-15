@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class WelcomeController 
 {
-	@Value("databaseProperties.name")
+	@Value("#{databaseProperties.name}")
 	private String name;
 	
 	@RequestMapping(value="/common/welcome", method=RequestMethod.GET)
 	public String setupForm(HttpServletRequest request, Model model)
 	{
 		System.out.println("«Î«Ûwelcome“≥√Ê");
-		System.out.println("name");
+		System.out.println(name);
 		return "welcome";
 	}
 }
