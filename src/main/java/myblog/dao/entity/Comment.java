@@ -16,7 +16,7 @@ import myblog.dao.entity.dict.CommentType;
 import myblog.dao.entity.dict.ContentModule;
 
 @Entity
-@Table(name = "blog_commment")
+@Table(name = "blog_comment")
 public class Comment extends StringUUIDEntity {
 	
 	private Comment parentComment;//»Ø¸´µÄÆÀÂÛID
