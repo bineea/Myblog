@@ -2,8 +2,8 @@ package myblog.dao.entity.dict;
 
 public enum CommentType {
 
-	COMMENT("ÆÀÂÛ") {},
-	REPLY("»Ø¸´") {},
+	COMMENT("è¯„è®º") {},
+	REPLY("å›å¤") {},
 	;
 
 	private String value;

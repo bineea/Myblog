@@ -6,8 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-//1.±ê×¢Îª@MappedSuperclassµÄÀà½«²»ÊÇÒ»¸öÍêÕûµÄÊµÌåÀà£¬Ëû½«²»»áÓ³Éäµ½Êı¾İ¿â±í£¬µ«ÊÇËûµÄÊôĞÔ¶¼½«Ó³Éäµ½Æä×ÓÀàµÄÊı¾İ¿â×Ö¶ÎÖĞ¡£
-//2.±ê×¢Îª@MappedSuperclassµÄÀà²»ÄÜÔÙ±ê×¢@Entity»ò@Table×¢½â£¬Ò²ÎŞĞèÊµÏÖĞòÁĞ»¯½Ó¿Ú¡£
+//1.æ ‡æ³¨ä¸º@MappedSuperclassçš„ç±»å°†ä¸æ˜¯ä¸€ä¸ªå®Œæ•´çš„å®ä½“ç±»ï¼Œä»–å°†ä¸ä¼šæ˜ å°„åˆ°æ•°æ®åº“è¡¨ï¼Œä½†æ˜¯ä»–çš„å±æ€§éƒ½å°†æ˜ å°„åˆ°å…¶å­ç±»çš„æ•°æ®åº“å­—æ®µä¸­ã€‚
+//2.æ ‡æ³¨ä¸º@MappedSuperclassçš„ç±»ä¸èƒ½å†æ ‡æ³¨@Entityæˆ–@Tableæ³¨è§£ï¼Œä¹Ÿæ— éœ€å®ç°åºåˆ—åŒ–æ¥å£ã€‚
 @MappedSuperclass
 public abstract class StringUUIDEntity extends BaseEntity {
 	

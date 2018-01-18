@@ -22,6 +22,6 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 			System.out.println(comment.toString());
 		});
 		if(!commentOptional.isPresent())
-			System.out.println("未查询到数据");
+			System.out.println("鏈煡璇㈠埌鏁版嵁");
 	}
 }

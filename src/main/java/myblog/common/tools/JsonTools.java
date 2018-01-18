@@ -17,6 +17,6 @@ public class JsonTools {
 	}
 	
 	public static void main(String[] args){
-		logger.info(" ‰≥ˆ»’÷æ£°£°£°");
+		logger.info("test");
 	}
 }

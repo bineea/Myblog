@@ -2,7 +2,7 @@ package myblog.dao.entity.dict;
 
 public enum ContentModule {
 	
-	ARTICLE("ндуб"){},
+	ARTICLE("Ф√┤Г╚═"){},
 	;
 	
 	private String value;

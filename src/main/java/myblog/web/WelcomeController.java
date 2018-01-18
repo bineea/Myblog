@@ -13,7 +13,7 @@ public class WelcomeController
 	@RequestMapping(value="/common/welcome", method=RequestMethod.GET)
 	public String setupForm(HttpServletRequest request, Model model)
 	{
-		System.out.println("ÇëÇówelcomeÒ³Ãæ");
+		System.out.println("è®¿é—®welcomeé¡µé¢");
 		return "welcome";
 	}
 }

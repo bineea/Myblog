@@ -4,7 +4,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import myblog.config.manager.AppConfig;
 
-//≈‰÷√web.xml
+//ÈÖçÁΩÆweb.xml
 public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer  
 {
 	@Override

@@ -10,16 +10,16 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import myblog.config.manager.AppConfig;
 
-//ÅäÖÃspring-servlet.xml
-//ÅäÖÃ×¢½âÇı¶¯mvc µÈĞ§ÓÚ <mvc:annotation-driven/>
+//é…ç½®spring-servlet.xml
+//é…ç½®æ³¨è§£é©±åŠ¨mvc ç­‰æ•ˆäº <mvc:annotation-driven/>
 @EnableWebMvc
-//×¢½â¸ÃÀàÎªÅäÖÃÀà
+//æ³¨è§£è¯¥ç±»ä¸ºé…ç½®ç±»
 @Configuration
-//×¢½âĞèÒªÉ¨ÃèµÄ°ü
+//æ³¨è§£éœ€è¦æ‰«æçš„åŒ…
 @ComponentScan(basePackages = AppConfig.APP_NAME + ".web")
 public class WebConfig implements WebMvcConfigurer 
 {
-	//ÅäÖÃÊÓÍ¼½âÎöÆ÷
+	//é…ç½®è§†å›¾è§£æå™¨
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver()
 	{
@@ -29,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer
 		return resolver;
 	}
 	
-	//ÅäÖÃ¾²Ì¬×ÊÔ´
+	//é…ç½®é™æ€èµ„æº
 	public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
@@ -40,12 +40,12 @@ public class WebConfig implements WebMvcConfigurer
 
 	*/
 	/**
-	 * ¸²¸Ç¸¸Àà·½·¨×¢²áÀ¹½ØÆ÷
+	 * è¦†ç›–çˆ¶ç±»æ–¹æ³•æ³¨å†Œæ‹¦æˆªå™¨
 	 */
 	/*
 	@Override
 	public void addInterceptors(InterceptorRegistry registry)
 	{
-		registry.addInterceptor(aclInterceptor);// ·ÃÎÊ¿ØÖÆ
+		registry.addInterceptor(aclInterceptor);// è®¿é—®æ§åˆ¶
 	}*/
 }

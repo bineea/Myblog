@@ -2,8 +2,8 @@ package myblog.dao.entity.dict;
 
 public enum CommentStatus {
 	
-	NORMAL("Õý³£"){},
-	DELETE("É¾³ý"){},
+	NORMAL("æ­£å¸¸"){},
+	DELETE("åˆ é™¤"){},
 	;
 	
 	private String value;

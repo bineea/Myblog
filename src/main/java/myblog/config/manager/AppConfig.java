@@ -19,12 +19,12 @@ import org.springframework.transaction.aspectj.AnnotationTransactionAspect;
 import com.alibaba.druid.pool.DruidDataSource;
 
 @Configuration
-//×¢½â¿ªÆô¶ÔSpring Data JPA RepostoryµÄÖ§³Ö
+//æ³¨è§£å¼€å¯å¯¹Spring Data JPA Repostoryçš„æ”¯æŒ
 @EnableJpaRepositories(basePackages ={ AppConfig.APP_NAME + ".dao.repo.jpa"}, entityManagerFactoryRef = "entityManager")
-//×¢½â¿ªÆô×¢½âÊ½ÊÂÎñµÄÖ§³Ö£¬Í¨ÖªSpring£¬@Transactional×¢½âµÄÀà±»ÊÂÎñµÄÇĞÃæ°üÎ§
-/*AdviceMode¹²ÓĞÁ½ÖÖÄ£Ê½£º
-PROXY(´úÀíÄ£Ê½£¬jdk¶¯Ì¬´úÀíºÍcglib¶¯Ì¬´úÀí)
-ASPECTJ(±àÒëÊ±ÔöÇ¿Ä£Ê½£¬±àÒëÊ±¶ÔÀà½øĞĞÔöÇ¿Éú³ÉĞÂµÄAOPÀà)£¬ĞèÒªÅäÖÃAnnotationTransactionAspect
+//æ³¨è§£å¼€å¯æ³¨è§£å¼äº‹åŠ¡çš„æ”¯æŒï¼Œé€šçŸ¥Springï¼Œ@Transactionalæ³¨è§£çš„ç±»è¢«äº‹åŠ¡çš„åˆ‡é¢åŒ…å›´
+/*AdviceModeå…±æœ‰ä¸¤ç§æ¨¡å¼ï¼š
+PROXY(ä»£ç†æ¨¡å¼ï¼ŒjdkåŠ¨æ€ä»£ç†å’ŒcglibåŠ¨æ€ä»£ç†)
+ASPECTJ(ç¼–è¯‘æ—¶å¢å¼ºæ¨¡å¼ï¼Œç¼–è¯‘æ—¶å¯¹ç±»è¿›è¡Œå¢å¼ºç”Ÿæˆæ–°çš„AOPç±»)ï¼Œéœ€è¦é…ç½®AnnotationTransactionAspect
 */
 @EnableTransactionManagement(mode = AdviceMode.ASPECTJ, proxyTargetClass = true)
 @ComponentScan(basePackages = {AppConfig.APP_NAME + ".manager"})
@@ -73,23 +73,23 @@ public class AppConfig
 		dataSource.setUrl(jdbcUrl);
 		dataSource.setUsername(username);
 		dataSource.setPassword(password);
-		//³õÊ¼»¯Á¬½ÓÊı
+		//åˆå§‹åŒ–è¿æ¥æ•°
 		dataSource.setInitialSize(5);
-		//×îĞ¡¿ÕÏĞÁ¬½ÓÊı
+		//æœ€å°ç©ºé—²è¿æ¥æ•°
 		dataSource.setMinIdle(1);
-		//×î´ó»î¶¯Á¬½ÓÊı
+		//æœ€å¤§æ´»åŠ¨è¿æ¥æ•°
 		dataSource.setMaxActive(100);
-		//×î´óÁ¬½ÓµÈ´ıÊ±¼ä
+		//æœ€å¤§è¿æ¥ç­‰å¾…æ—¶é—´
 		dataSource.setMaxWait(60000);
-		//SQL²éÑ¯,ÓÃÀ´ÑéÖ¤´ÓÁ¬½Ó³ØÈ¡³öµÄÁ¬½Ó,ÔÚ½«Á¬½Ó·µ»Ø¸øµ÷ÓÃÕßÖ®Ç°.Èç¹ûÖ¸¶¨,Ôò²éÑ¯±ØĞëÊÇÒ»¸öSQL SELECT²¢ÇÒ±ØĞë·µ»ØÖÁÉÙÒ»ĞĞ¼ÇÂ¼ 
+		//SQLæŸ¥è¯¢,ç”¨æ¥éªŒè¯ä»è¿æ¥æ± å–å‡ºçš„è¿æ¥,åœ¨å°†è¿æ¥è¿”å›ç»™è°ƒç”¨è€…ä¹‹å‰.å¦‚æœæŒ‡å®š,åˆ™æŸ¥è¯¢å¿…é¡»æ˜¯ä¸€ä¸ªSQL SELECTå¹¶ä¸”å¿…é¡»è¿”å›è‡³å°‘ä¸€è¡Œè®°å½• 
 		dataSource.setValidationQuery(validationQuery);
-		//ÊÇ·ñÔÚ´ÓÁ¬½Ó³ØÖĞÈ¡³öÁ¬½ÓÇ°½øĞĞ¼ìÑé,Èç¹û¼ìÑéÊ§°Ü,Ôò´ÓÁ¬½Ó³ØÖĞÈ¥³ıÁ¬½Ó²¢³¢ÊÔÈ¡³öÁíÒ»¸ö£»ÈôÉèÖÃÎªtrue£¬validationQuery²ÎÊı±ØĞëÉèÖÃÎª·Ç¿Õ×Ö·û´®
+		//æ˜¯å¦åœ¨ä»è¿æ¥æ± ä¸­å–å‡ºè¿æ¥å‰è¿›è¡Œæ£€éªŒ,å¦‚æœæ£€éªŒå¤±è´¥,åˆ™ä»è¿æ¥æ± ä¸­å»é™¤è¿æ¥å¹¶å°è¯•å–å‡ºå¦ä¸€ä¸ªï¼›è‹¥è®¾ç½®ä¸ºtrueï¼ŒvalidationQueryå‚æ•°å¿…é¡»è®¾ç½®ä¸ºéç©ºå­—ç¬¦ä¸²
 		dataSource.setTestOnBorrow(false);
-		//ÊÇ·ñÔÚ¹é»¹µ½³ØÖĞÇ°½øĞĞ¼ìÑé£»ÈôÉèÖÃÎªtrue£¬validationQuery²ÎÊı±ØĞëÉèÖÃÎª·Ç¿Õ×Ö·û´®
+		//æ˜¯å¦åœ¨å½’è¿˜åˆ°æ± ä¸­å‰è¿›è¡Œæ£€éªŒï¼›è‹¥è®¾ç½®ä¸ºtrueï¼ŒvalidationQueryå‚æ•°å¿…é¡»è®¾ç½®ä¸ºéç©ºå­—ç¬¦ä¸²
 		dataSource.setTestOnReturn(false);
-		//Á¬½ÓÊÇ·ñ±»¿ÕÏĞÁ¬½Ó»ØÊÕÆ÷(Èç¹ûÓĞ)½øĞĞ¼ìÑé.Èç¹û¼ì²âÊ§°Ü,ÔòÁ¬½Ó½«±»´Ó³ØÖĞÈ¥³ı£»ÈôÉèÖÃÎªtrue£¬validationQuery²ÎÊı±ØĞëÉèÖÃÎª·Ç¿Õ×Ö·û´®
+		//è¿æ¥æ˜¯å¦è¢«ç©ºé—²è¿æ¥å›æ”¶å™¨(å¦‚æœæœ‰)è¿›è¡Œæ£€éªŒ.å¦‚æœæ£€æµ‹å¤±è´¥,åˆ™è¿æ¥å°†è¢«ä»æ± ä¸­å»é™¤ï¼›è‹¥è®¾ç½®ä¸ºtrueï¼ŒvalidationQueryå‚æ•°å¿…é¡»è®¾ç½®ä¸ºéç©ºå­—ç¬¦ä¸²
 		dataSource.setTestWhileIdle(true);
-		// ´ò¿ªPSCache£¬²¢ÇÒÖ¸¶¨Ã¿¸öÁ¬½ÓÉÏPSCacheµÄ´óĞ¡
+		// æ‰“å¼€PSCacheï¼Œå¹¶ä¸”æŒ‡å®šæ¯ä¸ªè¿æ¥ä¸ŠPSCacheçš„å¤§å°
 		dataSource.setPoolPreparedStatements(true);
 		dataSource.setMaxPoolPreparedStatementPerConnectionSize(20);
 		return dataSource;

@@ -19,26 +19,26 @@ import myblog.dao.entity.dict.ContentModule;
 @Table(name = "blog_comment")
 public class Comment extends StringUUIDEntity {
 	
-	private Comment parentComment;//»Ø¸´µÄÆÀÂÛID
-	private Content content;//ÆÀÂÛµÄÄÚÈİID
-	private ContentModule contentModule;//ÆÀÂÛµÄÄÚÈİÄ£ĞÍ
-	private int commentCount;//ÆÀÂÛµÄ»Ø¸´ÊıÁ¿
-	private int orderNum;//ÅÅĞò±àºÅ£¬³£ÓÃÓïÖÃ¶¥µÈ
-	private User user;//ÆÀÂÛµÄÓÃ»§ID
-	private String ip;//ÆÀÂÛµÄIPµØÖ·
-	private String author;//ÆÀÂÛµÄ×÷Õß
-	private CommentType commentType;//ÆÀÂÛµÄÀàĞÍ£¬Ä¬ÈÏÊÇcomment
-	private String text;//ÆÀÂÛµÄÄÚÈİ
-	private String agent;//Ìá½»ÆÀÂÛµÄä¯ÀÀÆ÷ĞÅÏ¢
-	private LocalDateTime createTime;//ÆÀÂÛµÄÊ±¼ä
-	private String slug;//ÆÀÂÛµÄslug(Î±¾²Ì¬)
-	private String email;//ÆÀÂÛÓÃ»§µÄemail
-	private CommentStatus status;//ÆÀÂÛµÄ×´Ì¬
-	private int voteUp;//¡°¶¥¡±µÄÊıÁ¿
-	private int voteDown;//¡°²È¡±µÄÊıÁ¿
-	private String flag;//±êÊ¶
-	private Double lat;//Î³¶È
-	private Double lng;//¾­¶È
+	private Comment parentComment;//å›å¤çš„è¯„è®ºID
+	private Content content;//è¯„è®ºçš„å†…å®¹ID
+	private ContentModule contentModule;//è¯„è®ºçš„å†…å®¹æ¨¡å‹
+	private int commentCount;//è¯„è®ºçš„å›å¤æ•°é‡
+	private int orderNum;//æ’åºç¼–å·ï¼Œå¸¸ç”¨è¯­ç½®é¡¶ç­‰
+	private User user;//è¯„è®ºçš„ç”¨æˆ·ID
+	private String ip;//è¯„è®ºçš„IPåœ°å€
+	private String author;//è¯„è®ºçš„ä½œè€…
+	private CommentType commentType;//è¯„è®ºçš„ç±»å‹ï¼Œé»˜è®¤æ˜¯comment
+	private String text;//è¯„è®ºçš„å†…å®¹
+	private String agent;//æäº¤è¯„è®ºçš„æµè§ˆå™¨ä¿¡æ¯
+	private LocalDateTime createTime;//è¯„è®ºçš„æ—¶é—´
+	private String slug;//è¯„è®ºçš„slug(ä¼ªé™æ€)
+	private String email;//è¯„è®ºç”¨æˆ·çš„email
+	private CommentStatus status;//è¯„è®ºçš„çŠ¶æ€
+	private int voteUp;//â€œé¡¶â€çš„æ•°é‡
+	private int voteDown;//â€œè¸©â€çš„æ•°é‡
+	private String flag;//æ ‡è¯†
+	private Double lat;//çº¬åº¦
+	private Double lng;//ç»åº¦
 	
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
