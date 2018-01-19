@@ -41,15 +41,6 @@ public class AppConfig
 		return propertiesFactory;
 	}
 	
-	@Bean(name = "log4jProperties")
-	public PropertiesFactoryBean loadLog4jProperties()
-	{
-		PropertiesFactoryBean propertiesFactory = new PropertiesFactoryBean();
-		propertiesFactory.setLocation(new ClassPathResource("config/log4j.properties"));
-		propertiesFactory.setFileEncoding("utf-8");
-		return propertiesFactory;
-	}
-	
 	@Value("#{databaseProperties.driverClassName}")
 	private String driverClassName;
 	@Value("#{databaseProperties.url}")
@@ -126,4 +117,5 @@ public class AppConfig
 		aspect.setTransactionManager(transactionManager());
 		return aspect;
 	}
+	
 }

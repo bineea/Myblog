@@ -23,5 +23,9 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		});
 		if(!commentOptional.isPresent())
 			System.out.println("未查询到数据");
+			logger.info("info---{} 未查询到数据", "commentOptional");
+			logger.debug("debug---{} 未查询到数据", "commentOptional");
+			logger.warn("warn---{} 未查询到数据", "commentOptional");
+			logger.error("error---{} 未查询到数据", "commentOptional");
 	}
 }

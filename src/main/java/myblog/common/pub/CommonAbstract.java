@@ -1,5 +1,10 @@
 package myblog.common.pub;
 
-public abstract class CommonAbstract {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+public abstract class CommonAbstract {
+	
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+	
 }

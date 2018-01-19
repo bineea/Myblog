@@ -1,7 +1,10 @@
 package myblog.config.web;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import ch.qos.logback.ext.spring.web.LogbackConfigListener;
 import myblog.config.manager.AppConfig;
 
 //配置web.xml
@@ -21,4 +24,12 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 	protected String[] getServletMappings() {
 		return new String[] { "/app/*" };
 	}
+	
+	@Override
+	public void registerContextLoaderListener(ServletContext servletContext) {
+		servletContext.setInitParameter("logbackConfigLocation", "classpath:config/logback.xml");
+		servletContext.addListener(LogbackConfigListener.class);
+		super.registerContextLoaderListener(servletContext);
+	}
+	
 }
