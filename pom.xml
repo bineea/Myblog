@@ -94,6 +94,7 @@
 		    <artifactId>spring-webmvc</artifactId>
 		    <version>5.0.2.RELEASE</version>
 		</dependency>
+		
 		<!-- Spring jpa 依赖 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons -->
 		<dependency>
@@ -107,6 +108,7 @@
 		    <artifactId>spring-data-jpa</artifactId>
 		    <version>2.0.2.RELEASE</version>
 		</dependency>
+		
 		<!-- jackson 依赖 -->
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
@@ -126,6 +128,13 @@
 		    <artifactId>jackson-annotations</artifactId>
 		    <version>2.9.2</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.datatype</groupId>
+		    <artifactId>jackson-datatype-jsr310</artifactId>
+		    <version>2.9.2</version>
+		</dependency>
+		
 		<!-- hibernate 依赖 -->
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
@@ -139,6 +148,7 @@
 		    <artifactId>hibernate-entitymanager</artifactId>
 		    <version>5.2.11.Final</version>
 		</dependency>
+		
 		<!-- mysql jdbc 依赖 -->
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
@@ -146,6 +156,7 @@
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>8.0.8-dmr</version>
 		</dependency>
+		
 		<!-- slf4j log 依赖 -->
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
 		<dependency>
@@ -153,6 +164,7 @@
 		    <artifactId>slf4j-api</artifactId>
 		    <version>1.7.25</version>
 		</dependency>
+		
 		<!-- logback log 依赖 -->
 		<!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
 		<dependency>
@@ -178,6 +190,7 @@
 		    <artifactId>logback-ext-spring</artifactId>
 		    <version>0.1.4</version>
 		</dependency>
+		
 		<!-- alibaba 数据库连接池依赖 -->
 		<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
 		<dependency>
