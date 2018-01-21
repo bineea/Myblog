@@ -3,6 +3,8 @@ package myblog.manager;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import myblog.common.tools.JsonTools;
@@ -33,6 +35,7 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		Page<Comment> page = commentRepo.pageQuery(null, PageRequest.of(1, 16));
+		logger.info("分页查询数据共{}条",page.getContent().size());
 	}
 }

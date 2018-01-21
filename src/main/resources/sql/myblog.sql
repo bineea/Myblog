@@ -13,7 +13,7 @@ CREATE TABLE `blog_comment` (
   `user_id` varchar(32) DEFAULT NULL COMMENT '评论的用户ID(后台将评论推送给该系统用户)',
   `ip` varchar(64) DEFAULT NULL COMMENT '评论的IP地址',
   `author` varchar(128) DEFAULT NULL COMMENT '评论的作者',
-  `comment_type` varchar(32) DEFAULT 'comment' COMMENT '评论的类型，默认是comment',
+  `comment_type` varchar(32) DEFAULT 'COMMENT' COMMENT '评论的类型，默认是COMMENT',
   `text` longtext COMMENT '评论的内容',
   `agent` text COMMENT '提交评论的浏览器信息',
   `create_time` datetime DEFAULT NULL COMMENT '评论的时间',
