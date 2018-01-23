@@ -2,6 +2,7 @@ package myblog.dao.repo.jpa;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -12,4 +13,6 @@ public interface CommentRepo extends JpaRepository<Comment, String>, JpaSpecific
 
 	@Query(value = "select c from Comment c where c.content.id = ?1 ")
 	Page<Comment> pageQuery(String contentId, Pageable pageable);
+	
+	Page<Comment> findAll(Specification<Comment> spec, Pageable pageable);
 }

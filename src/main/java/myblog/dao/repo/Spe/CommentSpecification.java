@@ -1,8 +1,13 @@
-package myblog.dao.repo.Specification;
+package myblog.dao.repo.Spe;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.criteria.Predicate;
 
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.StringUtils;
 
 import myblog.common.pub.CommonAbstract;
 import myblog.dao.entity.Comment;
@@ -28,7 +33,16 @@ public class CommentSpecification extends CommonAbstract {
 	private CommentStatus status;// 评论的状态
 	
 	public Specification<Comment> pageAll() {
-		Specification<Comment> spe = (arg0, arg1, arg2) -> null;
+		Specification<Comment> spe = (root, query, criteriaBuilder) -> {
+			List<Predicate> predicateList = new ArrayList<Predicate>();
+			if(parentComment != null)
+				predicateList.add(criteriaBuilder.equal(root.get("parentComment.id"), parentComment.getId()));
+			if(StringUtils.hasText(text))
+				predicateList.add(criteriaBuilder.like(root.get("text").as(String.class), like(text)));
+			query.where(predicateList.toArray(new Predicate[0]));
+			query.orderBy(criteriaBuilder.desc(root.get("createTime").as(LocalDateTime.class)));
+			return query.getRestriction();
+		};
 		return spe;
 	}
 

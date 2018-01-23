@@ -41,7 +41,7 @@ public class Comment extends StringUUIDEntity {
 	private Double lng;//经度
 	
 	@ManyToOne
-	@JoinColumn(name = "parent_id")
+	@JoinColumn(name = "parent_id", nullable = true)
 	public Comment getParentComment() {
 		return parentComment;
 	}
@@ -50,7 +50,7 @@ public class Comment extends StringUUIDEntity {
 	}
 	
 	@ManyToOne
-	@JoinColumn(name = "content_id")
+	@JoinColumn(name = "content_id", nullable = true)
 	public Content getContent() {
 		return content;
 	}

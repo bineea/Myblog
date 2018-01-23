@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import myblog.common.tools.JsonTools;
 import myblog.dao.entity.Comment;
+import myblog.dao.repo.Spe.CommentSpecification;
 import myblog.dao.repo.jpa.CommentRepo;
 
 @Service
@@ -35,7 +36,14 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Page<Comment> page = commentRepo.pageQuery(null, PageRequest.of(1, 16));
-		logger.info("分页查询数据共{}条",page.getContent().size());
+		Page<Comment> page1 = commentRepo.pageQuery(null, PageRequest.of(0, 16));
+		logger.info("分页查询数据共{}条",page1.getContent().size());
+		logger.info(page1.toString());
+		
+		CommentSpecification spe = new CommentSpecification();
+		spe.setText("");
+		Page<Comment> page2 = commentRepo.findAll(spe.pageAll(), PageRequest.of(0, 16));
+		logger.info("分页查询数据共{}条",page2.getContent().size());
+		logger.info(page2.toString());
 	}
 }
