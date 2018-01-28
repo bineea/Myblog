@@ -20,6 +20,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 		return new Class[] { WebConfig.class };
 	}
 
+	//指定需要由DispatcherServlet映射的路径，如果是"/"，意思是由DispatcherServlet处理所有向该应用发起的请求
 	@Override
 	protected String[] getServletMappings() {
 		return new String[] { "/app/*" };

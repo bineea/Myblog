@@ -14,6 +14,6 @@ public class WelcomeController
 	public String setupForm(HttpServletRequest request, Model model)
 	{
 		System.out.println("访问welcome页面");
-		return "welcome";
+		return "index";
 	}
 }

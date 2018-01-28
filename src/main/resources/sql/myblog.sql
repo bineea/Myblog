@@ -35,3 +35,42 @@ CREATE TABLE `blog_comment` (
   KEY `content_module` (`content_module`),
   KEY `comment_count` (`comment_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='评论表，用于保存content内容的回复、分享、推荐等信息。';
+
+DROP TABLE IF EXISTS `blog_resource`;
+
+CREATE TABLE `blog_resource` (
+  `id` varchar(32) NOT NULL COMMENT '主键ID',
+  `list` int(11) NOT NULL COMMENT '菜单排序',
+  `menu_id` varchar(32) DEFAULT NULL COMMENT '对应上级菜单id',
+  `menu_type` varchar(10) NOT NULL COMMENT '菜单类型',
+  `name` varchar(200) NOT NULL COMMENT '资源名称',
+  `request_method` varchar(10) NOT NULL COMMENT '资源请求方式',
+  `resource_type` varchar(20) NOT NULL COMMENT '资源类型',
+  `url` varchar(300) NOT NULL COMMENT '链接',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '菜单资源表';
+
+DROP TABLE IF EXISTS `blog_role`;
+
+CREATE TABLE `blog_role` (
+  `id` varchar(32) NOT NULL COMMENT '主键id',
+  `info` varchar(255) DEFAULT NULL COMMENT '角色描述',
+  `list` int(11) NOT NULL COMMENT '排序',
+  `name` varchar(30) NOT NULL COMMENT '角色名称',
+  `system` int(1) NOT NULL COMMENT '是否系统自带',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '角色表';
+
+DROP TABLE IF EXISTS `blog_role_resource`;
+
+CREATE TABLE `blog_role_resource` (
+  `id` varchar(32) NOT NULL,
+  `resource_id` varchar(32) NOT NULL,
+  `role_id` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `resource_id` (`resource_id`),
+  KEY `role_id` (`role_id`),
+  CONSTRAINT `resource_id` FOREIGN KEY (`resource_id`) REFERENCES `blog_resource` (`id`),
+  CONSTRAINT `role_id` FOREIGN KEY (`role_id`) REFERENCES `blog_role` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

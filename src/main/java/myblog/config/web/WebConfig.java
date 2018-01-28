@@ -17,7 +17,7 @@ import myblog.config.manager.AppConfig;
 @Configuration
 //注解需要扫描的包
 @ComponentScan(basePackages = AppConfig.APP_NAME + ".web")
-public class WebConfig implements WebMvcConfigurer 
+public class WebConfig implements WebMvcConfigurer
 {
 	//配置视图解析器
 	@Bean
@@ -30,9 +30,10 @@ public class WebConfig implements WebMvcConfigurer
 	}
 	
 	//配置静态资源
+	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
 	}
 	
 	/*@Autowired
