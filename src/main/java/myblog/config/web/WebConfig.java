@@ -1,14 +1,17 @@
 package myblog.config.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import myblog.config.manager.AppConfig;
+import myblog.manager.AclHandlerInterceptor;
 
 //配置spring-servlet.xml
 //配置注解驱动mvc 等效于 <mvc:annotation-driven/>
@@ -36,17 +39,13 @@ public class WebConfig implements WebMvcConfigurer
 		registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
 	}
 	
-	/*@Autowired
+	@Autowired
 	private AclHandlerInterceptor aclInterceptor;
 
-	*/
-	/**
-	 * 覆盖父类方法注册拦截器
-	 */
-	/*
+	//覆盖父类方法注册拦截器
 	@Override
 	public void addInterceptors(InterceptorRegistry registry)
 	{
-		registry.addInterceptor(aclInterceptor);// 访问控制
-	}*/
+		registry.addInterceptor(aclInterceptor);
+	}
 }
