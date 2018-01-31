@@ -1,5 +1,6 @@
 package myblog.manager;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +16,11 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.util.WebUtils;
 
 import myblog.common.tools.WebTools;
+import myblog.dao.entity.AppResource;
+import myblog.dao.entity.RoleResource;
+import myblog.dao.entity.User;
+import myblog.dao.repo.jpa.AppResourceRepo;
+import myblog.dao.repo.jpa.RoleResourceRepo;
 import myblog.model.MySession;
 
 @Service
@@ -21,6 +28,11 @@ public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private String loginUri;
+	
+	@Autowired
+	private AppResourceRepo resourceRepo;
+	@Autowired
+	private RoleResourceRepo roleResourceRepo;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -40,6 +52,13 @@ public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		//校验权限
+		
+//		将 角色对应资源进行缓存
+		User loginUser = LoginHelper.getLoginUser(request);
+		AppResource resource = resourceRepo.findByUrlMethod(uri, method);
+		
+		List<RoleResource> roleResourceList = roleResourceRepo.findByRoleId(loginUser.getRole().getId());
+		
 		return true;
 	}
 	

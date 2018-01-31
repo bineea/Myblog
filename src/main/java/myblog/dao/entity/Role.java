@@ -25,7 +25,7 @@ public class Role extends StringUUIDEntity
 	@Max(value=999)
 	private Integer list;// 排序
 	private String info;
-	private boolean system;// 系统自带?
+	private boolean system;// 是否系统自带
 	public Role()
 	{
 
