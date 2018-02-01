@@ -18,4 +18,6 @@ public class MySession {
 	public static final String CURRENT_RESOURCE = "currentResource";
 	
 	public static final String ERROR_MSG = "errorMsg";
+	
+	public static final String SESSION_MENU_ID = "sessionMenuId";
 }

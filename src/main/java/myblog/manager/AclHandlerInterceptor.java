@@ -1,6 +1,5 @@
 package myblog.manager;
 
-import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,15 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.util.WebUtils;
 
 import myblog.common.tools.WebTools;
 import myblog.dao.entity.AppResource;
-import myblog.dao.entity.RoleResource;
+import myblog.dao.entity.AppResource.MenuType;
 import myblog.dao.entity.User;
-import myblog.dao.repo.jpa.AppResourceRepo;
-import myblog.dao.repo.jpa.RoleResourceRepo;
+import myblog.manager.acl.AclManagerImpl;
 import myblog.model.MySession;
 
 @Service
@@ -28,15 +27,15 @@ public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private String loginUri;
+	private String noRightUri;
 	
 	@Autowired
-	private AppResourceRepo resourceRepo;
-	@Autowired
-	private RoleResourceRepo roleResourceRepo;
+	private AclManagerImpl aclManager;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
 		String uri = WebTools.getUri(request, false);
 		if(uri.startsWith("/")) uri = uri.substring(1);
 		//忽略登陆请求
@@ -52,20 +51,61 @@ public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		//校验权限
-		
-//		将 角色对应资源进行缓存
 		User loginUser = LoginHelper.getLoginUser(request);
-		AppResource resource = resourceRepo.findByUrlMethod(uri, method);
+		AppResource resource = aclManager.findByUrlMethod(uri, method);
+		handleMenu(request, resource, method);
+		String result = aclManager.checkAuth(loginUser.getRole(), resource);
+		if (!StringUtils.hasText(result)) return true;
+		// 权限校验失败
+		logger.debug(result);
+		WebUtils.setSessionAttribute(request, MySession.ERROR_MSG, result);
+		if (method == RequestMethod.GET)
+			WebUtils.setSessionAttribute(request, MySession.LAST_URI, WebTools.getUri(request, true));
+		response.sendRedirect(getNorightUri(request) + "?method=" + method);
+		return false;
+	}
+	
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception
+	{
+		// session中存放的是字符串，此处转换成model的形式返回
+		if (modelAndView == null) return;
+		User loginUser = LoginHelper.getLoginUser(request);
+		if (loginUser != null) modelAndView.addObject(MySession.LOGIN_USER, loginUser);
+		modelAndView.addObject(MySession.ROLE_MENU, LoginHelper.getCurrentRoleMenu(request));
+		AppResource res = LoginHelper.getCurrentResource(request);
+		if (res != null) modelAndView.addObject(MySession.CURRENT_RESOURCE, res);
+	}
+	
+	private void handleMenu(HttpServletRequest request, AppResource resource, RequestMethod method) {
 		
-		List<RoleResource> roleResourceList = roleResourceRepo.findByRoleId(loginUser.getRole().getId());
-		
-		return true;
+		if(resource == null) {
+			WebUtils.setSessionAttribute(request, MySession.CURRENT_RESOURCE, null);
+			return;
+		}
+		MenuType type = resource.getMenuType();
+		if(method != RequestMethod.GET || type != MenuType.COLUMN) return;
+		WebUtils.setSessionAttribute(request, MySession.CURRENT_RESOURCE, resource.toJson());
+		String menuId = request.getParameter("myMenuId");
+		if(StringUtils.hasText(menuId)) {
+			WebUtils.setSessionAttribute(request, MySession.SESSION_MENU_ID, menuId);
+			return;
+		}
+		WebUtils.setSessionAttribute(request, MySession.SESSION_MENU_ID, resource.getId());
 	}
 	
 	private String getLoginUri(HttpServletRequest request) {
+		
 		if(!StringUtils.hasText(loginUri))
-			loginUri = request.getContextPath() + "";
+			loginUri = request.getContextPath() + "app/common/login";
 		int ran = new Random().nextInt(10);
 		return loginUri + "?ran=" + ran;
+	}
+	
+	private String getNorightUri(HttpServletRequest request) {
+		
+		if (noRightUri == null) noRightUri = request.getContextPath() + "/app/common/acl/noright";
+		return noRightUri;
 	}
 }

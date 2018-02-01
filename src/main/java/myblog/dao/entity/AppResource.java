@@ -198,7 +198,6 @@ public class AppResource extends StringUUIDEntity
 	public enum MenuType
 	{
 		COLUMN("栏目菜单") {},
-		BOX_TAB("标签菜单") {},
 		NOT_MENU("非菜单") {},;
 		private String value;
 

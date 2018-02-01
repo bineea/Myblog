@@ -9,10 +9,13 @@ public abstract class CommonAbstract {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
 	protected String like(String str) {
+		
 		return StringUtils.hasText(str) ? "%" + str + "%" : null;
 	}
 	
 	protected boolean hasText(String str) {
+		
 		return StringUtils.hasText(str);
 	}
+	
 }
