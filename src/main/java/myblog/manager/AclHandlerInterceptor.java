@@ -39,7 +39,7 @@ public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
 		String uri = WebTools.getUri(request, false);
 		if(uri.startsWith("/")) uri = uri.substring(1);
 		//忽略登陆请求
-		if(uri.startsWith("app/common/welcome")) return true;
+		if(uri.startsWith("app/common/login")) return true;
 		//跳转到登陆页
 		RequestMethod method = RequestMethod.valueOf(request.getMethod());
 		if(!LoginHelper.alreadyLogin(request)) {

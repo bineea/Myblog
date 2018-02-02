@@ -1,4 +1,4 @@
-package myblog.manager;
+package myblog.manager.comment;
 
 public interface CommentManager {
 

@@ -1,4 +1,4 @@
-package myblog.manager;
+package myblog.manager.comment;
 
 import java.util.Optional;
 
@@ -11,6 +11,7 @@ import myblog.common.tools.JsonTools;
 import myblog.dao.entity.Comment;
 import myblog.dao.repo.Spe.CommentSpecification;
 import myblog.dao.repo.jpa.CommentRepo;
+import myblog.manager.AbstractManager;
 
 @Service
 public class CommentManagerImpl extends AbstractManager implements CommentManager {
