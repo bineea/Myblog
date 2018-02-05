@@ -7,13 +7,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import myblog.model.acl.UserInfoModel;
+
 @Controller
 public class LoginController 
 {
-	@RequestMapping(value="/common/login")
-	public String setupForm(HttpServletRequest request)
+	@RequestMapping(value="/common/login",method=RequestMethod.GET)
+	public String setupForm(HttpServletRequest request, UserInfoModel userInfo, Model model)
 	{
-		System.out.println("访问welcome页面");
+		
 		return "index";
+	}
+	
+	@RequestMapping(value="/common/login",method=RequestMethod.POST)
+	public String login(HttpServletRequest request, UserInfoModel userInfo, Model model)
+	{
+		return "";
 	}
 }

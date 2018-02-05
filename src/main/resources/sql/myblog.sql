@@ -74,3 +74,21 @@ CREATE TABLE `blog_role_resource` (
   CONSTRAINT `resource_id` FOREIGN KEY (`resource_id`) REFERENCES `blog_resource` (`id`),
   CONSTRAINT `role_id` FOREIGN KEY (`role_id`) REFERENCES `blog_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `blog_user`;
+
+CREATE TABLE `blog_user` (
+`id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '昵称' ,
+`male`  tinyint(1) NULL DEFAULT NULL COMMENT '性别' ,
+`email`  varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邮箱' ,
+`login_name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '账号' ,
+`pass_wd`  varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码' ,
+`status`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '账号状态' ,
+`role_id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色id' ,
+PRIMARY KEY (`id`),
+UNIQUE INDEX `email` (`email`) USING BTREE ,
+UNIQUE INDEX `loginName` (`login_name`) USING BTREE,
+CONSTRAINT `roleId` FOREIGN KEY (`role_id`) REFERENCES `blog_role` (`id`)
+)
+ENGINE=InnoDB DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci COMMENT='用户表，用于保存用户信息。';

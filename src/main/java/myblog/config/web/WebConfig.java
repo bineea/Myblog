@@ -39,13 +39,13 @@ public class WebConfig implements WebMvcConfigurer
 		registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
 	}
 	
-//	@Autowired
-//	private AclHandlerInterceptor aclInterceptor;
-//
-//	//覆盖父类方法注册拦截器
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry)
-//	{
-//		registry.addInterceptor(aclInterceptor);
-//	}
+	@Autowired
+	private AclHandlerInterceptor aclInterceptor;
+
+	//覆盖父类方法注册拦截器
+	@Override
+	public void addInterceptors(InterceptorRegistry registry)
+	{
+		registry.addInterceptor(aclInterceptor);
+	}
 }
