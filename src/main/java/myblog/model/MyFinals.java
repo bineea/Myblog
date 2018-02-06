@@ -3,6 +3,8 @@ package myblog.model;
 import java.util.regex.Pattern;
 
 public class MyFinals {
+	
+	public static String COOKIE_USER = "mycookieuser";
 
 //	默认分页查询页码
 	public static final int DEFAULT_PAGE_NUM = 0;

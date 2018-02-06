@@ -1,17 +1,22 @@
 package myblog.manager;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.WebUtils;
 
 import myblog.common.tools.JsonTools;
+import myblog.common.tools.WebTools;
 import myblog.dao.entity.AppResource;
 import myblog.dao.entity.User;
 import myblog.model.MySession;
@@ -63,5 +68,32 @@ public class LoginHelper {
 			logger.error("", e);
 		}
 		return null;
+	}
+	
+	public static void addLoginSession(HttpServletRequest request, User user, List<RoleMenuModel> menus) {
+		
+		Assert.notNull(user, "账号信息不能为空");
+		String ip = WebTools.getIpAddress(request);
+		if ("0:0:0:0:0:0:0:1".equals(ip)) ip = "127.0.0.1";
+		
+		HttpSession session = request.getSession(false);
+		session.invalidate();
+		WebUtils.setSessionAttribute(request, MySession.LOGIN_IP, ip);
+		WebUtils.setSessionAttribute(request, MySession.LOGIN_USER, user.toJson());
+		WebUtils.setSessionAttribute(request, MySession.LOGIN_ROLE, user.getRole().getId());
+		WebUtils.setSessionAttribute(request, MySession.LOGIN_TIME, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+		try {
+			String menuJson = JsonTools.writeValueAsString(menus);
+			WebUtils.setSessionAttribute(request, MySession.ROLE_MENU, menuJson);
+			logger.debug("role menu:{}", menuJson);
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error(e.getMessage());
+		}
+	}
+	
+	public static void addLoginCookie(String loginName) {
+		
+		
 	}
 }
