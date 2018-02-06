@@ -98,7 +98,7 @@ public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
 	private String getLoginUri(HttpServletRequest request) {
 		
 		if(!StringUtils.hasText(loginUri))
-			loginUri = request.getContextPath() + "app/common/login";
+			loginUri = request.getContextPath() + "/app/common/login";
 		int ran = new Random().nextInt(10);
 		return loginUri + "?ran=" + ran;
 	}

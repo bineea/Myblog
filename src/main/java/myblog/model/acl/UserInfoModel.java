@@ -15,7 +15,8 @@ public class UserInfoModel extends BaseModel {
 	private Role role;
 	private String roleId;
 	private String oldPasswd;// 老密码
-	private String confirm_pw;// 确认密码
+	private String confirmPw;// 确认密码
+	private boolean rememberMe;// 记住账号
 
 	public String getName() {
 		return name;
@@ -89,12 +90,20 @@ public class UserInfoModel extends BaseModel {
 		this.oldPasswd = oldPasswd;
 	}
 
-	public String getConfirm_pw() {
-		return confirm_pw;
+	public String getConfirmPw() {
+		return confirmPw;
 	}
 
-	public void setConfirm_pw(String confirm_pw) {
-		this.confirm_pw = confirm_pw;
+	public void setConfirmPw(String confirmPw) {
+		this.confirmPw = confirmPw;
+	}
+
+	public boolean isRememberMe() {
+		return rememberMe;
+	}
+
+	public void setRememberMe(boolean rememberMe) {
+		this.rememberMe = rememberMe;
 	}
 
 }
