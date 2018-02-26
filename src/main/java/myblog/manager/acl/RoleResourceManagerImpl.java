@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import myblog.dao.entity.AppResource;
@@ -13,6 +14,7 @@ import myblog.dao.entity.RoleResource;
 import myblog.dao.repo.jpa.RoleResourceRepo;
 import myblog.model.acl.MenuModel;
 
+@Service
 public class RoleResourceManagerImpl implements RoleResourceManager {
 
 	@Autowired
@@ -32,23 +34,16 @@ public class RoleResourceManagerImpl implements RoleResourceManager {
 		return menuList;
 	}
 	
-	private MenuModel getRoleMenu(AppResource column, String roleId) {
+	private MenuModel getRoleMenu(AppResource resource, String roleId) {
 		MenuModel menuModel = new MenuModel();
-		List<AppResource> resources = roleResourceRepo.findByMenuIdRoleId(column.getId(), roleId).stream()
-				.map(roleResource -> roleResource.getResource())
-				.collect(Collectors.toList());
-		resources.forEach(resource -> {
-					if(resource.getMenuType() == MenuType.COLUMN)
-					{
-						menuModel.getColumnMenu().add(getRoleMenu(resource, roleId));
-					}
-					else if(resource.getMenuType() == MenuType.MENU)
-					{
-						menuModel.getResource().add(resource);
-					}
-				});
-		if(resources.stream().anyMatch(resource -> resource.getMenuType() == MenuType.COLUMN))
+		menuModel.setResource(resource);
+		if(resource.getMenuType() == MenuType.COLUMN)
+		{
 			menuModel.setColumn(true);
+			roleResourceRepo.findByMenuIdRoleId(resource.getId(), roleId).stream()
+											.map(roleResource -> roleResource.getResource())
+											.forEach(res -> menuModel.getColumnMenu().add(getRoleMenu(res,roleId)));
+		}
 		return menuModel;
 	}
 

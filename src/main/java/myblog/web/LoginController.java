@@ -19,6 +19,7 @@ import org.springframework.web.util.WebUtils;
 import myblog.common.pub.MyManagerException;
 import myblog.dao.entity.User;
 import myblog.manager.LoginHelper;
+import myblog.manager.acl.RoleResourceManager;
 import myblog.manager.acl.UserManager;
 import myblog.model.MyFinals;
 import myblog.model.MySession;
@@ -29,6 +30,8 @@ public class LoginController
 {
 	@Autowired
 	private UserManager userManager;
+	@Autowired
+	private RoleResourceManager roleResourceManager;
 	
 	@RequestMapping(value="/common/login",method=RequestMethod.GET)
 	public String setupForm(HttpServletRequest request, HttpServletResponse response, Model model, 
@@ -53,11 +56,16 @@ public class LoginController
 	
 	@RequestMapping(value="/common/login",method=RequestMethod.POST)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model, 
-			@ModelAttribute("userInfoModel") UserInfoModel userInfoModel) throws MyManagerException
+			@ModelAttribute("userInfoModel") UserInfoModel userInfoModel) throws MyManagerException, IOException
 	{
 		User user = userManager.toLogin(userInfoModel);
-		
-//		addLoginSession(request, user,);
-		return "index";
+		LoginHelper.addLoginSession(request, user, roleResourceManager.getRoleMenuList(user.getRole().getId()));
+		if(userInfoModel.isRememberMe())
+			LoginHelper.addLoginCookie(user.getLoginName(), response);
+		String lastUri = (String) WebUtils.getSessionAttribute(request, MySession.LAST_URI);
+		if(!StringUtils.hasText(lastUri) || lastUri.startsWith("/app/common/welcome"))
+			return "index";
+		WebUtils.setSessionAttribute(request, MySession.LAST_URI, null);
+		return "redirect:" + lastUri;
 	}
 }

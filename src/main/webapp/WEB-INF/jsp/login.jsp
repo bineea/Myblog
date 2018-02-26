@@ -55,7 +55,7 @@
                 <div class="login-content">
                     <form:form action="${rootUrl }app/common/login" modelAttribute="userInfoModel" method="POST" class="margin-bottom-0">
                         <div class="form-group m-b-15">
-                            <form:input type="text" path="email" class="form-control input-lg" placeholder="Email Address" />
+                            <form:input type="text" path="loginName" class="form-control input-lg" placeholder="LoginName" />
                         </div>
                         <div class="form-group m-b-15">
                             <form:input type="password" path="passwd" class="form-control input-lg" placeholder="Password" />
