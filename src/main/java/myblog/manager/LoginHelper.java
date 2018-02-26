@@ -1,12 +1,16 @@
 package myblog.manager;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -19,8 +23,9 @@ import myblog.common.tools.JsonTools;
 import myblog.common.tools.WebTools;
 import myblog.dao.entity.AppResource;
 import myblog.dao.entity.User;
+import myblog.model.MyFinals;
 import myblog.model.MySession;
-import myblog.model.acl.RoleMenuModel;
+import myblog.model.acl.MenuModel;
 
 public class LoginHelper {
 
@@ -42,17 +47,17 @@ public class LoginHelper {
 		return null;
 	}
 	
-	public static List<RoleMenuModel> getCurrentRoleMenu(HttpServletRequest request)
+	public static List<MenuModel> getCurrentRoleMenu(HttpServletRequest request)
 	{
 		String str = (String) WebUtils.getSessionAttribute(request, MySession.ROLE_MENU);
 		try
 		{
-			return str == null ? new ArrayList<RoleMenuModel>() : JsonTools.json2List(str, RoleMenuModel.class);
+			return str == null ? new ArrayList<MenuModel>() : JsonTools.json2List(str, MenuModel.class);
 		}
 		catch (IOException e)
 		{
 			logger.error("", e);
-			return new ArrayList<RoleMenuModel>();
+			return new ArrayList<MenuModel>();
 		}
 	}
 	
@@ -70,7 +75,7 @@ public class LoginHelper {
 		return null;
 	}
 	
-	public static void addLoginSession(HttpServletRequest request, User user, List<RoleMenuModel> menus) {
+	public static void addLoginSession(HttpServletRequest request, User user, List<MenuModel> menus) {
 		
 		Assert.notNull(user, "账号信息不能为空");
 		String ip = WebTools.getIpAddress(request);
@@ -92,8 +97,18 @@ public class LoginHelper {
 		}
 	}
 	
-	public static void addLoginCookie(String loginName) {
+	public static void addLoginCookie(String accountNumber, HttpServletResponse response ) {
 		
-		
+		byte[] accountByte = null;
+		try {
+			accountByte = accountNumber.getBytes("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		String accountStr = Base64.getEncoder().encodeToString(accountByte);
+		Cookie account = new Cookie(MyFinals.COOKIE_USER, accountStr);
+		account.setMaxAge(7*24*60*60);
+		response.addCookie(account);
+	
 	}
 }

@@ -12,4 +12,7 @@ public interface RoleResourceRepo extends JpaRepository<RoleResource, String>, J
 
 	@Query(value = "select r from RoleResource r where r.role.id = ?1")
 	List<RoleResource> findByRoleId(String roleId);
+	
+	@Query(value = "select r from RoleResource r where r.resource.menuId = ?1 and r.role.id = ?2")
+	List<RoleResource> findByMenuIdRoleId(String menuId, String roleId);
 }

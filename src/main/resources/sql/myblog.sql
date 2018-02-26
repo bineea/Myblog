@@ -44,9 +44,8 @@ CREATE TABLE `blog_resource` (
   `menu_id` varchar(32) DEFAULT NULL COMMENT '对应上级菜单id',
   `menu_type` varchar(10) NOT NULL COMMENT '菜单类型',
   `name` varchar(200) NOT NULL COMMENT '资源名称',
-  `request_method` varchar(10) NOT NULL COMMENT '资源请求方式',
-  `resource_type` varchar(20) NOT NULL COMMENT '资源类型',
-  `url` varchar(300) NOT NULL COMMENT '链接',
+  `request_method` varchar(10) DEFAULT NULL COMMENT '资源请求方式',
+  `url` varchar(300) DEFAULT NULL COMMENT '链接',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '菜单资源表';
 

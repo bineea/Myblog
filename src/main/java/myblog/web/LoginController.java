@@ -1,6 +1,7 @@
 package myblog.web;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.WebUtils;
 
+import myblog.common.pub.MyManagerException;
 import myblog.dao.entity.User;
 import myblog.manager.LoginHelper;
 import myblog.manager.acl.UserManager;
@@ -44,16 +46,17 @@ public class LoginController
 		for(Cookie cookie:cookies)
 		{
 			if(MyFinals.COOKIE_USER.equals(cookie.getName()))
-				model.addAttribute("loginName", cookie.getValue());
+				model.addAttribute("loginName", StringUtils.hasText(cookie.getValue()) ? new String(Base64.getDecoder().decode(cookie.getValue()), "utf-8") : null);
 		}
 		return "login";
 	}
 	
 	@RequestMapping(value="/common/login",method=RequestMethod.POST)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model, 
-			@ModelAttribute("userInfoModel") UserInfoModel userInfoModel)
+			@ModelAttribute("userInfoModel") UserInfoModel userInfoModel) throws MyManagerException
 	{
 		User user = userManager.toLogin(userInfoModel);
+		
 //		addLoginSession(request, user,);
 		return "index";
 	}

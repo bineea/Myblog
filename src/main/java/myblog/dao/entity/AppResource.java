@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import myblog.common.entity.StringUUIDEntity;
-import myblog.dao.entity.dict.ResourceType;
 
 @Entity
 @Table(name = "blog_resource", uniqueConstraints = { @UniqueConstraint(columnNames = { "url", "request_method" }) })
@@ -27,15 +26,11 @@ public class AppResource extends StringUUIDEntity
 	@NotNull
 	@Size(max = 100)
 	private String name;// 资源名称
-	@NotNull
 	@Size(max = 300)
 	private String url;// ex:/info/index.do
-	@NotNull
 	private RequestMethod requestMethod = RequestMethod.GET;
 	@NotNull
 	private MenuType menuType;// 菜单类型，有些资源要验证，但不一定是菜单资源比如修改.do,删除.do
-	@NotNull
-	private ResourceType type;
 	private int list;// 菜单排序
 	private String menuId;// 对应上级菜单的ID
 
@@ -161,18 +156,6 @@ public class AppResource extends StringUUIDEntity
 		this.menuType = menuType;
 	}
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "resource_type", length = 20, nullable = false)
-	public ResourceType getType()
-	{
-		return type;
-	}
-
-	public void setType(ResourceType type)
-	{
-		this.type = type;
-	}
-
 	@Column(nullable = false, scale = 6)
 	public int getList()
 	{
@@ -198,6 +181,7 @@ public class AppResource extends StringUUIDEntity
 	public enum MenuType
 	{
 		COLUMN("栏目菜单") {},
+		MENU("菜单"){},
 		NOT_MENU("非菜单") {},;
 		private String value;
 

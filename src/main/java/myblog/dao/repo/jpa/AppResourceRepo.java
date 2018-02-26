@@ -11,4 +11,5 @@ public interface AppResourceRepo extends JpaRepository<AppResource, String>, Jpa
 
 	@Query(value = "select a from AppResource a where a.url = ?1 and a.requestMethod = ?2")
 	AppResource findByUrlMethod(String url, RequestMethod requestMethod);
+	
 }
