@@ -35,7 +35,6 @@ public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
 		String uri = WebTools.getUri(request, false);
 		if(uri.startsWith("/")) uri = uri.substring(1);
 		//忽略登陆请求
