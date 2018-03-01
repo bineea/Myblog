@@ -31,8 +31,11 @@ public class AppResource extends StringUUIDEntity
 	private RequestMethod requestMethod = RequestMethod.GET;
 	@NotNull
 	private MenuType menuType;// 菜单类型，有些资源要验证，但不一定是菜单资源比如修改.do,删除.do
-	private int list;// 菜单排序
+	@NotNull
+	private Integer list;// 菜单排序
 	private String menuId;// 对应上级菜单的ID
+	@Size(max = 100)
+	private String logoStyle;// 菜单样式
 
 	// 非持久化信息
 	private boolean hasResource;// 当前角色是否有这个菜单
@@ -157,13 +160,11 @@ public class AppResource extends StringUUIDEntity
 	}
 
 	@Column(nullable = false, scale = 6)
-	public int getList()
-	{
+	public Integer getList() {
 		return list;
 	}
 
-	public void setList(int list)
-	{
+	public void setList(Integer list) {
 		this.list = list;
 	}
 
@@ -176,6 +177,15 @@ public class AppResource extends StringUUIDEntity
 	public void setMenuId(String menuId)
 	{
 		this.menuId = menuId;
+	}
+	
+	@Column(name = "logo_style")
+	public String getLogoStyle() {
+		return logoStyle;
+	}
+
+	public void setLogoStyle(String logoStyle) {
+		this.logoStyle = logoStyle;
 	}
 
 	public enum MenuType

@@ -12,6 +12,7 @@ import myblog.model.BaseModel;
 public class MenuModel extends BaseModel {
 
 	private boolean column = false;// 是否为栏目
+	private boolean hasColumns = false; // 是否存在子栏目
 	private AppResource resource;// 菜单资源
 	private List<MenuModel> columnMenu = new ArrayList<>();
 
@@ -21,6 +22,14 @@ public class MenuModel extends BaseModel {
 
 	public void setColumn(boolean column) {
 		this.column = column;
+	}
+
+	public boolean isHasColumns() {
+		return hasColumns;
+	}
+
+	public void setHasColumns(boolean hasColumns) {
+		this.hasColumns = hasColumns;
 	}
 
 	public AppResource getResource() {

@@ -1,6 +1,7 @@
 package myblog.manager.acl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,18 @@ public class RoleResourceManagerImpl implements RoleResourceManager {
 			menuModel.setColumn(true);
 			roleResourceRepo.findByMenuIdRoleId(resource.getId(), roleId).stream()
 											.map(roleResource -> roleResource.getResource())
-											.forEach(res -> menuModel.getColumnMenu().add(getRoleMenu(res,roleId)));
+											.sorted(new Comparator<AppResource>() {
+
+												@Override
+												public int compare(AppResource res1, AppResource res2) {
+													return res1.getList().compareTo(res2.getList());
+												}
+												
+											})
+											.forEach(res -> {
+												menuModel.setHasColumns(true);
+												menuModel.getColumnMenu().add(getRoleMenu(res,roleId));
+											});
 		}
 		return menuModel;
 	}

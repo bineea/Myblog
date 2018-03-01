@@ -5,23 +5,24 @@
 <script>
 	$(document).ready(function() {
 			var menus = <%=session.getAttribute("roleMenu")%>;
-			$("#test").append(toMenuHtml(menus));
+			$("#test").append(toMenuHtml(menus, true));
 	});
 	
-	function toMenuHtml(menus) {
+	function toMenuHtml(menus, hasLogo) {
 		var menuHtml = '';
 		for(var i=0; i<menus.length; i++) {
 			if(menus[i].column) {
-				menuHtml += '<li class="has-sub">'
-							+	'<a href="javascript:;">'
-							+   '<b class="caret pull-right"></b>'
-							+   '<i class="fa fa-laptop"></i>'
-							+   '<span>' + menus[i].resource.name + '</span>'
-						    + 	'</a>'
-							+	'<ul class="sub-menu">';
-				menuHtml += toMenuHtml(menus[i].columnMenu);
-				menuHtml +=	'</ul>'
-							+'</li>';
+									  menuHtml += '<li class="has-sub">'
+											   +	'<a href="javascript:;">';
+				menus[i].hasColumns ? menuHtml += 		'<b class="caret pull-right"></b>' : menuHtml;
+							hasLogo ? menuHtml += 		'<i class="' + menus[i].resource.logoStyle + '"></i>' : menuHtml;
+									  menuHtml += 		'<span>' + menus[i].resource.name + '</span>'
+											   + 	'</a>';
+				menus[i].hasColumns ? menuHtml += 	'<ul class="sub-menu">'
+											   +		toMenuHtml(menus[i].columnMenu, false)
+											   +	'</ul>'
+											   +'</li>' 
+									: menuHtml;
 			}
 			else {
 				menuHtml += '<li><a href="' + menus[i].resource.url + '">' + menus[i].resource.name + '</a></li>';
