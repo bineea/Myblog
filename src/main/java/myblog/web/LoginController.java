@@ -33,7 +33,7 @@ public class LoginController
 	@Autowired
 	private RoleResourceManager roleResourceManager;
 	
-	@RequestMapping(value="/common/login",method=RequestMethod.GET)
+	@RequestMapping(value="common/login",method=RequestMethod.GET)
 	public String setupForm(HttpServletRequest request, HttpServletResponse response, Model model, 
 			@ModelAttribute("userInfoModel") UserInfoModel userInfoModel) throws IOException
 	{
@@ -54,7 +54,7 @@ public class LoginController
 		return "login";
 	}
 	
-	@RequestMapping(value="/common/login",method=RequestMethod.POST)
+	@RequestMapping(value="common/login",method=RequestMethod.POST)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model, 
 			@ModelAttribute("userInfoModel") UserInfoModel userInfoModel) throws MyManagerException, IOException
 	{
