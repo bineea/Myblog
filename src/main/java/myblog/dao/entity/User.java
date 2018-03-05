@@ -1,5 +1,7 @@
 package myblog.dao.entity;
 
+import java.sql.Blob;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -31,6 +33,7 @@ public class User extends StringUUIDEntity {
 	private String passwd;
 	private UserStatus status = UserStatus.NORMAL;
 	private Role role;
+	private Blob profilePicture; //头像
 
 	@Column(name = "name")
 	public String getName() {
@@ -95,6 +98,15 @@ public class User extends StringUUIDEntity {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	@Column(name = "profile_picture")
+	public Blob getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(Blob profilePicture) {
+		this.profilePicture = profilePicture;
 	}
 
 	public enum UserStatus {
