@@ -86,6 +86,7 @@ CREATE TABLE `blog_user` (
 `pass_wd`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码' ,
 `status`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '账号状态' ,
 `role_id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色id' ,
+`profile_picture` blob NULL DEFAULT NULL COMMENT '头像',
 PRIMARY KEY (`id`),
 UNIQUE INDEX `email` (`email`) USING BTREE ,
 UNIQUE INDEX `loginName` (`login_name`) USING BTREE,
