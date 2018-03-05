@@ -5,7 +5,7 @@
 <script>
 	$(document).ready(function() {
 			var menus = <%=session.getAttribute("roleMenu")%>;
-			$("#test").append(toMenuHtml(menus, true));
+			$("#sidebar").append(toMenuHtml(menus, true));
 	});
 	
 	function toMenuHtml(menus, hasLogo) {
@@ -25,7 +25,7 @@
 									: menuHtml;
 			}
 			else {
-				menuHtml += '<li><a href="' + menus[i].resource.url + '">' + menus[i].resource.name + '</a></li>';
+				menuHtml += '<li><a href="${rootUrl }' + menus[i].resource.url + '">' + menus[i].resource.name + '</a></li>';
 			}
 		}
 		return menuHtml;
@@ -51,8 +51,15 @@
 		</ul>
 		<!-- end sidebar user -->
 		<!-- begin sidebar nav -->
-		<ul class="nav" id="test">
+		<ul class="nav" id="sidebar">
 			<li class="nav-header">Navigation</li>
+			<li class="has-sub">
+				<a href="${rootUrl }app/index?myMenuId=index">
+				    <b class="caret pull-right"></b>
+				    <i class="fa fa-home"></i>
+				    <span>首页</span>
+			    </a>
+			</li>
 <!-- 	        begin sidebar minify button -->
 <!-- 			<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li> -->
 <!-- 	        end sidebar minify button -->
