@@ -4,8 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>My blog</title>
+<title>首页</title>
 <%@ include file="/WEB-INF/jsp/common/include.jsp"%>
+<script>
+	$(document).ready(function() {
+		App.init();
+		DashboardV2.init();
+	});
+</script>
 </head>
 <body>
 <!-- begin #page-loader -->
@@ -378,11 +384,5 @@
 	</div>
 	<!-- end page container -->
 	
-	<script>
-		$(document).ready(function() {
-			App.init();
-			DashboardV2.init();
-		});
-	</script>
 </body>
 </html>
