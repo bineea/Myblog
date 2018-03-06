@@ -3,6 +3,7 @@ package myblog.manager.acl;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,11 +23,13 @@ public class RoleResourceMapHolder {
 	public Map<String, AppResource> handleMenu(String roleId) {
 		
 		Map<String, AppResource> resourceMap = roleResourceMap.get(roleId);
-		if(resourceMap.isEmpty()){
+		if(resourceMap == null || resourceMap.isEmpty()){
+			resourceMap = new ConcurrentHashMap<>();
 			List<RoleResource> roleResourceList = roleResourceRepo.findByRoleId(roleId);
-			roleResourceList.stream().map(roleResource -> roleResource.getResource()).forEach(resource -> {
+			List<AppResource> resourceList = roleResourceList.stream().map(roleResource -> roleResource.getResource()).collect(Collectors.toList());
+			for(AppResource resource:resourceList) {
 				resourceMap.put(resource.getId(), resource);
-			});
+			}
 			roleResourceMap.put(roleId, resourceMap);
 		}
 		return resourceMap;
