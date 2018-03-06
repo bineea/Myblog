@@ -17,7 +17,6 @@ import org.springframework.web.util.WebUtils;
 
 import myblog.common.tools.WebTools;
 import myblog.dao.entity.AppResource;
-import myblog.dao.entity.AppResource.MenuType;
 import myblog.dao.entity.User;
 import myblog.manager.acl.AclManagerImpl;
 import myblog.model.MySession;
@@ -83,8 +82,7 @@ public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
 			WebUtils.setSessionAttribute(request, MySession.CURRENT_RESOURCE, null);
 			return;
 		}
-		MenuType type = resource.getMenuType();
-		if(method != RequestMethod.GET || type != MenuType.COLUMN) return;
+		if(method != RequestMethod.GET) return;
 		WebUtils.setSessionAttribute(request, MySession.CURRENT_RESOURCE, resource.toJson());
 		String menuId = request.getParameter("myMenuId");
 		if(StringUtils.hasText(menuId)) {
