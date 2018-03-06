@@ -3,28 +3,29 @@
 
 <script>
 	$(document).ready(function() {
-			var menus = <%=session.getAttribute("roleMenu")%>;
-			$("#sidebarNav").append(toMenuHtml(menus, true));
+			var allMenus = <%=session.getAttribute("roleMenu")%>;
+			$("#sidebarNav").append(toMenuHtml(allMenus, true));
+			$("#${currentResource.id}").parents("#sidebarNav li").andSelf().addClass("active");
 	});
 	
-	function toMenuHtml(menus, hasLogo) {
+	function toMenuHtml(allMenus, hasLogo) {
 		var menuHtml = '';
-		for(var i=0; i<menus.length; i++) {
-			if(menus[i].column) {
-									  menuHtml += '<li class="has-sub">'
+		for(var i=0; i<allMenus.length; i++) {
+			if(allMenus[i].column) {
+									  menuHtml += '<li class="has-sub" id="' + allMenus[i].resource.id + '">'
 											   +	'<a href="javascript:;">';
-				menus[i].hasColumns ? menuHtml += 		'<b class="caret pull-right"></b>' : menuHtml;
-							hasLogo ? menuHtml += 		'<i class="' + menus[i].resource.logoStyle + '"></i>' : menuHtml;
-									  menuHtml += 		'<span>' + menus[i].resource.name + '</span>'
+				allMenus[i].hasColumns ? menuHtml += 		'<b class="caret pull-right"></b>' : menuHtml;
+							hasLogo ? menuHtml += 		'<i class="' + allMenus[i].resource.logoStyle + '"></i>' : menuHtml;
+									  menuHtml += 		'<span>' + allMenus[i].resource.name + '</span>'
 											   + 	'</a>';
-				menus[i].hasColumns ? menuHtml += 	'<ul class="sub-menu">'
-											   +		toMenuHtml(menus[i].columnMenu, false)
+				allMenus[i].hasColumns ? menuHtml += 	'<ul class="sub-menu">'
+											   +		toMenuHtml(allMenus[i].columnMenu, false)
 											   +	'</ul>'
 											   +'</li>' 
 									: menuHtml;
 			}
 			else {
-				menuHtml += '<li><a href="${rootUrl }' + menus[i].resource.url + '">' + menus[i].resource.name + '</a></li>';
+				menuHtml += '<li id="' + allMenus[i].resource.id + '"><a href="${rootUrl }' + allMenus[i].resource.url + '">' + allMenus[i].resource.name + '</a></li>';
 			}
 		}
 		return menuHtml;
