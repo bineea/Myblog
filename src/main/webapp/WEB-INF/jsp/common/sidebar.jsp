@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ include file="/WEB-INF/jsp/common/include.jsp"%>
 
 <script>
 	$(document).ready(function() {
 			var menus = <%=session.getAttribute("roleMenu")%>;
-			$("#sidebar").append(toMenuHtml(menus, true));
+			$("#sidebarNav").append(toMenuHtml(menus, true));
 	});
 	
 	function toMenuHtml(menus, hasLogo) {
@@ -51,11 +50,11 @@
 		</ul>
 		<!-- end sidebar user -->
 		<!-- begin sidebar nav -->
-		<ul class="nav" id="sidebar">
+		<ul class="nav" id="sidebarNav">
 			<li class="nav-header">Navigation</li>
 			<li class="has-sub">
 				<a href="${rootUrl }app/index?myMenuId=index">
-				    <b class="caret pull-right"></b>
+				    <b class="pull-right"></b>
 				    <i class="fa fa-home"></i>
 				    <span>首页</span>
 			    </a>

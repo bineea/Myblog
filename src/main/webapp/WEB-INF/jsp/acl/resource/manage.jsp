@@ -5,16 +5,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <title>资源管理</title>
+
 <%@ include file="/WEB-INF/jsp/common/include.jsp"%>
+
 <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-   <link href="assets/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" />
+<link href="${rootUrl}assets/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" />
 <!-- ================== END PAGE LEVEL JS ================== -->
-<script>
-	$(document).ready(function() {
-		App.init();
-		DashboardV2.init();
-	});
-</script>
+
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script src="${rootUrl}assets/plugins/jstree/dist/jstree.min.js"></script>
+<script src="${rootUrl}assets/js/ui-tree.demo.min.js"></script>
+<!-- ================== END PAGE LEVEL JS ================== -->
+
 </head>
 <body>
 <!-- begin #page-loader -->
@@ -41,49 +43,36 @@
 			<!-- end page-header -->
 			<!-- begin row -->
 			<div class="row">
-			    <!-- begin col-4 -->
-			    <div class="col-md-4">
-                    <div class="panel panel-inverse" data-sortable-id="tree-view-1">
-                        <div class="panel-heading">
-                            <div class="panel-heading-btn">
-                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
-                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-                            </div>
-                            <h4 class="panel-title">Default Tree</h4>
-                        </div>
-                        <div class="panel-body">
-                            <div id="jstree-default">
-                                <ul>
-                                    <li data-jstree='{"opened":true}' >
-                                        Root node 1
-                                        <ul>
-                                            <li data-jstree='{"opened":true, "selected":true }'>Initially Selected</li>
-                                            <li>Folder 1</li>
-                                            <li>Folder 2</li>
-                                            <li>Folder 3</li>
-                                            <li data-jstree='{"opened":true}' >
-                                                Initially open
-                                                <ul>
-                                                    <li data-jstree='{"disabled":true}' >Disabled node</li>
-                                                    <li>Another node</li>
-                                                </ul>
-                                            </li>
-                                            <li data-jstree='{ "icon" : "fa fa-warning fa-lg text-danger" }'>custom icon class (fontawesome)</li>
-                                            <li data-jstree='{ "icon" : "fa fa-link fa-lg text-primary" }'><a href="http://www.jstree.com">Clickable link node</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>Root node 2</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+			    <!-- begin col-3 -->
+			    <div class="col-md-3">
+	                <div id="jstree-default">
+	                    <ul>
+	                        <li data-jstree='{"opened":true}' >
+	                            Root node 1
+	                            <ul>
+	                                <li data-jstree='{"opened":true, "selected":true }'>Initially Selected</li>
+	                                <li>Folder 1</li>
+	                                <li>Folder 2</li>
+	                                <li>Folder 3</li>
+	                                <li data-jstree='{"opened":true}' >
+	                                    Initially open
+	                                    <ul>
+	                                        <li data-jstree='{"disabled":true}' >Disabled node</li>
+	                                        <li>Another node</li>
+	                                    </ul>
+	                                </li>
+	                                <li data-jstree='{ "icon" : "fa fa-warning fa-lg text-danger" }'>custom icon class (fontawesome)</li>
+	                                <li data-jstree='{ "icon" : "fa fa-link fa-lg text-primary" }'><a href="http://www.jstree.com">Clickable link node</a></li>
+	                            </ul>
+	                        </li>
+	                        <li>Root node 2</li>
+	                    </ul>
+	                </div>
 			    </div>
-			    <!-- end col-4 -->
+			    <!-- end col-3 -->
 			    
-			    <!-- begin col-8 -->
-			    <div class="col-md-8">
+			    <!-- begin col-9 -->
+			    <div class="col-md-9">
                     <!-- begin panel -->
                     <div class="panel panel-inverse">
                         <div class="panel-heading">
@@ -135,7 +124,7 @@
                     </div>
                     <!-- end panel -->
 			    </div>
-			    <!-- end col-8 -->
+			    <!-- end col-9 -->
 			</div>
 			<!-- end row -->
 			
@@ -148,6 +137,11 @@
 		<!-- end scroll to top btn -->
 	</div>
 	<!-- end page container -->
-	
+	<script>
+		$(document).ready(function() {
+			App.init();
+			TreeView.init();
+		});
+	</script>
 </body>
 </html>

@@ -3,15 +3,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>首页</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>welcome</title>
 <%@ include file="/WEB-INF/jsp/common/include.jsp"%>
-<script>
-	$(document).ready(function() {
-		App.init();
-		DashboardV2.init();
-	});
-</script>
+
+<!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
+<link href="${rootUrl}assets/plugins/jquery-jvectormap/jquery-jvectormap.css" rel="stylesheet" />
+<link href="${rootUrl}assets/plugins/bootstrap-calendar/css/bootstrap_calendar.css" rel="stylesheet" />
+<link href="${rootUrl}assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+<link href="${rootUrl}assets/plugins/morris/morris.css" rel="stylesheet" />
+<!-- ================== END PAGE LEVEL CSS STYLE ================== -->
+
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script src="${rootUrl}assets/plugins/morris/raphael.min.js"></script>
+<script src="${rootUrl}assets/plugins/morris/morris.js"></script>
+<script src="${rootUrl}assets/plugins/jquery-jvectormap/jquery-jvectormap.min.js"></script>
+<script src="${rootUrl}assets/plugins/jquery-jvectormap/jquery-jvectormap-world-merc-en.js"></script>
+<script src="${rootUrl}assets/plugins/bootstrap-calendar/js/bootstrap_calendar.min.js"></script>
+<script src="${rootUrl}assets/plugins/gritter/js/jquery.gritter.js"></script>
+<script src="${rootUrl}assets/js/dashboard-v2.min.js"></script>
+<!-- ================== END PAGE LEVEL JS ================== -->
+
 </head>
 <body>
 <!-- begin #page-loader -->
@@ -383,6 +395,11 @@
 		<!-- end scroll to top btn -->
 	</div>
 	<!-- end page container -->
-	
+	<script>
+		$(document).ready(function() {
+			App.init();
+			DashboardV2.init();
+		});
+	</script>
 </body>
 </html>
