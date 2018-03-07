@@ -71,7 +71,8 @@ public class AclHandlerInterceptor extends HandlerInterceptorAdapter {
 		if (modelAndView == null) return;
 		User loginUser = LoginHelper.getLoginUser(request);
 		if (loginUser != null) modelAndView.addObject(MySession.LOGIN_USER, loginUser);
-		modelAndView.addObject(MySession.ROLE_MENU, LoginHelper.getCurrentRoleMenu(request));
+		//modelAndView.addObject(MySession.ROLE_MENU, LoginHelper.getCurrentRoleMenu(request));
+		modelAndView.addObject(MySession.ROLE_MENU, (String) WebUtils.getSessionAttribute(request, MySession.ROLE_MENU));
 		AppResource res = LoginHelper.getCurrentResource(request);
 		if (res != null) modelAndView.addObject(MySession.CURRENT_RESOURCE, res);
 	}
