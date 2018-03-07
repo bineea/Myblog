@@ -4,8 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-<title>welcome</title>
+<title>My Blog | Welcome</title>
 <%@ include file="/WEB-INF/jsp/common/include.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/sidebarInit.jsp"%>
 
 <!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
 <link href="${rootUrl}assets/plugins/jquery-jvectormap/jquery-jvectormap.css" rel="stylesheet" />
@@ -24,6 +25,13 @@
 <script src="${rootUrl}assets/js/dashboard-v2.min.js"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
 
+<script src="${rootUrl}my-assets/js/sidebar.js"></script>
+
+<script>
+	$(document).ready(function() {
+		DashboardV2.init();
+	});
+</script>
 </head>
 <body>
 <!-- begin #page-loader -->
@@ -395,11 +403,5 @@
 		<!-- end scroll to top btn -->
 	</div>
 	<!-- end page container -->
-	<script>
-		$(document).ready(function() {
-			App.init();
-			DashboardV2.init();
-		});
-	</script>
 </body>
 </html>
