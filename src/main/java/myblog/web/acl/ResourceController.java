@@ -2,12 +2,16 @@ package myblog.web.acl;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import myblog.common.tools.HttpResponseHelper;
 import myblog.common.tools.JsonTools;
 import myblog.manager.acl.ResourceManager;
 
@@ -30,5 +34,11 @@ public class ResourceController {
 	public String managePost() {
 		
 		return prefix + "manage";
+	}
+	
+	@RequestMapping(value = "/loadResource", method = RequestMethod.POST)
+	public void loadResource(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		HttpResponseHelper.responseJson("", response);
 	}
 }

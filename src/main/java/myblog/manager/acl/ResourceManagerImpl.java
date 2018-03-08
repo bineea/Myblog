@@ -1,6 +1,5 @@
 package myblog.manager.acl;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,12 +21,8 @@ public class ResourceManagerImpl implements ResourceManager {
 	public List<AppResource> findRootMenu() {
 		List<AppResource> resourceList = resourceRepo.findByMenuType(MenuType.COLUMN).stream()
 														.filter(resource -> !StringUtils.hasText(resource.getMenuId()))
-														.sorted(new Comparator<AppResource>() {
-															
-															@Override
-															public int compare(AppResource res1, AppResource res2) {
-																return res1.getList().compareTo(res2.getList());
-															}
+														.sorted((res1, res2) -> {
+															return res1.getList().compareTo(res2.getList());
 														})
 														.collect(Collectors.toList());
 		return resourceList;

@@ -26,7 +26,7 @@
 		$("#jstree-default").jstree({
 			'core':{
 				'data':{
-					'url':'',
+					'url':'${rootUrl}app/acl/resource/loadResource',
 					'dataType':'json',
 					'data':function(node){
 						return { "id" : node.id };
