@@ -23,17 +23,20 @@
 	$(document).ready(function() {
 		var rootMenuJson = ${rootMenu};
 		
-		$("#jstree-default").jstree({
-			'core':{
-				'data':{
-					'url':'${rootUrl}app/acl/resource/loadResource',
-					'dataType':'json',
-					'data':function(node){
-						return { "id" : node.id };
-					}
-				}
-			}
-		});
+// 		$("#jstree-default").jstree({
+// 			'core':{
+// 				'data':{
+// 					'url':'${rootUrl}app/acl/resource/loadResource',
+// 					'dataType':'json',
+// 					'data':function(node){
+// 						return { "id" : node.id };
+// 					}
+// 				},
+// 				'themes':{
+// 					'responsive':false
+// 				}
+// 			}
+// 		});
 		
 		TreeView.init();
 	});
@@ -66,6 +69,13 @@
 			    <div class="col-md-3">
 	                <div id="jstree-default">
 	                    <ul>
+                             <li>
+                                 Root node
+                                 <ul>
+                                     <li>Child node 1</li>
+                                     <li>Child node 2</li>
+                                 </ul>
+                             </li>
 	                    </ul>
 	                </div>
 			    </div>

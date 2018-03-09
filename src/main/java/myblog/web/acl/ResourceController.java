@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import myblog.common.tools.HttpResponseHelper;
 import myblog.common.tools.JsonTools;
@@ -36,9 +37,9 @@ public class ResourceController {
 		return prefix + "manage";
 	}
 	
-	@RequestMapping(value = "/loadResource", method = RequestMethod.POST)
-	public void loadResource(HttpServletRequest request, HttpServletResponse response) throws IOException
+	@RequestMapping(value = "/loadResource", method = RequestMethod.GET)
+	public void loadResource(@RequestParam(value = "id") String id,HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		HttpResponseHelper.responseJson("", response);
+		HttpResponseHelper.responseJson("[{\"id\":1,\"text\":\"Root node\",\"children\":[{\"id\":2,\"text\":\"Child node 1\",\"children\":true},{\"id\":3,\"text\":\"Child node 2\"}]}]", response);
 	}
 }
