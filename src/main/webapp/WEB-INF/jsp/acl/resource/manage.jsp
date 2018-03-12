@@ -14,7 +14,6 @@
 
 <!-- ================== BEGIN PAGE LEVEL JS ================== -->
 <script src="${rootUrl}assets/plugins/jstree/dist/jstree.min.js"></script>
-<script src="${rootUrl}assets/js/ui-tree.demo.min.js"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
 
 
@@ -23,27 +22,38 @@
 	$(document).ready(function() {
 		var rootMenuJson = ${rootMenu};
 		
-// 		$("#jstree-default").jstree({
-// 			'core':{
-// 				'data':{
-// 					'url':'${rootUrl}app/acl/resource/loadResource',
-// 					'dataType':'json',
-// 					'data':function(node){
-// 						return { "id" : node.id };
-// 					}
-// 				},
-// 				'themes':{
-// 					'responsive':false
-// 				}
-// 			}
-// 		});
+		$("#jstree-default").jstree({
+			'core':{
+				'data':{
+					'url':'${rootUrl}app/acl/resource/loadResource',
+					'dataType':'json',
+					'data':function(node){
+						return { "id" : node.id };
+					}
+				},
+				'themes':{
+					'responsive':false
+				}
+			},
+			"types": {
+	            "default": {
+	                "icon": "fa fa-folder text-warning fa-lg"
+	            },
+	            "file": {
+	                "icon": "fa fa-file text-inverse fa-lg"
+	            }
+	        },
+	        "plugins": ["types"]
+		});
 		
-		TreeView.init();
+		$('#jstree-default').on("changed.jstree", function (e, data) {
+		    //触发查询form表单提交
+			console.log("The selected nodes are:");
+		    console.log(data.selected);
+		    alert(data.selected);
+		});
 	});
 	
-	function toTree(menuJson) {
-		
-	}
 </script>
 
 </head>
@@ -69,13 +79,6 @@
 			    <div class="col-md-3">
 	                <div id="jstree-default">
 	                    <ul>
-                             <li>
-                                 Root node
-                                 <ul>
-                                     <li>Child node 1</li>
-                                     <li>Child node 2</li>
-                                 </ul>
-                             </li>
 	                    </ul>
 	                </div>
 			    </div>
@@ -95,6 +98,9 @@
                             <h4 class="panel-title">资源管理</h4>
                         </div>
                         <div class="panel-body">
+                        	
+                        	
+                        	
                             <table id="data-table" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>

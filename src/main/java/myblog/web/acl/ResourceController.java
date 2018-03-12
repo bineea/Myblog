@@ -40,6 +40,10 @@ public class ResourceController {
 	@RequestMapping(value = "/loadResource", method = RequestMethod.GET)
 	public void loadResource(@RequestParam(value = "id") String id,HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		HttpResponseHelper.responseJson("[{\"id\":1,\"text\":\"Root node\",\"children\":[{\"id\":2,\"text\":\"Child node 1\",\"children\":true},{\"id\":3,\"text\":\"Child node 2\"}]}]", response);
+		System.out.println("请求加载资源参数id为：" + id);
+		if(id.equals("#"))
+			HttpResponseHelper.responseJson("[{\"id\":1,\"text\":\"Root node\",\"children\":[{\"id\":2,\"text\":\"Child node 1\",\"children\":true},{\"id\":3,\"text\":\"Child node 2\"}]}]", response);
+		else
+			HttpResponseHelper.responseJson("[{\"id\":2,\"text\":\"Child node 1\",\"children\":[{\"id\":5,\"text\":\"Child node 3\",\"children\":true},{\"id\":6,\"text\":\"Child node 4\"}]}]", response);
 	}
 }
