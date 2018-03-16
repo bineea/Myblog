@@ -13,4 +13,6 @@ public class MyFinals {
 //	手机号码正则
 	public static final String mobileRegexp = "^1[3|4|5|7|8|9]{1}[0-9]{9}$";
 	public static final Pattern mobilePattern = Pattern.compile(mobileRegexp);
+//	jstree请求根目录ID
+	public static final String jsTreeRootReq = "#";
 }

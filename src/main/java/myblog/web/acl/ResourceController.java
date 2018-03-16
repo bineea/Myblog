@@ -1,6 +1,7 @@
 package myblog.web.acl;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import myblog.common.tools.HttpResponseHelper;
 import myblog.common.tools.JsonTools;
 import myblog.manager.acl.ResourceManager;
+import myblog.model.acl.ResourceTreeModel;
+import myblog.web.AbstractController;
 
 @Controller
 @RequestMapping("acl/resource")
-public class ResourceController {
+public class ResourceController extends AbstractController {
 	
 	@Autowired
 	private ResourceManager manager;
@@ -40,10 +43,7 @@ public class ResourceController {
 	@RequestMapping(value = "/loadResource", method = RequestMethod.GET)
 	public void loadResource(@RequestParam(value = "id") String id,HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		System.out.println("请求加载资源参数id为：" + id);
-		if(id.equals("#"))
-			HttpResponseHelper.responseJson("[{\"id\":1,\"text\":\"Root node\",\"children\":[{\"id\":2,\"text\":\"Child node 1\",\"children\":true},{\"id\":3,\"text\":\"Child node 2\"}]}]", response);
-		else
-			HttpResponseHelper.responseJson("[{\"id\":2,\"text\":\"Child node 1\",\"children\":[{\"id\":5,\"text\":\"Child node 3\",\"children\":true},{\"id\":6,\"text\":\"Child node 4\"}]}]", response);
+		List<ResourceTreeModel> treeList = manager.getResourceTree(id);
+		HttpResponseHelper.responseJson(JsonTools.writeValueAsString(treeList), response);
 	}
 }
