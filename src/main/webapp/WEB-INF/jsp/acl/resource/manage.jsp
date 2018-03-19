@@ -16,8 +16,6 @@
 <script src="${rootUrl}assets/plugins/jstree/dist/jstree.min.js"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
 
-
-
 <script>
 	$(document).ready(function() {
 		var rootMenuJson = ${rootMenu};
@@ -50,10 +48,23 @@
 		});
 
 		$('#jstree-default').on("changed.jstree", function (e, data) {
-		    //触发查询form表单提交
-			console.log("The selected nodes are:");
-		    console.log(data.selected);
+		    console.log(data.instance.get_node(data.selected[0]).data);
+		    var menuType = data.instance.get_node(data.selected[0]).data;
+		    if(menuType == 'COLUMN')
+		    {
+		    	$.ajax({
+		    		url:'',
+		    		data:{},
+		    		success:function(result,status,xhr){
+		    			
+		    		},
+		    		error:function(xhr,status,error){
+		    			
+		    		}
+		    	});
+		    }
 		});
+		
 	});
 	
 </script>
@@ -99,20 +110,12 @@
                             </div>
                             <h4 class="panel-title">资源管理</h4>
                         </div>
-                        <div class="alert alert-info fade in">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            AutoFill gives an Excel like option to a DataTable to click and drag over multiple cells,
-                            filling in information over the selected cells and incrementing numbers as needed.
-                            Try to mouseover and drag over any table column below.
-                        </div>
                         <div class="panel-toolbar ">
-                        	<button type="button" class="btn btn-info m-r-5 m-b-5">添加主栏目</button>
-                        	<button type="button" class="btn btn-info m-r-5 m-b-5">添加子栏目</button>
-                        	<button type="button" class="btn btn-info m-r-5 m-b-5">添加菜单</button>
-                        	<button type="button" class="btn btn-info m-r-5 m-b-5">添加非菜单</button>
-                        	<form class="form-horizontal form-inline" modelAttribute="queryModel"  id="listForm" name="listForm" method="post" action="${rootUrl}app/acl/resource/manage">
+                        	<button type="button" class="btn btn-primary m-r-5 m-b-5">添加主栏目</button>
+                        	<button type="button" class="btn btn-primary m-r-5 m-b-5" style="display: none">添加子栏目</button>
+                        	<button type="button" class="btn btn-primary m-r-5 m-b-5" style="display: none">添加菜单</button>
+                        	<button type="button" class="btn btn-primary m-r-5 m-b-5" style="display: none">添加非菜单</button>
+                        	<form class="form-horizontal form-inline" modelAttribute="queryModel"  id="resourceForm" name="resourceForm" method="post" action="${rootUrl}app/acl/resource/manage">
 	                        	<div class="form-group m-5">
                                     <label class="control-label">资源名称:</label>
                                     <input type="text" class="form-control" placeholder="资源名称" />
@@ -128,7 +131,7 @@
 								</div>
                                 <input type="hidden" id="id" name="id" value="root"></input>
 								<input type="hidden" id="resourceType" name="resourceType" value=""></input>
-	                        	<button type="button" class="btn btn-info m-r-5 m-b-5">查询</button>
+	                        	<button type="submit" class="btn btn-primary m-r-5 m-b-5">查询</button>
 	                        	<button type="button" class="btn btn-default m-r-5 m-b-5">重置</button>
                         	</form>
                         </div>
@@ -146,9 +149,7 @@
                                         <th>操作</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                   
-                                </tbody>
+<%-- 								<%@ include file="queryResult.jsp"%> --%>
                             </table>
                         </div>
                     </div>

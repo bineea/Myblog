@@ -11,6 +11,7 @@ public class ResourceTreeModel extends BaseModel {
 
 	private String id;
 	private String icon;
+	private Object data;
 	private String text;
 	private TreeState state;
 	private String type = "default";
@@ -21,6 +22,7 @@ public class ResourceTreeModel extends BaseModel {
 		ResourceTreeModel model = new ResourceTreeModel();
 		model.setId(resource.getId());
 		model.setText(resource.getName());
+		model.setData(resource.getMenuType().name());
 		return model;
 	}
 
@@ -38,6 +40,14 @@ public class ResourceTreeModel extends BaseModel {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public Object getData() {
+		return data;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
 	}
 
 	public String getText() {
