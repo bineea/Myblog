@@ -20,34 +20,34 @@
 	$(document).ready(function() {
 		var rootMenuJson = ${rootMenu};
 		
-		$("#jstree-default").jstree({
+		$('#jstree-default').jstree({
 			'core':{
 				'data':{
 					'url':'${rootUrl}app/acl/resource/loadResource',
 					'dataType':'json',
 					'data':function(node){
-						return { "id" : node.id };
+						return { 'id' : node.id };
 					}
 				},
 				'themes':{
 					'responsive':false
 				}
 			},
-			"types": {
-	            "default": {
-	                "icon": "fa fa-folder text-warning fa-lg"
+			'types': {
+	            'default': {
+	                'icon': 'fa fa-folder text-warning fa-lg'
 	            },
-	            "file": {
-	                "icon": "fa fa-file text-inverse fa-lg"
+	            'file': {
+	                'icon': 'fa fa-file text-inverse fa-lg'
 	            },
-	            "link": {
-	            	"icon": "fa fa-link fa-lg text-primary"
+	            'link': {
+	            	'icon': 'fa fa-link fa-lg text-primary'
 	            }
 	        },
-	        "plugins": ["types"]
+	        'plugins': ['types']
 		});
 
-		$('#jstree-default').on("changed.jstree", function (e, data) {
+		$('#jstree-default').on('changed.jstree', function (e, data) {
 		    console.log(data.instance.get_node(data.selected[0]).data);
 		    var menuType = data.instance.get_node(data.selected[0]).data;
 		    if(menuType == 'COLUMN')
@@ -63,6 +63,15 @@
 		    		}
 		    	});
 		    }
+		});
+		
+		$('#pageQueryForm').ajaxForm({
+			type: "post", //提交方式 
+	        success: function (responseText, status, xhr) { //提交成功的回调函数
+	        	var $responseText = $(responseText);
+	        	var $tbody=$responseText.find("#page_query tbody");
+	        	$('#data-table').find("> tbody").empty().append($tbody.html());
+	        }
 		});
 		
 	});
@@ -115,7 +124,7 @@
                         	<button type="button" class="btn btn-primary m-r-5 m-b-5" style="display: none">添加子栏目</button>
                         	<button type="button" class="btn btn-primary m-r-5 m-b-5" style="display: none">添加菜单</button>
                         	<button type="button" class="btn btn-primary m-r-5 m-b-5" style="display: none">添加非菜单</button>
-                        	<form class="form-horizontal form-inline" modelAttribute="queryModel"  id="resourceForm" name="resourceForm" method="post" action="${rootUrl}app/acl/resource/manage">
+                        	<form class="form-horizontal form-inline" modelAttribute="queryModel"  id="pageQueryForm" name="pageQueryForm" method="post" action="${rootUrl}app/acl/resource/manage">
 	                        	<div class="form-group m-5">
                                     <label class="control-label">资源名称:</label>
                                     <input type="text" class="form-control" placeholder="资源名称" />
@@ -136,7 +145,6 @@
                         	</form>
                         </div>
                         <div class="panel-body">
-                        
                             <table id="data-table" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
@@ -149,7 +157,8 @@
                                         <th>操作</th>
                                     </tr>
                                 </thead>
-<%-- 								<%@ include file="queryResult.jsp"%> --%>
+                                <tbody>
+								</tbody>
                             </table>
                         </div>
                     </div>

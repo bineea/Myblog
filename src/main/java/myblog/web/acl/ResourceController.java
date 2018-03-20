@@ -1,6 +1,7 @@
 package myblog.web.acl;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,9 +36,11 @@ public class ResourceController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/manage", method = RequestMethod.POST)
-	public String managePost() {
+	public String managePost(Model model) {
 		
-		return prefix + "manage";
+		String[] array = {"qwe", "123", "1q", "08k8"};
+		model.addAttribute("queryResult", Arrays.asList(array));
+		return prefix + "queryResult";
 	}
 	
 	@RequestMapping(value = "/loadResource", method = RequestMethod.GET)
