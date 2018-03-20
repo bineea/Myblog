@@ -2,6 +2,9 @@ package myblog.dao.repo.jpa;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +23,6 @@ public interface AppResourceRepo extends JpaRepository<AppResource, String>, Jpa
 	
 	@Query(value = "select a from AppResource a where a.menuId =?1 order by list asc")
 	List<AppResource> findByMenuId(String menuId);
+	
+	Page<AppResource> findAll(Specification<AppResource> spec, Pageable pageable);
 }

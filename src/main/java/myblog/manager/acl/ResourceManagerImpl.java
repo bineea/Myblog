@@ -6,11 +6,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import myblog.dao.entity.AppResource;
 import myblog.dao.entity.AppResource.MenuType;
+import myblog.dao.repo.Spe.AppResourcePageSpe;
 import myblog.dao.repo.jpa.AppResourceRepo;
 import myblog.model.MyFinals;
 import myblog.model.acl.ResourceTreeModel;
@@ -71,6 +73,11 @@ public class ResourceManagerImpl implements ResourceManager {
 			});
 		}
 		return treeList;
+	}
+
+	@Override
+	public Page<AppResource> pageQuery(AppResourcePageSpe pageSpe) {
+		return resourceRepo.findAll(pageSpe.handleSpecification(), pageSpe.getPageRequest());
 	}
 
 }

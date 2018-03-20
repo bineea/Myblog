@@ -48,25 +48,22 @@
 		});
 
 		$('#jstree-default').on('changed.jstree', function (e, data) {
-		    console.log(data.instance.get_node(data.selected[0]).data);
+			console.log(data.selected[0]);
 		    var menuType = data.instance.get_node(data.selected[0]).data;
 		    if(menuType == 'COLUMN')
 		    {
-		    	$.ajax({
-		    		url:'',
-		    		data:{},
-		    		success:function(result,status,xhr){
-		    			
-		    		},
-		    		error:function(xhr,status,error){
-		    			
-		    		}
-		    	});
+		    	$('#menuId').val(data.selected[0]);
+		    	$('#pageQueryForm').submit();
 		    }
 		});
 		
 		$('#pageQueryForm').ajaxForm({
 			type: "post", //提交方式 
+			beforeSubmit: function(formData, jqForm, options) {
+				var form = jqForm[0];
+			    if(!form.menuId.value)
+			    	return false;
+			},
 	        success: function (responseText, status, xhr) { //提交成功的回调函数
 	        	var $responseText = $(responseText);
 	        	var $tbody=$responseText.find("#page_query tbody");
@@ -127,7 +124,7 @@
                         	<form class="form-horizontal form-inline" modelAttribute="queryModel"  id="pageQueryForm" name="pageQueryForm" method="post" action="${rootUrl}app/acl/resource/manage">
 	                        	<div class="form-group m-5">
                                     <label class="control-label">资源名称:</label>
-                                    <input type="text" class="form-control" placeholder="资源名称" />
+                                    <input name="name" type="text" class="form-control" placeholder="资源名称" />
                                 </div>
                                 <div class="form-group m-5">
 									<label class="control-label">资源类型:</label>
@@ -138,8 +135,7 @@
 										<option value="NOT_MENU">非菜单</option>
 									</select>
 								</div>
-                                <input type="hidden" id="id" name="id" value="root"></input>
-								<input type="hidden" id="resourceType" name="resourceType" value=""></input>
+                                <input type="hidden" id="menuId" name="menuId"></input>
 	                        	<button type="submit" class="btn btn-primary m-r-5 m-b-5">查询</button>
 	                        	<button type="button" class="btn btn-default m-r-5 m-b-5">重置</button>
                         	</form>

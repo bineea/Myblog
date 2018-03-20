@@ -9,7 +9,6 @@ import javax.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
-import myblog.common.pub.CommonAbstract;
 import myblog.dao.entity.Comment;
 import myblog.dao.entity.Content;
 import myblog.dao.entity.User;
@@ -17,7 +16,7 @@ import myblog.dao.entity.dict.CommentStatus;
 import myblog.dao.entity.dict.CommentType;
 import myblog.dao.entity.dict.ContentModule;
 
-public class CommentSpecification extends CommonAbstract {
+public class CommentPageSpe extends AbstractPageSpecification<Comment> {
 
 	private Comment parentComment;// 回复的评论ID
 	private Content content;// 评论的内容ID
@@ -32,20 +31,21 @@ public class CommentSpecification extends CommonAbstract {
 	private String email;// 评论用户的email
 	private CommentStatus status;// 评论的状态
 	
-	public Specification<Comment> pageAll() {
+	@Override
+	public Specification<Comment> handleSpecification() {
 		Specification<Comment> spe = (root, query, criteriaBuilder) -> {
 			List<Predicate> predicateList = new ArrayList<Predicate>();
 			if(parentComment != null)
 				predicateList.add(criteriaBuilder.equal(root.get("parentComment.id"), parentComment.getId()));
 			if(StringUtils.hasText(text))
 				predicateList.add(criteriaBuilder.like(root.get("text").as(String.class), like(text)));
-			query.where(predicateList.toArray(new Predicate[0]));
-			query.orderBy(criteriaBuilder.desc(root.get("createTime").as(LocalDateTime.class)));
+			query.where(predicateList.stream().toArray(Predicate[]::new));
+			query.orderBy(criteriaBuilder.desc(root.get("createTime").as(LocalDateTime.class)),criteriaBuilder.desc(root.get("id").as(String.class)));
 			return query.getRestriction();
 		};
 		return spe;
 	}
-
+	
 	public Comment getParentComment() {
 		return parentComment;
 	}
