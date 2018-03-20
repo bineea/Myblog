@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"
     pageEncoding="utf-8" session="true"%>
-
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ include file="tag.jsp"%>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- ================== BEGIN BASE CSS STYLE ================== -->
@@ -37,7 +32,6 @@
 <script src="${rootUrl}assets/js/apps.min.js"></script>
 <!-- ================== END BASE JS ================== -->
 
-<c:url value="/" var="rootUrl" scope="application"></c:url>
-<c:if test="${fn:contains(rootUrl,';jsession')}">
-	<c:set value="${fn:split(rootUrl,';')[0] }" var="rootUrl" scope="application"/>	
-</c:if>
+<!-- ================== BEGIN BASE JS ================== -->
+<script src="${rootUrl}assets/js/jquery/jquery.form.js"></script>
+<!-- ================== END BASE JS ================== -->
