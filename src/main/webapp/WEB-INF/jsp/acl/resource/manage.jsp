@@ -59,20 +59,97 @@
 		
 		$('#pageQueryForm').ajaxForm({
 			type: "post", //提交方式 
-			beforeSubmit: function(formData, jqForm, options) {
+			/* beforeSubmit: function(formData, jqForm, options) {
 				var form = jqForm[0];
 			    if(!form.menuId.value)
 			    	return false;
-			},
+			}, */
 	        success: function (responseText, status, xhr) { //提交成功的回调函数
 	        	var $responseText = $(responseText);
-	        	var $tbody=$responseText.find("#page_query tbody");
-	        	$('#data-table').find("> tbody").empty().append($tbody.html());
+	        	//处理分页
+	        	_bindPager($responseText.find("#page_query_pager"));
+	        	//显示列表
+	        	var hasText = $responseText.find("#page_query tbody").children().size() > 0;
+	        	if(hasText) {
+		        	var $tbody=$responseText.find("#page_query tbody");
+		        	$('#data-table').find("> tbody").empty().append($tbody.html());
+	        	}
+	        	else {
+	        		$('#data-table').find("> tbody").empty()
+	        		.append("<tr><td colspan='15' ><div class='taiji_not_found'>没有检索到符合条件的数据！</div></td></tr>");
+	        	}
+	        },
+	        error: function (xhr, status, error) {
+	        	
 	        }
 		});
 		
+		$("#page_pager").on("click", ".pager_item", function(){
+			var pageclickednumber = $(this).attr("value");
+			// 分页标签点击处理
+			var $pageNo = $("input[name='pageNo']", this.currentTarget);
+			if ($pageNo.attr("name")) {
+				// 如果pageNo存在，则直接修改其值
+				$pageNo.val(pageclickednumber);
+			} else {
+				// 否则，创建pageNo，并追加到form标签下。
+				$pageNo = $(
+				"<input type='text' id='pageNo' name='pageNo'/>")
+				.val(pageclickednumber)
+				.appendTo($("#pageQueryForm"));
+			}
+			// 提交表单
+			$("#pageQueryForm").trigger("submit");
+		});
+		
+		function _bindPager($searchPager) {
+			// 添加分页样式
+        	var $this = this,
+        		currentPage = window.parseInt($searchPager.find("#page_current_page").text(),10),
+        		totalPages = window.parseInt($searchPager.find("#page_total_page").text(),10),
+        		totalElements = window.parseInt($searchPager.find("#page_total_element").text(),10);
+        	//2.2.2 处理各种异常情况 
+        	//当没有查询到数据或返回数据异常的时候，页面显示0条记录，1页，当前页在第1页。
+        	if(isNaN(totalPages) || totalPages < 2 ||isNaN(currentPage) || currentPage < 0 ||
+        			isNaN(totalElements) || totalElements <= 0){
+        		$("#page_pager", this.currentTarget).hide();
+        	}else{
+        		$("#page_pager", this.currentTarget)
+        			.each(function() {
+        			var $ul = $("<ul class='pagination m-t-0 m-b-10 pull-right'>");
+        			var $li_prev = $("<li ><a href='javascript:;' class='pager_item' value='"+(currentPage-1)+"'>«</a></li>").appendTo($ul);
+        			if(currentPage === 0){
+        				$li_prev.addClass("disabled").find("a").removeClass("pager_item");
+        			}
+        			var startPoint = 0,endPoint = 4;
+        			if(currentPage > 2){
+        				startPoint = currentPage -2;
+        				endPoint = currentPage +2;
+        			}
+        			if(endPoint >= totalPages){
+        				startPoint = totalPages -4;
+        				endPoint = totalPages -1;
+        			}
+        			if(startPoint < 0){
+        				startPoint = 0;
+        			}
+        			for(var point = startPoint;point<=endPoint;point++){
+        				var $li_point = $("<li ><a href='javascript:;' class='pager_item' value='"+point+"'>"+(point+1)+"</a></li>").appendTo($ul);
+        				if(point === currentPage){
+        					$li_point.addClass("active").find("a").removeClass("pager_item");
+        				}
+        			}
+        			var $li_next = $("<li ><a href='javascript:;' class='pager_item' value='"+(currentPage + 1)+"'>»</a></li>").appendTo($ul); 
+        			if(currentPage === totalPages){
+        				$li_next.addClass("disabled").find("a").removeClass("pager_item");
+        			}
+        			$(this).html($ul);
+        		}).show();
+        	}
+		}
+		
 	});
-	
+
 </script>
 
 </head>
@@ -117,11 +194,11 @@
                             <h4 class="panel-title">资源管理</h4>
                         </div>
                         <div class="panel-toolbar ">
-                        	<button type="button" class="btn btn-primary m-r-5 m-b-5">添加主栏目</button>
-                        	<button type="button" class="btn btn-primary m-r-5 m-b-5" style="display: none">添加子栏目</button>
-                        	<button type="button" class="btn btn-primary m-r-5 m-b-5" style="display: none">添加菜单</button>
-                        	<button type="button" class="btn btn-primary m-r-5 m-b-5" style="display: none">添加非菜单</button>
-                        	<form class="form-horizontal form-inline" modelAttribute="queryModel"  id="pageQueryForm" name="pageQueryForm" method="post" action="${rootUrl}app/acl/resource/manage">
+                        	<button type="button" class="btn btn-inverse btn-sm  m-r-5 m-b-5">添加主栏目</button>
+                        	<button type="button" class="btn btn-inverse btn-sm m-r-5 m-b-5" style="display: none">添加子栏目</button>
+                        	<button type="button" class="btn btn-inverse btn-sm m-r-5 m-b-5" style="display: none">添加菜单</button>
+                        	<button type="button" class="btn btn-inverse btn-sm m-r-5 m-b-5" style="display: none">添加非菜单</button>
+                        	<form:form class="form-horizontal form-inline" modelAttribute="queryModel"  id="pageQueryForm" name="pageQueryForm" method="post" action="${rootUrl}app/acl/resource/manage">
 	                        	<div class="form-group m-5">
                                     <label class="control-label">资源名称:</label>
                                     <input name="name" type="text" class="form-control" placeholder="资源名称" />
@@ -135,10 +212,10 @@
 										<option value="NOT_MENU">非菜单</option>
 									</select>
 								</div>
-                                <input type="hidden" id="menuId" name="menuId"></input>
-	                        	<button type="submit" class="btn btn-primary m-r-5 m-b-5">查询</button>
-	                        	<button type="button" class="btn btn-default m-r-5 m-b-5">重置</button>
-                        	</form>
+                                <input type="hidden" id="menuId" name="menuId" value="root"></input>
+	                        	<button type="submit" class="btn btn-inverse btn-sm m-r-5 m-b-5">查询</button>
+	                        	<button type="button" class="btn btn-default btn-sm m-r-5 m-b-5">重置</button>
+                        	</form:form>
                         </div>
                         <div class="panel-body">
                             <table id="data-table" class="table table-striped table-bordered">
@@ -156,6 +233,18 @@
                                 <tbody>
 								</tbody>
                             </table>
+                            <div id="page_pager">
+<!--                            		<span>737 messages</span> -->
+<!-- 	                            <ul class="pagination m-t-0 m-b-10 pull-right"> -->
+<!-- 							        <li class="disabled"><a href="javascript:;">«</a></li> -->
+<!-- 							        <li class="active"><a href="javascript:;">1</a></li> -->
+<!-- 							        <li><a href="javascript:;">2</a></li> -->
+<!-- 							        <li><a href="javascript:;">3</a></li> -->
+<!-- 							        <li><a href="javascript:;">4</a></li> -->
+<!-- 							        <li><a href="javascript:;">5</a></li> -->
+<!-- 							        <li><a href="javascript:;">»</a></li> -->
+<!-- 							    </ul> -->
+						    </div>
                         </div>
                     </div>
                     <!-- end panel -->
