@@ -35,3 +35,7 @@
 <!-- ================== BEGIN BASE JS ================== -->
 <script src="${rootUrl}assets/js/jquery/jquery.form.js"></script>
 <!-- ================== END BASE JS ================== -->
+
+<!-- ================== BEGIN BASE JS ================== -->
+<script src="${rootUrl}assets/js/jquery/jquery.custom-1.0.js"></script>
+<!-- ================== END BASE JS ================== -->
