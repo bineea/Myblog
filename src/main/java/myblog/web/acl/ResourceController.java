@@ -39,7 +39,6 @@ public class ResourceController extends AbstractController {
 	
 	@RequestMapping(value = "/manage", method = RequestMethod.POST)
 	public String managePost(@ModelAttribute("queryModel") AppResourcePageSpe pageSpe, Model model) {
-		pageSpe.setPageSize(1);
 		Page<AppResource> page = manager.pageQuery(pageSpe);
 		model.addAttribute("queryResult", page.getContent());
 		model.addAttribute("currentPage", page.getNumber());

@@ -59,11 +59,11 @@
 		
 		$('#pageQueryForm').ajaxForm({
 			type: "post", //提交方式 
-			/* beforeSubmit: function(formData, jqForm, options) {
+			beforeSubmit: function(formData, jqForm, options) {
 				var form = jqForm[0];
 			    if(!form.menuId.value)
 			    	return false;
-			}, */
+			},
 	        success: function (responseText, status, xhr) { //提交成功的回调函数
 	        	var $responseText = $(responseText);
 	        	//处理分页
@@ -78,20 +78,7 @@
 		
 		$("#page_pager").on("click", ".pager_item", function(){
 			var pageclickednumber = $(this).attr("value");
-			// 分页标签点击处理
-			var $pageNo = $("input[name='pageNo']", this.currentTarget);
-			if ($pageNo.attr("name")) {
-				// 如果pageNo存在，则直接修改其值
-				$pageNo.val(pageclickednumber);
-			} else {
-				// 否则，创建pageNo，并追加到form标签下。
-				$pageNo = $(
-				"<input type='text' id='pageNo' name='pageNo'/>")
-				.val(pageclickednumber)
-				.appendTo($("#pageQueryForm"));
-			}
-			// 提交表单
-			$("#pageQueryForm").trigger("submit");
+			$._handlePageClick(pageclickednumber);
 		});
 		
 	});

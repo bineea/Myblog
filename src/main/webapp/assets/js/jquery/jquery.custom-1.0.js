@@ -67,6 +67,27 @@
 			}
 		},
 		
-		
+		/**************************************************************************
+		 * 
+		 * 处理分页跳转
+		 * 
+		 *************************************************************************/
+		_handlePageClick: function(pageclickednumber) {
+			// 分页标签点击处理
+			var $pageNo = $("input[name='pageNo']", this.currentTarget);
+			if ($pageNo.attr("name")) {
+				// 如果pageNo存在，则直接修改其值
+				$pageNo.val(pageclickednumber);
+			} else {
+				// 否则，创建pageNo，并追加到form标签下。
+				$pageNo = $(
+				"<input type='text' id='pageNo' name='pageNo'/>")
+				.val(pageclickednumber)
+				.appendTo($("#pageQueryForm"), this.currentTarget);
+			}
+			// 提交表单
+			$("#pageQueryForm", this.currentTarget).trigger("submit");
+		},
 	});
+    
 })(jQuery,window,document);

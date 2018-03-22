@@ -28,7 +28,7 @@ public abstract class AbstractPageSpecification<E> extends CommonAbstract {
 	}
 
 	public PageRequest getPageRequest() {
-		return PageRequest.of(pageNo-1, pageSize);
+		return PageRequest.of(pageNo, pageSize);
 	}
 	
 	public abstract Specification<E> handleSpecification();
