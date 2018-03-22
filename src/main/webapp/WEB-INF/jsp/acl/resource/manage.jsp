@@ -81,6 +81,21 @@
 			$._handlePageClick(pageclickednumber);
 		});
 		
+		$("#addRootMenu").click(function(){
+			$.ajax({
+				url: this.href,
+				success: function(data, textStatus, jqXHR) {
+					console.log("请求成功");
+					$modalDialog = $(data).appendTo(document.body);
+					$modalDialog.modal({backdrop:true,show:true});
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log("请求失败");
+					console.log("错误提示： " + XMLHttpRequest.status + " " + XMLHttpRequest.statusText);
+				}
+			});
+			return false;
+		});
 	});
 
 </script>
@@ -127,10 +142,10 @@
                             <h4 class="panel-title">资源管理</h4>
                         </div>
                         <div class="panel-toolbar ">
-                        	<button type="button" class="btn btn-inverse btn-sm  m-r-5 m-b-5">添加主栏目</button>
-                        	<button type="button" class="btn btn-inverse btn-sm m-r-5 m-b-5" style="display: none">添加子栏目</button>
-                        	<button type="button" class="btn btn-inverse btn-sm m-r-5 m-b-5" style="display: none">添加菜单</button>
-                        	<button type="button" class="btn btn-inverse btn-sm m-r-5 m-b-5" style="display: none">添加非菜单</button>
+                        	<a id="addRootMenu" href="${rootUrl }app/acl/resource/addResource?menuType=COLUMN&isRootMenu=true" class="btn btn-inverse btn-sm m-r-5 m-b-5">添加主栏目</a>
+                        	<a id="addColumn" href="javascript:;" class="btn btn-inverse btn-sm m-r-5 m-b-5" style="display: none">添加子栏目</a>
+                        	<a id="addMenu" href="javascript:;" class="btn btn-inverse btn-sm m-r-5 m-b-5" style="display: none">添加菜单</a>
+                        	<a id="addNotMenu" href="javascript:;" class="btn btn-inverse btn-sm m-r-5 m-b-5" style="display: none">添加非菜单</a>
                         	<form:form class="form-horizontal form-inline" modelAttribute="queryModel"  id="pageQueryForm" name="pageQueryForm" method="post" action="${rootUrl}app/acl/resource/manage">
 	                        	<div class="form-group m-5">
                                     <label class="control-label">资源名称:</label>
@@ -167,16 +182,6 @@
 								</tbody>
                             </table>
                             <div id="page_pager">
-<!--                            		<span>737 messages</span> -->
-<!-- 	                            <ul class="pagination m-t-0 m-b-10 pull-right"> -->
-<!-- 							        <li class="disabled"><a href="javascript:;">«</a></li> -->
-<!-- 							        <li class="active"><a href="javascript:;">1</a></li> -->
-<!-- 							        <li><a href="javascript:;">2</a></li> -->
-<!-- 							        <li><a href="javascript:;">3</a></li> -->
-<!-- 							        <li><a href="javascript:;">4</a></li> -->
-<!-- 							        <li><a href="javascript:;">5</a></li> -->
-<!-- 							        <li><a href="javascript:;">»</a></li> -->
-<!-- 							    </ul> -->
 						    </div>
                         </div>
                     </div>
@@ -185,7 +190,6 @@
 			    <!-- end col-9 -->
 			</div>
 			<!-- end row -->
-			
 			
 		</div>
 		<!-- end #content -->

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import myblog.common.tools.HttpResponseHelper;
 import myblog.common.tools.JsonTools;
 import myblog.dao.entity.AppResource;
+import myblog.dao.entity.AppResource.MenuType;
 import myblog.dao.repo.Spe.AppResourcePageSpe;
 import myblog.manager.acl.ResourceManager;
 import myblog.model.acl.ResourceTreeModel;
@@ -52,5 +53,14 @@ public class ResourceController extends AbstractController {
 	{
 		List<ResourceTreeModel> treeList = manager.getResourceTree(id);
 		HttpResponseHelper.responseJson(JsonTools.writeValueAsString(treeList), response);
+	}
+	
+	@RequestMapping(value = "/addResource", method = RequestMethod.GET)
+	public String addResource(
+			@RequestParam(value = "menuType", required = true) MenuType menuType,
+			@RequestParam(value = "menuId", required = false) String menuId,
+			@RequestParam(value = "isRootMenu", required = true) boolean isRootMenu,
+			Model model) {
+		return prefix + "add";
 	}
 }
