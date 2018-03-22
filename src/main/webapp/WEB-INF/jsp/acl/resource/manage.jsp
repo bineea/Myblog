@@ -85,12 +85,13 @@
 			$.ajax({
 				url: this.href,
 				success: function(data, textStatus, jqXHR) {
-					console.log("请求成功");
-					$modalDialog = $(data).appendTo(document.body);
-					$modalDialog.modal({backdrop:true,show:true});
+					var opts={
+						"size":"",
+						backdrop:true
+					};
+					$._showModal(opts,data);
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown) {
-					console.log("请求失败");
 					console.log("错误提示： " + XMLHttpRequest.status + " " + XMLHttpRequest.statusText);
 				}
 			});
@@ -162,7 +163,6 @@
 								</div>
                                 <input type="hidden" id="menuId" name="menuId" value="root"></input>
 	                        	<button type="submit" class="btn btn-inverse btn-sm m-r-5 m-b-5">查询</button>
-	                        	<button type="button" class="btn btn-default btn-sm m-r-5 m-b-5">重置</button>
                         	</form:form>
                         </div>
                         <div class="panel-body">

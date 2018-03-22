@@ -94,8 +94,28 @@
 		 * 显示模态框
 		 * 
 		 *************************************************************************/
-		_showModel: function(options, data) {
-			
+		_showModal: function(opts, data) {
+			var defaults={
+					size:"",
+					backdrop:true
+				};
+			var options = $.extend({}, defaults, opts);
+			var templateModal='<div class="modal fade" role="dialog" aria-labelledby="myModalLabel">'+
+							  		'<div class="modal-dialog" role="document">'+
+										'<div class="modal-content">'+
+										'</div>'+
+									'</div>'+
+							  '</div>';
+			$modalDialog=$(templateModal).appendTo(document.body);
+			$modalDialog.on("hidden.bs.modal",function(){
+				$(this).removeClass("modal-message");
+				$(this).find(".modal-dialog").removeClass("modal-lg").removeClass("modal-sm");
+				$(this).find(".modal-content").empty();
+			});
+			$modalDialog.find(".modal-dialog").addClass(options.size);
+			$modalDialog.find(".modal-content").html(data);
+			$modalDialog.modal({backdrop:options.backdrop,show:true});
+			return $modalDialog;
 		},
 		
 		/**************************************************************************
@@ -103,7 +123,7 @@
 		 * 关闭模态框
 		 * 
 		 *************************************************************************/
-		_hideModel: function(options) {
+		_hideModal: function(options) {
 			$(".modal-open>.modal.in:last").modal("hide");
 		},
 		
@@ -112,6 +132,7 @@
 		 * 
 		 * 
 		 *************************************************************************/
+		
 	});
     
 })(jQuery,window,document);

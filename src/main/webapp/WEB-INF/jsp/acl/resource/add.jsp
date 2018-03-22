@@ -7,9 +7,6 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	</head>
 	<body>
-	<div class="modal fade" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title">Modal title</h4>
@@ -18,11 +15,8 @@
 	        <p>One fine body&hellip;</p>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	        <button type="button" class="btn btn-primary">保存</button>
+	        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-inverse btn-sm">保存</button>
 	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
 	</body>
 </html>
