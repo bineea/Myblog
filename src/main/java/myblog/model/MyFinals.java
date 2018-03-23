@@ -7,7 +7,7 @@ public class MyFinals {
 	public static String COOKIE_USER = "mycookieuser";
 
 //	默认分页查询页码
-	public static final int DEFAULT_PAGE_NUM = 1;
+	public static final int DEFAULT_PAGE_NUM = 0;
 //	默认分页查询单页数量
 	public static final int DEFAULT_PAGE_SIZE = 27;
 //	手机号码正则
