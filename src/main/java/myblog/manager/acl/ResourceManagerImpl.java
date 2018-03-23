@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import myblog.dao.entity.AppResource;
@@ -78,6 +79,12 @@ public class ResourceManagerImpl implements ResourceManager {
 	@Override
 	public Page<AppResource> pageQuery(AppResourcePageSpe pageSpe) {
 		return resourceRepo.findAll(pageSpe.handleSpecification(), pageSpe.getPageRequest());
+	}
+
+	@Override
+	public AppResource findById(String id) {
+		Assert.hasText(id, "id参数不能为空");
+		return resourceRepo.findById(id).orElse(null);
 	}
 
 }
