@@ -53,6 +53,7 @@
 		    if(menuType == 'COLUMN')
 		    {
 		    	$('#menuId').val(data.selected[0]);
+		    	$('#parentName').val(data.instance.get_node(data.selected[0]).text);
 		    	$('#pageQueryForm').submit();
 		    }
 		});
@@ -161,7 +162,8 @@
 										<option value="NOT_MENU">非菜单</option>
 									</select>
 								</div>
-                                <input type="hidden" id="menuId" name="menuId" value="root"></input>
+                                <input type="text" id="menuId" name="menuId" value="root"></input>
+                                <input type="text" id="parentName" name="parentName" value=""></input>
 	                        	<button type="submit" class="btn btn-inverse btn-sm m-r-5 m-b-5">查询</button>
                         	</form:form>
                         </div>
