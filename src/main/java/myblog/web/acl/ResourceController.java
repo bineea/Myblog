@@ -59,8 +59,15 @@ public class ResourceController extends AbstractController {
 	public String addResource(
 			@RequestParam(value = "menuType", required = true) MenuType menuType,
 			@RequestParam(value = "menuId", required = false) String menuId,
+			@RequestParam(value = "parentName", required = false) String parentName,
 			@RequestParam(value = "isRootMenu", required = true) boolean isRootMenu,
+			@ModelAttribute("addModel") AppResource resource,
 			Model model) {
+		model.addAttribute("menuType", menuType);
+		model.addAttribute("menuId", menuId);
+		model.addAttribute("parentName", parentName);
+		model.addAttribute("isRootMenu", isRootMenu);
+		model.addAttribute("menuTypes", MenuType.values());
 		return prefix + "add";
 	}
 }
