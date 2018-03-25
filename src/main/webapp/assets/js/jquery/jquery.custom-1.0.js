@@ -129,10 +129,16 @@
 		
 		/**************************************************************************
 		 * 
-		 * 
+		 * 表格数据处理
 		 * 
 		 *************************************************************************/
-		
+		_handleTableData: function(responseText,table) {
+			var $row = $(responseText).find(".result_data tr");
+			if(table=="add"){
+				var $tbody=$('#data-table', this.currentTarget).find("> tbody");
+				$tbody.prepend($row);
+			}
+		},
 	});
     
 })(jQuery,window,document);

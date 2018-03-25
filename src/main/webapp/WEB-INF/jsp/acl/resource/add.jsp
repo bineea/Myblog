@@ -10,11 +10,14 @@
 $(document).ready(function() {
 	$('#myForm').ajaxForm({
 		type: "post", //提交方式 
+		complete: function(xhr) {
+			$._hideModal();
+		},
 		success: function(responseText, status, xhr){
-			console.log("success");
+			$._handleTableData(responseText, "add");
 		},
 		error: function(xhr, status, error) {
-			console.log("error");
+			
 		}
 	});
 });

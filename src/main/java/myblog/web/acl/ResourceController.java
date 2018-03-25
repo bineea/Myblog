@@ -72,7 +72,7 @@ public class ResourceController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/addResource", method = RequestMethod.POST)
-	public String addResourcePost(@ModelAttribute("addModel") AppResource resource) {
+	public String addResourcePost(@ModelAttribute("addModel") AppResource resource, Model model) {
 		
 		try {
 			System.out.println(JsonTools.entityToJson(resource));
@@ -80,6 +80,7 @@ public class ResourceController extends AbstractController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		model.addAttribute("data", resource);
 		return prefix + "result";
 	}
 }

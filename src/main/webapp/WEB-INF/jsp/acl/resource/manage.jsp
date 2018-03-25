@@ -48,7 +48,6 @@
 		});
 
 		$('#jstree-default').on('changed.jstree', function (e, data) {
-			console.log(data.selected[0]);
 		    var menuType = data.instance.get_node(data.selected[0]).data;
 		    if(menuType == 'COLUMN')
 		    {
@@ -162,8 +161,8 @@
 										<option value="NOT_MENU">非菜单</option>
 									</select>
 								</div>
-                                <input type="text" id="menuId" name="menuId" value="root"></input>
-                                <input type="text" id="parentName" name="parentName" value=""></input>
+                                <input type="hidden" id="menuId" name="menuId" value="root"></input>
+                                <input type="hidden" id="parentName" name="parentName" value=""></input>
 	                        	<button type="submit" class="btn btn-inverse btn-sm m-r-5 m-b-5">查询</button>
                         	</form:form>
                         </div>
