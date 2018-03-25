@@ -4,16 +4,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="expires" content="0" />
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<script>
+$(document).ready(function() {
+	$('#myForm').ajaxForm({
+		type: "post", //提交方式 
+		success: function(responseText, status, xhr){
+			console.log("success");
+		},
+		error: function(xhr, status, error) {
+			console.log("error");
+		}
+	});
+});
+</script>
 </head>
 <body>
 	<div class="modal-header">
 	  	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	  	<h4 class="modal-title">添加资源</h4>
 	</div>
+	<form:form modelAttribute="addModel" id="myForm" name="myForm" cssClass="form-horizontal" action="${rootUrl }app/acl/resource/addResource" method="post">
 	<div class="modal-body">
-	<form:form modelAttribute="addModel" id="myForm" name="myForm" cssClass="form-horizontal" action="${rootUrl }app/acl/resource/add" method="post">
          <input type="hidden" id="menuId" name="menuId" />
          <c:if test="${!isRootMenu }">
          <div class="form-group">
@@ -66,11 +79,11 @@
                  <input name="logoStyle" type="text" class="form-control" placeholder="样式" />
              </div>
          </div>
-	</form:form>
 	</div>
 	<div class="modal-footer">
 	  	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
 	  	<button type="submit" class="btn btn-inverse btn-sm">保存</button>
 	</div>
+	</form:form>
 </body>
 </html>

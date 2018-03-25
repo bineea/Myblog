@@ -56,7 +56,7 @@ public class ResourceController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/addResource", method = RequestMethod.GET)
-	public String addResource(
+	public String addResourceGet(
 			@RequestParam(value = "menuType", required = true) MenuType menuType,
 			@RequestParam(value = "menuId", required = false) String menuId,
 			@RequestParam(value = "parentName", required = false) String parentName,
@@ -69,5 +69,17 @@ public class ResourceController extends AbstractController {
 		model.addAttribute("isRootMenu", isRootMenu);
 		model.addAttribute("menuTypes", MenuType.values());
 		return prefix + "add";
+	}
+	
+	@RequestMapping(value = "/addResource", method = RequestMethod.POST)
+	public String addResourcePost(@ModelAttribute("addModel") AppResource resource) {
+		
+		try {
+			System.out.println(JsonTools.entityToJson(resource));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return prefix + "result";
 	}
 }
