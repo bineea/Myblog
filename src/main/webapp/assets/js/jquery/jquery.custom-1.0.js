@@ -139,6 +139,26 @@
 				$tbody.prepend($row);
 			}
 		},
+		
+		/**************************************************************************
+		 * 
+		 * 显示信息
+		 * 
+		 *************************************************************************/
+		showLoading: function(message) {
+			// 创建loading
+			console.log("[_createLoading]" + message);
+			$loadingDiv = $("#alert-loading");
+			if(!$loadingDiv.length){
+				var html=
+					'<div id="alert-loading" class="alert alert-info  ">'+
+						'<strong></strong>'+
+						'<div  class="fade in"><span class="spinner"></span></div>'+
+					'</div>';
+				$loadingDiv=$(html).prependTo(document.body);
+			}
+			$loadingDiv.find("strong").text(message).end().fadeIn(10);
+		},
 	});
     
 })(jQuery,window,document);

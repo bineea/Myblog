@@ -11,6 +11,7 @@
 <link href="${rootUrl}assets/css/style.min.css" rel="stylesheet" />
 <link href="${rootUrl}assets/css/style-responsive.min.css" rel="stylesheet" />
 <link href="${rootUrl}assets/css/theme/default.css" rel="stylesheet" id="theme" />
+<link href="${rootUrl}assets/plugins/jquery-confirm/dist/jquery-confirm.min.css" rel="stylesheet" id="theme" />
 <!-- ================== END BASE CSS STYLE ================== -->
 
 <!-- ================== BEGIN BASE JS ================== -->
@@ -34,8 +35,6 @@
 
 <!-- ================== BEGIN BASE JS ================== -->
 <script src="${rootUrl}assets/js/jquery/jquery.form.js"></script>
-<!-- ================== END BASE JS ================== -->
-
-<!-- ================== BEGIN BASE JS ================== -->
+<script src="${rootUrl}assets/plugins/jquery-confirm/dist/jquery-confirm.min.js"></script>
 <script src="${rootUrl}assets/js/jquery/jquery.custom-1.0.js"></script>
 <!-- ================== END BASE JS ================== -->

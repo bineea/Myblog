@@ -97,13 +97,52 @@
 			});
 			return false;
 		});
+		
+		$("#data-table").on("click", ".update_op", function(){
+			$.ajax({
+				url: this.href,
+				success: function(data, textStatus, jqXHR) {
+					var opts={
+						"size":"",
+						backdrop:true
+					};
+					$._showModal(opts,data);
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown) {
+					console.log("错误提示： " + XMLHttpRequest.status + " " + XMLHttpRequest.statusText);
+				}
+			});
+			return false;
+		});
+		
+		$("#data-table").on("click", ".delete_op", function(){
+			$.confirm({
+		    	theme: 'white',
+		        title: 'Are you sure',
+		        content: '确定删除该数据？',
+		        confirm: function(){
+		        	console.log("to do ...");
+					$.ajax({
+						url: this.href,
+						type: 'POST',
+						success: function(data, textStatus, jqXHR) {
+							console.log("success to delete");
+						},
+						error:function(XMLHttpRequest, textStatus, errorThrown) {
+							console.log("错误提示： " + XMLHttpRequest.status + " " + XMLHttpRequest.statusText);
+						}
+					});
+		        }
+		    });
+			return false;
+		});
 	});
 
 </script>
 
 </head>
 <body>
-<!-- begin #page-loader -->
+	<!-- begin #page-loader -->
 	<div id="page-loader" class="fade in"><span class="spinner"></span></div>
 	<!-- end #page-loader -->
 	
@@ -115,6 +154,14 @@
 		
 		<!-- begin #content -->
 		<div id="content" class="content">
+		
+			<div id="alert-loading" class="alert alert-info">
+			<strong>操作进行中，请稍候！</strong>
+				<div class="fade in">
+				<span class="spinner"></span>
+				</div>
+			</div>
+		
 			<!-- begin page-header -->
 			<h1 class="page-header">资源管理 <small>My place,My rule</small></h1>
 			<!-- end page-header -->

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,13 +75,28 @@ public class ResourceController extends AbstractController {
 	@RequestMapping(value = "/addResource", method = RequestMethod.POST)
 	public String addResourcePost(@ModelAttribute("addModel") AppResource resource, Model model) {
 		
-		try {
-			System.out.println(JsonTools.entityToJson(resource));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		model.addAttribute("data", resource);
+		return prefix + "result";
+	}
+	
+	@RequestMapping(value = "updateResource/{id}", method = RequestMethod.GET)
+	public String updateResourceGet(@PathVariable("id") String id,  Model model) {
+		
+		model.addAttribute("editModel", manager.findById(id));
+		return prefix + "edit";
+	}
+	
+	@RequestMapping(value = "updateResource", method = RequestMethod.POST)
+	public String updateResourcePost(@ModelAttribute("editModel") AppResource resource, Model model) {
+		
+		return prefix + "result";
+	}
+	
+	@RequestMapping(value = "/deleteResource/{id}", method = RequestMethod.POST)
+	public String delete(@PathVariable("id") String id, HttpServletRequest request, Model model, HttpServletResponse response) {
+		
+		
 		return prefix + "result";
 	}
 }

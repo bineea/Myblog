@@ -10,7 +10,7 @@
 	<td>${data.url }</td>
 	<td>${data.requestMethod }</td>
 	<td>
-		<a>修改</a>
-		<a>删除</a>
+		<a class="update_op" href="${rootUrl }app/acl/resource/updateResource/${data.id}">修改</a>
+		<a class="delete_op" href="${rootUrl }app/acl/resource/deleteResource/${data.id}">删除</a>
 	</td>
 </tr>
