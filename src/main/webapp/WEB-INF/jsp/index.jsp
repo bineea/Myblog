@@ -25,8 +25,6 @@
 <script src="${rootUrl}assets/js/dashboard-v2.min.js"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->
 
-<script src="${rootUrl}my-assets/js/sidebar.js"></script>
-
 <script>
 	$(document).ready(function() {
 		DashboardV2.init();
