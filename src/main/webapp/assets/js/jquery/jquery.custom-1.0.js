@@ -142,23 +142,45 @@
 		
 		/**************************************************************************
 		 * 
-		 * 显示信息
+		 * 显示loading
 		 * 
 		 *************************************************************************/
-		showLoading: function(message) {
-			// 创建loading
-			console.log("[_createLoading]" + message);
-			$loadingDiv = $("#alert-loading");
-			if(!$loadingDiv.length){
-				var html=
-					'<div id="alert-loading" class="alert alert-info  ">'+
-						'<strong></strong>'+
-						'<div  class="fade in"><span class="spinner"></span></div>'+
-					'</div>';
+		showLoading: function() {
+			$loadingDiv = $("#page-loader");
+			if(!$loadingDiv.length) {
+				var html = '<div id="page-loader" class="fade in" style="filter:alpha(opacity=60);opacity:0.6;">'
+						 +		'<span class="spinner"></span>'
+						 + '</div>';
 				$loadingDiv=$(html).prependTo(document.body);
 			}
-			$loadingDiv.find("strong").text(message).end().fadeIn(10);
 		},
+		
+		/**************************************************************************
+		 * 
+		 * 隐藏loading
+		 * 
+		 *************************************************************************/
+		hideLoading: function() {
+			$("#alert-loading").addClass("hide");
+		},
+		
+		/**************************************************************************
+		 * 
+		 * 显示警告信息
+		 * 
+		 *************************************************************************/
+		showWarnMsg: function(message) {
+			$warnMsgDiv = $("#warn-message");
+			if(!$warnMsgDiv.length) {
+				var html = '<div id="warn-message" class="alert alert-warning alert-dismissible" role="alert">'
+						 + 		'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+						 + 		'<strong>Warning!</strong>'
+						 + 		'<span></span>'
+						 + '</div>';
+			}
+			$warnMsgDiv.find("span").text(message);
+		},
+		
 	});
     
 })(jQuery,window,document);

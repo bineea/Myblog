@@ -121,7 +121,6 @@
 		        title: 'Are you sure',
 		        content: '确定删除该数据？',
 		        confirm: function(){
-		        	console.log("to do ...");
 					$.ajax({
 						url: this.href,
 						type: 'POST',
@@ -142,10 +141,6 @@
 
 </head>
 <body>
-	<!-- begin #page-loader -->
-	<div id="page-loader" class="fade in"><span class="spinner"></span></div>
-	<!-- end #page-loader -->
-	
 	<!-- begin #page-container -->
 	<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
 		<%@ include file="/WEB-INF/jsp/common/head.jsp"%>
@@ -154,14 +149,6 @@
 		
 		<!-- begin #content -->
 		<div id="content" class="content">
-		
-			<div id="alert-loading" class="alert alert-info">
-			<strong>操作进行中，请稍候！</strong>
-				<div class="fade in">
-				<span class="spinner"></span>
-				</div>
-			</div>
-		
 			<!-- begin page-header -->
 			<h1 class="page-header">资源管理 <small>My place,My rule</small></h1>
 			<!-- end page-header -->
