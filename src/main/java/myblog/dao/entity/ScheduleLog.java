@@ -15,7 +15,7 @@ import javax.persistence.Transient;
 import myblog.common.entity.StringUUIDEntity;
 
 @Entity
-@Table(name = "sample_schedule_log")
+@Table(name = "blog_schedule_log")
 public class ScheduleLog extends StringUUIDEntity
 {
 	private String taskName;
