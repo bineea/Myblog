@@ -85,14 +85,10 @@
 			$.ajax({
 				url: this.href,
 				success: function(data, textStatus, jqXHR) {
-					var opts={
-						"size":"",
-						backdrop:true
-					};
-					$._showModal(opts,data);
+					$._showModal({},data);
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown) {
-					console.log("错误提示： " + XMLHttpRequest.status + " " + XMLHttpRequest.statusText);
+					$.showWarnMsg();
 				}
 			});
 			return false;
@@ -102,14 +98,10 @@
 			$.ajax({
 				url: this.href,
 				success: function(data, textStatus, jqXHR) {
-					var opts={
-						"size":"",
-						backdrop:true
-					};
-					$._showModal(opts,data);
+					$._showModal({},data);
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown) {
-					console.log("错误提示： " + XMLHttpRequest.status + " " + XMLHttpRequest.statusText);
+					$.showWarnMsg();
 				}
 			});
 			return false;
@@ -120,17 +112,26 @@
 		    	theme: 'white',
 		        title: 'Are you sure',
 		        content: '确定删除该数据？',
-		        confirm: function(){
-					$.ajax({
-						url: this.href,
-						type: 'POST',
-						success: function(data, textStatus, jqXHR) {
-							console.log("success to delete");
-						},
-						error:function(XMLHttpRequest, textStatus, errorThrown) {
-							console.log("错误提示： " + XMLHttpRequest.status + " " + XMLHttpRequest.statusText);
-						}
-					});
+		        buttons: {   
+		        	confirm: {
+		            	text: '确认',
+		                keys: ['enter'],
+		                action: function(){
+		 					$.ajax({
+		 						url: this.href,
+		 						type: 'POST',
+		 						success: function(data, textStatus, jqXHR) {
+		 							console.log("success to delete");
+		 						},
+		 						error:function(XMLHttpRequest, textStatus, errorThrown) {
+		 							$.showWarnMsg();
+		 						}
+		 					});
+		                }
+		            },
+		            cancel: {
+		            	text: '取消'
+		            }
 		        }
 		    });
 			return false;

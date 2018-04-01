@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import myblog.common.pub.MyManagerException;
 import myblog.dao.entity.AppResource;
 import myblog.dao.repo.Spe.AppResourcePageSpe;
 import myblog.model.acl.ResourceTreeModel;
@@ -30,6 +31,29 @@ public interface ResourceManager {
 	 */
 	Page<AppResource> pageQuery(AppResourcePageSpe pageSpe);
 	
+	/**
+	 * 查询资源
+	 * @param id
+	 * @return
+	 */
 	AppResource findById(String id);
 	
+	/**
+	 * 删除资源
+	 * @param id
+	 */
+	void deleteById(String id) throws MyManagerException;
+	
+	/**
+	 * 添加资源
+	 * @param resource
+	 */
+	AppResource add(AppResource resource);
+	
+	/**
+	 * 更新资源
+	 * @param resource
+	 * @return
+	 */
+	AppResource update(AppResource resource);
 }

@@ -170,6 +170,7 @@
 		 * 
 		 *************************************************************************/
 		showWarnMsg: function(message) {
+			console.log(message)
 			$warnMsgDiv = $("#warn-message");
 			if(!$warnMsgDiv.length) {
 				var html = '<div id="warn-message" class="alert alert-warning alert-dismissible" role="alert">'
