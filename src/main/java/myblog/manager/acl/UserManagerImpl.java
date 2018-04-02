@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import myblog.common.pub.MyManagerException;
-import myblog.common.pub.MyViolationException;
 import myblog.common.tools.SecurityTools;
 import myblog.common.tools.SecurityTools.DigestType;
 import myblog.dao.entity.User;
@@ -24,9 +23,9 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 	public User toLogin(UserInfoModel userInfoModel) throws MyManagerException {
 		
 		if(!StringUtils.hasText(userInfoModel.getLoginName()))
-			throw new MyViolationException("loginName", "账号不能为空");
+			throw new MyManagerException("账号不能为空");
 		if(!StringUtils.hasText(userInfoModel.getPasswd()))
-			throw new MyViolationException("passwd", "密码不能为空");
+			throw new MyManagerException("密码不能为空");
 		String passwd = SecurityTools.encryStr(userInfoModel.getPasswd(), DigestType.SHA_1);
 		User user = userRepo.findByLoginNamePasswd(userInfoModel.getLoginName(), passwd);
 		if(user == null)

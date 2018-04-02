@@ -108,6 +108,7 @@
 		});
 		
 		$("#data-table").on("click", ".delete_op", function(){
+			var hrefUrl = this.href;
 			$.confirm({
 		    	theme: 'white',
 		        title: 'Are you sure',
@@ -118,13 +119,13 @@
 		                keys: ['enter'],
 		                action: function(){
 		 					$.ajax({
-		 						url: this.href,
+		 						url: hrefUrl,
 		 						type: 'POST',
 		 						success: function(data, textStatus, jqXHR) {
 		 							console.log("success to delete");
 		 						},
 		 						error:function(XMLHttpRequest, textStatus, errorThrown) {
-		 							$.showWarnMsg();
+		 							$.showWarnMsg(textStatus);
 		 						}
 		 					});
 		                }
@@ -177,7 +178,7 @@
                             </div>
                             <h4 class="panel-title">资源管理</h4>
                         </div>
-                        <div class="panel-toolbar ">
+                        <div id="myManager" class="panel-toolbar">
                         	<a id="addRootMenu" href="${rootUrl }app/acl/resource/addResource?menuType=COLUMN&isRootMenu=true" class="btn btn-inverse btn-sm m-r-5 m-b-5">添加主栏目</a>
                         	<a id="addColumn" href="javascript:;" class="btn btn-inverse btn-sm m-r-5 m-b-5" style="display: none">添加子栏目</a>
                         	<a id="addMenu" href="javascript:;" class="btn btn-inverse btn-sm m-r-5 m-b-5" style="display: none">添加菜单</a>

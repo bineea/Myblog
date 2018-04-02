@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import myblog.common.pub.MyManagerException;
 import myblog.common.tools.HttpResponseHelper;
 import myblog.common.tools.JsonTools;
 import myblog.dao.entity.AppResource;
@@ -50,7 +51,8 @@ public class ResourceController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/loadResource", method = RequestMethod.GET)
-	public void loadResource(@RequestParam(value = "id") String id,HttpServletRequest request, HttpServletResponse response) throws IOException
+	public void loadResource(@RequestParam(value = "id") String id,HttpServletRequest request, 
+			HttpServletResponse response) throws IOException
 	{
 		List<ResourceTreeModel> treeList = manager.getResourceTree(id);
 		HttpResponseHelper.responseJson(JsonTools.writeValueAsString(treeList), response);
@@ -73,30 +75,31 @@ public class ResourceController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/addResource", method = RequestMethod.POST)
-	public String addResourcePost(@ModelAttribute("addModel") AppResource resource, Model model) {
-		
-		
-		model.addAttribute("data", resource);
+	public String addResourcePost(@ModelAttribute("addModel") AppResource resource, Model model,
+			HttpServletRequest request, HttpServletResponse response) throws IOException, MyManagerException {
+		AppResource res = manager.add(resource);
+		model.addAttribute("data", res);
 		return prefix + "result";
 	}
 	
 	@RequestMapping(value = "updateResource/{id}", method = RequestMethod.GET)
 	public String updateResourceGet(@PathVariable("id") String id,  Model model) {
-		
 		model.addAttribute("editModel", manager.findById(id));
 		return prefix + "edit";
 	}
 	
 	@RequestMapping(value = "updateResource", method = RequestMethod.POST)
-	public String updateResourcePost(@ModelAttribute("editModel") AppResource resource, Model model) {
-		
+	public String updateResourcePost(@ModelAttribute("editModel") AppResource resource, Model model,
+			HttpServletRequest request, HttpServletResponse response) throws IOException, MyManagerException {
+		AppResource res = manager.update(resource);
+		model.addAttribute("data", res);
 		return prefix + "result";
 	}
 	
 	@RequestMapping(value = "/deleteResource/{id}", method = RequestMethod.POST)
-	public String delete(@PathVariable("id") String id, HttpServletRequest request, Model model, HttpServletResponse response) {
-		
-		
+	public String delete(@PathVariable("id") String id, HttpServletRequest request, Model model, 
+			HttpServletResponse response) throws IOException, MyManagerException {
+		manager.deleteById(id);
 		return prefix + "result";
 	}
 }

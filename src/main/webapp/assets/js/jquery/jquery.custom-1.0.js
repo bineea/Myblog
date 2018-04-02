@@ -178,6 +178,7 @@
 						 + 		'<strong>Warning!</strong>'
 						 + 		'<span></span>'
 						 + '</div>';
+				$warnMsgDiv=$(html).prependTo($("#myManager"));
 			}
 			$warnMsgDiv.find("span").text(message);
 		},

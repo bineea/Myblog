@@ -110,19 +110,46 @@ public class ResourceManagerImpl implements ResourceManager {
 
 	@Transactional
 	@Override
-	public AppResource add(AppResource resource) {
-		
+	public AppResource add(AppResource resource) throws MyManagerException {
+		resourceValid(resource);
+		if(resource.getRequestMethod() != null && StringUtils.hasText(resource.getUrl()))
+		{
+			AppResource res = resourceRepo.findByUrlMethod(resource.getUrl(), resource.getRequestMethod());
+			if(res != null) throw new MyManagerException("该URI的资源已经存在:"+resource.getUrl()+"---"+resource.getRequestMethod().name());
+		}
+		if(StringUtils.hasText(resource.getMenuId()))
+		{
+			Optional<AppResource> resOptinal = resourceRepo.findById(resource.getMenuId());
+			if(!resOptinal.isPresent()) throw new MyManagerException("指定的父资源不存在");
+		}
+		resourceRepo.save(resource);
 		return null;
 	}
 
 	@Transactional
 	@Override
-	public AppResource update(AppResource resource) {
-		
-		return null;
+	public AppResource update(AppResource resource) throws MyManagerException {
+		resourceValid(resource);
+		Optional<AppResource> resOptinal = resourceRepo.findById(resource.getId());
+		if(!resOptinal.isPresent()) throw new MyManagerException("指定的资源不存在:" + resource.getUrl());
+		AppResource res = resOptinal.get();
+		res.setName(resource.getName());
+		res.setList(resource.getList());
+		res.setLogoStyle(resource.getLogoStyle());
+		resourceRepo.save(res);
+		return res;
 	}
 	
-	private void resourceValid() {
-		
+	private void resourceValid(AppResource resource) throws MyManagerException {
+		if(!StringUtils.hasText(resource.getName()))
+			throw new MyManagerException("资源名称不能为空");
+		if(resource.getMenuType() == null)
+			throw new MyManagerException("资源类型不能为空");
+		if(resource.getList() == null)
+			throw new MyManagerException("资源序号不能为空");
+		if(resource.getMenuType() != MenuType.COLUMN && resource.getRequestMethod() == null)
+			throw new MyManagerException("资源请求方式不能为空");
+		if(resource.getMenuType() != MenuType.COLUMN && !StringUtils.hasText(resource.getUrl()))
+			throw new MyManagerException("资源url不能为空");
 	}
 }

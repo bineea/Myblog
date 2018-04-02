@@ -48,12 +48,12 @@ public interface ResourceManager {
 	 * 添加资源
 	 * @param resource
 	 */
-	AppResource add(AppResource resource);
+	AppResource add(AppResource resource) throws MyManagerException;
 	
 	/**
 	 * 更新资源
 	 * @param resource
 	 * @return
 	 */
-	AppResource update(AppResource resource);
+	AppResource update(AppResource resource) throws MyManagerException;
 }
