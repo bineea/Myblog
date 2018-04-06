@@ -14,10 +14,15 @@ $(document).ready(function() {
 			$._hideModal();
 		},
 		success: function(responseText, status, xhr){
-			$._handleTableData(responseText, "update");
+			if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)){
+				$.showWarnMsg(responseText.msg);
+			}else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE) && '${!isRootMenu}'){
+				$._handleTableData(responseText, "update");
+				$.showMsg(new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
+			}
 		},
 		error: function(xhr, status, error) {
-			console.log("error："+status);
+			$.showWarnMsg("系统异常，请稍后重试！");
 		}
 	});
 });
@@ -40,18 +45,21 @@ $(document).ready(function() {
          <div class="form-group">
              <label class="col-md-3 control-label">URL</label>
              <div class="col-md-7">
+             	<input type="hidden" id="url" name="url" value="${editModel.url }"/>
                 <p class="form-control-static">${editModel.url }</p>
              </div>
          </div>
          <div class="form-group">
              <label class="col-md-3 control-label">请求方式</label>
              <div class="col-md-7">
+             	<input type="hidden" id="requestMethod" name="requestMethod" value="${editModel.requestMethod }"/>
                 <p class="form-control-static">${editModel.requestMethod }</p>
              </div>
          </div>
          <div class="form-group">
              <label class="col-md-3 control-label">菜单类型</label>
              <div class="col-md-7">
+             	<input type="hidden" id="menuType" name="menuType" value="${editModel.menuType }"/>
                 <p class="form-control-static">${editModel.menuType.value }</p>
              </div>
          </div>

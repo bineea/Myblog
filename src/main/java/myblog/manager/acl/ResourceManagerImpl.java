@@ -123,7 +123,7 @@ public class ResourceManagerImpl implements ResourceManager {
 			if(!resOptinal.isPresent()) throw new MyManagerException("指定的父资源不存在");
 		}
 		resourceRepo.save(resource);
-		return null;
+		return resource;
 	}
 
 	@Transactional

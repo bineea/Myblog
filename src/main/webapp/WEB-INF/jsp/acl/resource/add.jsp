@@ -14,10 +14,15 @@ $(document).ready(function() {
 			$._hideModal();
 		},
 		success: function(responseText, status, xhr){
-			$._handleTableData(responseText, "add");
+			if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)){
+				$.showWarnMsg(responseText.msg);
+			}else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE) && '${!isRootMenu}'){
+				$._handleTableData(responseText, "add");
+				$.showMsg(new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
+			}
 		},
 		error: function(xhr, status, error) {
-			
+			$.showWarnMsg("系统异常，请稍后重试！");
 		}
 	});
 });
@@ -30,12 +35,13 @@ $(document).ready(function() {
 	</div>
 	<form:form modelAttribute="addModel" id="myForm" name="myForm" cssClass="form-horizontal" action="${rootUrl }app/acl/resource/addResource" method="post">
 	<div class="modal-body">
-         <input type="hidden" id="menuId" name="menuId" />
+         <input type="hidden" id="menuId" name="menuId" value="${menuId }" />
+         <input type="hidden" id="menuType" name="menuType" value="${menuType }" />
          <c:if test="${!isRootMenu }">
          <div class="form-group">
              <label class="col-md-3 control-label">所属上级资源</label>
              <div class="col-md-7">
-                 <input name="parentName" type="text" class="form-control" disabled />
+                 <p class="form-control-static">${parentName }</p>
              </div>
          </div>
          </c:if>
@@ -45,29 +51,28 @@ $(document).ready(function() {
                  <input name="name" type="text" class="form-control" placeholder="资源名称" />
              </div>
          </div>
-         <div class="form-group">
-             <label class="col-md-3 control-label">URL</label>
-             <div class="col-md-7">
-                 <input name="url" type="text" class="form-control" placeholder="URL" />
-             </div>
-         </div>
-         <div class="form-group">
-             <label class="col-md-3 control-label">请求方式</label>
-             <div class="col-md-7">
-                 <select name="requestMethod" class="form-control">
-                 	<option value=""></option>
-                    <option value="GET">GET</option>
-                    <option value="POST">POST</option>
-                 </select>
-             </div>
-         </div>
+         <c:if test="${menuType ne 'COLUMN' }">
+         	<div class="form-group">
+	             <label class="col-md-3 control-label">URL</label>
+	             <div class="col-md-7">
+	                 <input name="url" type="text" class="form-control" placeholder="URL" />
+	             </div>
+	        </div>
+	        <div class="form-group">
+	             <label class="col-md-3 control-label">请求方式</label>
+	             <div class="col-md-7">
+	                 <select name="requestMethod" class="form-control">
+	                 	<option value=""></option>
+	                    <option value="GET">GET</option>
+	                    <option value="POST">POST</option>
+	                 </select>
+	             </div>
+	        </div>
+         </c:if>
          <div class="form-group">
              <label class="col-md-3 control-label">菜单类型</label>
              <div class="col-md-7">
-                <form:select path="menuType" class="form-control" >
-                	<form:option value="">全部</form:option>
-					<form:options items="${menuTypes}" itemLabel="value"/>
-				</form:select>
+                <p class="form-control-static">${menuType.value }</p>
              </div>
          </div>
          <div class="form-group">

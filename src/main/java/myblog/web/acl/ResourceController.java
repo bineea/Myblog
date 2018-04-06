@@ -70,7 +70,6 @@ public class ResourceController extends AbstractController {
 		model.addAttribute("menuId", menuId);
 		model.addAttribute("parentName", parentName);
 		model.addAttribute("isRootMenu", isRootMenu);
-		model.addAttribute("menuTypes", MenuType.values());
 		return prefix + "add";
 	}
 	
@@ -79,6 +78,7 @@ public class ResourceController extends AbstractController {
 			HttpServletRequest request, HttpServletResponse response) throws IOException, MyManagerException {
 		AppResource res = manager.add(resource);
 		model.addAttribute("data", res);
+		addSuccess(response, "添加资源成功");
 		return prefix + "result";
 	}
 	
@@ -93,6 +93,7 @@ public class ResourceController extends AbstractController {
 			HttpServletRequest request, HttpServletResponse response) throws IOException, MyManagerException {
 		AppResource res = manager.update(resource);
 		model.addAttribute("data", res);
+		addSuccess(response, "更新资源成功");
 		return prefix + "result";
 	}
 	
@@ -100,6 +101,7 @@ public class ResourceController extends AbstractController {
 	public String delete(@PathVariable("id") String id, HttpServletRequest request, Model model, 
 			HttpServletResponse response) throws IOException, MyManagerException {
 		manager.deleteById(id);
+		addSuccess(response, "删除资源成功");
 		return prefix + "result";
 	}
 }

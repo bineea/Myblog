@@ -30,11 +30,9 @@
 <![endif]-->
 <script src="${rootUrl}assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="${rootUrl}assets/plugins/jquery-cookie/jquery.cookie.js"></script>
-<script src="${rootUrl}assets/js/apps.min.js"></script>
-<!-- ================== END BASE JS ================== -->
-
-<!-- ================== BEGIN BASE JS ================== -->
-<script src="${rootUrl}assets/js/jquery/jquery.form.js"></script>
 <script src="${rootUrl}assets/plugins/jquery-confirm/dist/jquery-confirm.min.js"></script>
+<script src="${rootUrl}assets/js/base64.js"></script>
+<script src="${rootUrl}assets/js/jquery/jquery.form.js"></script>
 <script src="${rootUrl}assets/js/jquery/jquery.custom-1.0.js"></script>
+<script src="${rootUrl}assets/js/apps.min.js"></script>
 <!-- ================== END BASE JS ================== -->

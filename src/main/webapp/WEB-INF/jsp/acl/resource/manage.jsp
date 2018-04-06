@@ -51,9 +51,22 @@
 		    var menuType = data.instance.get_node(data.selected[0]).data;
 		    if(menuType == 'COLUMN')
 		    {
+		    	$('#addColumn').attr("href","${rootUrl }app/acl/resource/addResource?menuType=COLUMN&isRootMenu=false&parentName="
+		    			+data.instance.get_node(data.selected[0]).text+"&menuId="+data.selected[0]);
+		    	$('#addMenu').attr("href","${rootUrl }app/acl/resource/addResource?menuType=MENU&isRootMenu=false&parentName="
+		    			+data.instance.get_node(data.selected[0]).text+"&menuId="+data.selected[0]);
 		    	$('#menuId').val(data.selected[0]);
-		    	$('#parentName').val(data.instance.get_node(data.selected[0]).text);
 		    	$('#pageQueryForm').submit();
+		    	$('#addColumn').show();
+		    	$('#addMenu').show();
+		    }
+		    else
+		    {
+		    	$('#addColumn').hide();
+		    	$('#addMenu').hide();
+		    	$('#menuId').val("");
+		    	$('#addColumn').attr("href","javascript:;");
+		    	$('#addMenu').attr("href","javascript:;");
 		    }
 		});
 		
@@ -72,7 +85,7 @@
 	        	$._handleSearchReasult($responseText);
 	        },
 	        error: function (xhr, status, error) {
-	        	
+	        	$.showWarnMsg("系统异常，请稍后重试！");
 	        }
 		});
 		
@@ -88,11 +101,37 @@
 					$._showModal({},data);
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown) {
-					$.showWarnMsg();
+					$.showWarnMsg("系统异常，请稍后重试！");
 				}
 			});
 			return false;
 		});
+		
+		$("#addColumn").click(function(){
+			$.ajax({
+				url: this.href,
+				success: function(data, textStatus, jqXHR) {
+					$._showModal({},data);
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown) {
+					$.showWarnMsg("系统异常，请稍后重试！");
+				}
+			});
+			return false;
+		});
+		
+		$("#addMenu").click(function(){
+			$.ajax({
+				url: this.href,
+				success: function(data, textStatus, jqXHR) {
+					$._showModal({},data);
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown) {
+					$.showWarnMsg("系统异常，请稍后重试！");
+				}
+			});
+			return false;
+		});	
 		
 		$("#data-table").on("click", ".update_op", function(){
 			$.ajax({
@@ -101,13 +140,14 @@
 					$._showModal({},data);
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown) {
-					$.showWarnMsg();
+					$.showWarnMsg("系统异常，请稍后重试！");
 				}
 			});
 			return false;
 		});
 		
 		$("#data-table").on("click", ".delete_op", function(){
+			var trNode = this.parentNode.parentNode;
 			var hrefUrl = this.href;
 			$.confirm({
 		    	theme: 'white',
@@ -122,10 +162,15 @@
 		 						url: hrefUrl,
 		 						type: 'POST',
 		 						success: function(data, textStatus, jqXHR) {
-		 							console.log("success to delete");
+									if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
+			 							$.showWarnMsg(data.msg);
+									} else if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
+										$._handleTableData(data,"delete",trNode);
+										$.showMsg(new Base64().decode(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
+									}
 		 						},
 		 						error:function(XMLHttpRequest, textStatus, errorThrown) {
-		 							$.showWarnMsg(textStatus);
+		 							$.showWarnMsg("系统异常，请稍后重试！");
 		 						}
 		 					});
 		                }
@@ -198,7 +243,6 @@
 									</select>
 								</div>
                                 <input type="hidden" id="menuId" name="menuId" value="root"></input>
-                                <input type="hidden" id="parentName" name="parentName" value=""></input>
 	                        	<button type="submit" class="btn btn-inverse btn-sm m-r-5 m-b-5">查询</button>
                         	</form:form>
                         </div>
