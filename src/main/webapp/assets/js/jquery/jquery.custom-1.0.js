@@ -1,5 +1,9 @@
 ;(function($,window,document,undefined){
     $.extend({
+    	Constans:{
+			RESPONSE_HEADER_NOTE:"header_note",
+			RESPONSE_HEADER_ERROR:"header_error"
+		},
 		/**************************************************************************
 		 * 
 		 * 处理分页
@@ -132,11 +136,15 @@
 		 * 表格数据处理
 		 * 
 		 *************************************************************************/
-		_handleTableData: function(responseText,table) {
+		_handleTableData: function(responseText,table,trNode) {
 			var $row = $(responseText).find(".result_data tr");
 			if(table=="add"){
 				var $tbody=$('#data-table', this.currentTarget).find("> tbody");
 				$tbody.prepend($row);
+			} else if(table=="update"){
+				trNode.replaceWith($row);
+			} else if(table=="delete"){
+				trNode.remove();
 			}
 		},
 		
@@ -175,14 +183,30 @@
 			if(!$warnMsgDiv.length) {
 				var html = '<div id="warn-message" class="alert alert-warning alert-dismissible" role="alert">'
 						 + 		'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
-						 + 		'<strong>Warning!</strong>'
+						 + 		'<strong>Warning！</strong>'
 						 + 		'<span></span>'
 						 + '</div>';
 				$warnMsgDiv=$(html).prependTo($("#myManager"));
 			}
-			$warnMsgDiv.find("span").text(message);
+			$warnMsgDiv.find("span").last().text(message);
 		},
 		
+		/**************************************************************************
+		 * 
+		 * 显示信息
+		 * 
+		 *************************************************************************/
+		showMsg: function(message) {
+			if(message == null || message == undefined) {
+				message = '';
+			}
+			console.log(message);
+			$.dialog({
+			        title: '操作成功！',
+			        content: message,
+			        backgroundDismiss: true,
+			});
+		},
 	});
     
 })(jQuery,window,document);
