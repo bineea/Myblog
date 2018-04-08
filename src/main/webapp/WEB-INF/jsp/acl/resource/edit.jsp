@@ -18,6 +18,7 @@ $(document).ready(function() {
 				$.showWarnMsg(responseText.msg);
 			}else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE) && '${!isRootMenu}'){
 				$._handleTableData(responseText, "update");
+				$('#jstree-default').jstree(true).refresh(); //刷新树
 				$.showMsg(new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
 			}
 		},

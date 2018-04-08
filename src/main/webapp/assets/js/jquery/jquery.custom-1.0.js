@@ -69,6 +69,7 @@
 				$('#data-table').find("> tbody").empty()
 				.append("<tr><td colspan='15' ><div class='taiji_not_found'>没有检索到符合条件的数据！</div></td></tr>");
 			}
+			this._bindDataClick();
 		},
 		
 		/**************************************************************************
@@ -142,10 +143,27 @@
 				var $tbody=$('#data-table', this.currentTarget).find("> tbody");
 				$tbody.prepend($row);
 			} else if(table=="update"){
-				trNode.replaceWith($row);
+				$("#data-table",this.currentTarget).find(".custom_clicked")
+												   .replaceWith($row.addClass("custom_clicked"));
 			} else if(table=="delete"){
 				trNode.remove();
 			}
+			this._bindDataClick();
+		},
+		
+		/**************************************************************************
+		 * 
+		 * 表格点击事件
+		 * 
+		 *************************************************************************/
+		_bindDataClick: function() {
+			$('#data-table',this.currentTarget)
+					.find(" > tbody > tr")
+					.off("click")
+					.on("click",function(event) {
+								$(this).addClass("custom_clicked")
+										.siblings().removeClass("custom_clicked");
+							});
 		},
 		
 		/**************************************************************************

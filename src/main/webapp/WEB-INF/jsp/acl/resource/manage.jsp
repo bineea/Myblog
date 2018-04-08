@@ -166,6 +166,7 @@
 			 							$.showWarnMsg(data.msg);
 									} else if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
 										$._handleTableData(data,"delete",trNode);
+										$('#jstree-default').jstree(true).refresh(); //刷新树
 										$.showMsg(new Base64().decode(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
 									}
 		 						},
@@ -183,7 +184,7 @@
 			return false;
 		});
 	});
-
+	
 </script>
 
 </head>
