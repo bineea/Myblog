@@ -1,7 +1,6 @@
 package myblog.model.acl;
 
 import myblog.dao.entity.AppResource;
-import myblog.dao.entity.dict.TreeState;
 import myblog.model.BaseModel;
 
 /**
@@ -13,7 +12,7 @@ public class ResourceTreeModel extends BaseModel {
 	private String icon;
 	private Object data;
 	private String text;
-	private TreeState state;
+	private TreeStateModel state;
 	private String type = "default";
 	private Object children;
 	
@@ -58,11 +57,11 @@ public class ResourceTreeModel extends BaseModel {
 		this.text = text;
 	}
 
-	public TreeState getState() {
+	public TreeStateModel getState() {
 		return state;
 	}
 
-	public void setState(TreeState state) {
+	public void setState(TreeStateModel state) {
 		this.state = state;
 	}
 
