@@ -23,7 +23,6 @@ public class User extends StringUUIDEntity {
 	@NotNull
 	@Size(max = 50, message = "{userName.error}")
 	private String name;//昵称
-	@NotNull
 	private Boolean male;
 	@Email
 	private String email;
@@ -126,4 +125,5 @@ public class User extends StringUUIDEntity {
 		}
 
 	}
+
 }
