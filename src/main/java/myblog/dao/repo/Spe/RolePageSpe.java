@@ -19,7 +19,7 @@ public class RolePageSpe extends AbstractPageSpecification<Role> {
 		Specification<Role> spe = (root, query, criteriaBuilder) -> {
 			List<Predicate> predicateList = new ArrayList<Predicate>();
 			if(StringUtils.hasText(name))
-				predicateList.add(criteriaBuilder.like(root.get(name).as(String.class), like(name)));
+				predicateList.add(criteriaBuilder.like(root.get("name").as(String.class), like(name)));
 			query.where(predicateList.stream().toArray(Predicate[]::new));
 			query.orderBy(criteriaBuilder.desc(root.get("list").as(Integer.class)),criteriaBuilder.desc(root.get("id").as(String.class)));
 			return query.getRestriction();
