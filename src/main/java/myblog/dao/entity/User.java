@@ -24,11 +24,12 @@ public class User extends StringUUIDEntity {
 	@Size(max = 50, message = "{userName.error}")
 	private String name;//昵称
 	private Boolean male;
+	@NotNull
 	@Email
-	private String email;
+	private String email;//唯一
 	@NotNull
 	@Size(max = 20, message = "登录名长度不能超过20")
-	private String loginName;//账号（字母+数字）
+	private String loginName;//账号（字母+数字）唯一
 	private String passwd;
 	private UserStatus status = UserStatus.NORMAL;
 	private Role role;
