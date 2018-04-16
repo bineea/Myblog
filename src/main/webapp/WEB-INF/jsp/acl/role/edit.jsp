@@ -18,7 +18,6 @@ $(document).ready(function() {
 				$.showWarnMsg(responseText.msg);
 			}else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE) && '${!isRootMenu}'){
 				$._handleTableData(responseText, "update");
-				$('#jstree-default').jstree(true).refresh(); //刷新树
 				$.showMsg(new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
 			}
 		},
@@ -32,68 +31,28 @@ $(document).ready(function() {
 <body>
 	<div class="modal-header">
 	  	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	  	<h4 class="modal-title">编辑资源</h4>
+	  	<h4 class="modal-title">编辑角色</h4>
 	</div>
-	<form:form modelAttribute="editModel" id="myForm" name="myForm" cssClass="form-horizontal" action="${rootUrl }app/acl/resource/updateResource" method="post">
+	<form:form modelAttribute="editModel" id="myForm" name="myForm" cssClass="form-horizontal" action="${rootUrl }app/acl/role/updateRole" method="post">
 	<div class="modal-body">
          <input type="hidden" id="id" name="id" value="${editModel.id }"/>
+         <input type="hidden" id="system" name="system" value="${editModel.system }"/>
 		 <div class="form-group">
-             <label class="col-md-3 control-label">资源名称</label>
+             <label class="col-md-3 control-label">角色名称</label>
              <div class="col-md-7">
-                <input name="name" type="text" class="form-control" placeholder="资源名称" value="${editModel.name }" />
+                <input name="name" type="text" class="form-control" placeholder="角色名称" value="${editModel.name }" />
              </div>
          </div>
-         <div class="form-group">
-             <label class="col-md-3 control-label">URL</label>
-             <div class="col-md-7">
-             	<input type="hidden" id="url" name="url" value="${editModel.url }"/>
-                <p class="form-control-static">${editModel.url }</p>
-             </div>
-         </div>
-         <div class="form-group">
-             <label class="col-md-3 control-label">请求方式</label>
-             <div class="col-md-7">
-             	<input type="hidden" id="requestMethod" name="requestMethod" value="${editModel.requestMethod }"/>
-                <p class="form-control-static">${editModel.requestMethod }</p>
-             </div>
-         </div>
-         <div class="form-group">
-             <label class="col-md-3 control-label">菜单类型</label>
-             <div class="col-md-7">
-             	<input type="hidden" id="menuType" name="menuType" value="${editModel.menuType }"/>
-                <p class="form-control-static">${editModel.menuType.value }</p>
-             </div>
-         </div>
-         <%-- <div class="form-group">
-             <label class="col-md-3 control-label">请求方式</label>
-             <div class="col-md-7">
-                 <select name="requestMethod" class="form-control">
-                 	<option value=" ">请选择</option>
-					<c:forEach items="${requestMethods}" var="method">
-						<option value="${method}" ${method==editModel.requestMethod?'selected':''}>${method}</option>
-					</c:forEach>
-                 </select>
-             </div>
-         </div>
-         <div class="form-group">
-             <label class="col-md-3 control-label">菜单类型</label>
-             <div class="col-md-7">
-                <form:select path="menuType" class="form-control" >
-                	<form:option value=" ">请选择</form:option>
-					<form:options items="${menuTypes}" itemLabel="value"/>
-				</form:select>
-             </div>
-         </div> --%>
          <div class="form-group">
              <label class="col-md-3 control-label">序号</label>
              <div class="col-md-7">
-                <form:input path="list" type="text" class="form-control" placeholder="排序号" />
+                <form:input path="list" type="text" class="form-control" placeholder="排序号" value="${editModel.list }"  />
              </div>
          </div>
          <div class="form-group">
-             <label class="col-md-3 control-label">样式</label>
+             <label class="col-md-3 control-label">备注</label>
              <div class="col-md-7">
-                <form:input path="logoStyle" type="text" class="form-control" placeholder="样式" />
+                <textarea name="info" class="form-control" placeholder="备注">${editModel.info }</textarea>
              </div>
          </div>
 	</div>
