@@ -8,9 +8,9 @@
 
 <%@ include file="/WEB-INF/jsp/common/include.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/sidebarInit.jsp"%>
-<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<!-- ================== BEGIN PAGE LEVEL CSS ================== -->
 <link href="${rootUrl}assets/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" />
-<!-- ================== END PAGE LEVEL JS ================== -->
+<!-- ================== END PAGE LEVEL CSS ================== -->
 
 <!-- ================== BEGIN PAGE LEVEL JS ================== -->
 <script src="${rootUrl}assets/plugins/jstree/dist/jstree.min.js"></script>
