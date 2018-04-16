@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import myblog.common.pub.MyManagerException;
 import myblog.common.tools.JsonTools;
 import myblog.dao.entity.Role;
-import myblog.dao.entity.User;
 import myblog.dao.repo.Spe.RolePageSpe;
-import myblog.manager.LoginHelper;
 import myblog.manager.acl.RoleManager;
 import myblog.model.acl.ResourceTreeModel;
 import myblog.web.AbstractController;
@@ -51,10 +50,9 @@ public class RoleController extends AbstractController {
 	
 	@RequestMapping(value = "/configRole/{id}", method = RequestMethod.GET)
 	public String configGet(@PathParam("id") String id, HttpServletRequest request, Model model) throws IOException {
-		User user = LoginHelper.getLoginUser(request);
-		List<ResourceTreeModel> treeList = manager.getAllResource(user.getRole().getId());
+		List<ResourceTreeModel> treeList = manager.getAllResource(id);
 		model.addAttribute("treeJson", JsonTools.writeValueAsString(treeList));
-		model.addAttribute("roleId", user.getRole().getId());
+		model.addAttribute("roleId", id);
 		return prefix + "conf";
 	}
 	
@@ -65,5 +63,43 @@ public class RoleController extends AbstractController {
 			Model model, HttpServletResponse response) throws IOException, MyManagerException {
 		manager.configRole(roleId, resourceIds);
 		addSuccess(response, "成功配置资源");
+	}
+	
+	@RequestMapping(value = "/addRole", method = RequestMethod.GET)
+	public String addRoleGet(@ModelAttribute("addModel") Role role, Model model) {
+		return prefix + "add";
+	}
+	
+	@RequestMapping(value = "/addRole", method = RequestMethod.POST)
+	public String addRolePost(@ModelAttribute("addModel") Role role, Model model,
+			HttpServletResponse response) throws MyManagerException, IOException {
+		manager.add(role);
+		model.addAttribute("data", role);
+		addSuccess(response, "成功添加角色");
+		return prefix + "result";
+	}
+	
+	@RequestMapping(value = "/updateRole/{id}", method = RequestMethod.GET)
+	public String updateRoleGet(@PathVariable("id") String id, Model model) {
+		Role role = manager.findById(id);
+		model.addAttribute("editModel", role);
+		return prefix + "edit";
+	}
+	
+	@RequestMapping(value = "/updateRole", method = RequestMethod.POST)
+	public String updateRolePost(@ModelAttribute("editModel") Role role, Model model, HttpServletResponse response) 
+			throws MyManagerException, IOException {
+		manager.update(role);
+		model.addAttribute("data", role);
+		addSuccess(response, "成功更新角色信息");
+		return prefix + "result";
+	}
+	
+	@RequestMapping(value = "/deleteRole/{id}", method = RequestMethod.POST)
+	public String delete(@PathVariable("id") String id, Model model, HttpServletResponse response) 
+			throws MyManagerException, IOException {
+		manager.deleteById(id);
+		addSuccess(response, "成功删除角色");
+		return prefix + "result";
 	}
 }
