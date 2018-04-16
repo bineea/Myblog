@@ -15,8 +15,15 @@
 	</c:choose>
 	<td>${data.info }</td>
 	<td>
-		<a class="update_op" href="${rootUrl }app/acl/role/updateRole/${data.id}">修改</a>
-		<a class="delete_op" href="${rootUrl }app/acl/role/deleteRole/${data.id}">删除</a>
-		<a class="config_op" href="${rootUrl }app/acl/role/configRole/${data.id}">配置</a>
+	<c:choose>
+		<c:when test="${data.system }">
+			系统内置角色
+		</c:when>
+		<c:otherwise>
+			<a class="update_op" href="${rootUrl }app/acl/role/updateRole/${data.id}">修改</a>
+			<a class="delete_op" href="${rootUrl }app/acl/role/deleteRole/${data.id}">删除</a>
+			<a class="config_op" href="${rootUrl }app/acl/role/configRole/${data.id}">配置</a>
+		</c:otherwise>
+	</c:choose>
 	</td>
 </tr>
