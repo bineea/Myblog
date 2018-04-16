@@ -10,7 +10,7 @@
 <%@ include file="/WEB-INF/jsp/common/sidebarInit.jsp"%>
 <script>
 	$(document).ready(function() {
-		$("#pageQueryForm").ajaxSubmit({
+		$("#pageQueryForm").ajaxForm({
 			type: "post", //提交方式 
 	        success: function (responseText, status, xhr) { //提交成功的回调函数
 	        	var $responseText = $(responseText);
@@ -25,6 +25,69 @@
 		});
 		
 		$("#data-table").on("click", ".config_op", function() {
+			$.ajax({
+				url: this.href,
+				success: function(data, textStatus, jqXHR) {
+					$._showModal({},data);
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown) {
+					$.showWarnMsg("系统异常，请稍后重试！");
+				}
+			});
+			return false;
+		});
+		
+		$("#data-table").on("click", ".update_op", function() {
+			$.ajax({
+				url: this.href,
+				success: function(data, textStatus, jqXHR) {
+					$._showModal({},data);
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown) {
+					$.showWarnMsg("系统异常，请稍后重试！");
+				}
+			});
+			return false;
+		});
+		
+		$("#data-table").on("click", ".delete_op", function() {
+			var trNode = this.parentNode.parentNode;
+			var hrefUrl = this.href;
+			$.confirm({
+		    	theme: 'white',
+		        title: 'Are you sure',
+		        content: '确定删除该数据？',
+		        buttons: {   
+		        	confirm: {
+		            	text: '确认',
+		                keys: ['enter'],
+		                action: function(){
+		 					$.ajax({
+		 						url: hrefUrl,
+		 						type: 'POST',
+		 						success: function(data, textStatus, jqXHR) {
+									if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
+			 							$.showWarnMsg(data.msg);
+									} else if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
+										$._handleTableData(data,"delete",trNode);
+										$.showMsg(new Base64().decode(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
+									}
+		 						},
+		 						error:function(XMLHttpRequest, textStatus, errorThrown) {
+		 							$.showWarnMsg("系统异常，请稍后重试！");
+		 						}
+		 					});
+		                }
+		            },
+		            cancel: {
+		            	text: '取消'
+		            }
+		        }
+		    });
+			return false;
+		});
+		
+		$("#addRole").click(function() {
 			$.ajax({
 				url: this.href,
 				success: function(data, textStatus, jqXHR) {
