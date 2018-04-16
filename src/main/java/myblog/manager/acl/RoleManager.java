@@ -31,4 +31,38 @@ public interface RoleManager {
 	 * @param resourceIds
 	 */
 	void configRole(String roleId, String[] resourceIds) throws MyManagerException;
+	
+	/**
+	 * 获取所有角色
+	 * @return
+	 */
+	List<Role> getAll();
+	
+	/**
+	 * 添加角色
+	 * @param role
+	 * @throws MyManagerException
+	 */
+	void add(Role role) throws MyManagerException;
+	
+	/**
+	 * 更新角色
+	 * @param role
+	 * @throws MyManagerException
+	 */
+	void update(Role role) throws MyManagerException;
+	
+	/**
+	 * 通过id删除角色
+	 * @param id
+	 * @throws MyManagerException
+	 */
+	void deleteById(String id) throws MyManagerException;
+	
+	/**
+	 * 通过id查询
+	 * @param id
+	 * @return
+	 */
+	Role findById(String id);
 }

@@ -96,4 +96,55 @@ public class RoleManagerImpl extends AbstractManager implements RoleManager {
 		roleResourceHolder.removeRoleMenus(roleId);
 	}
 
+	@Override
+	public List<Role> getAll() {
+		return roleRepo.findAll();
+	}
+
+	@Override
+	@Transactional
+	public void add(Role role) throws MyManagerException {
+		roleValid(role);
+		Role ro = roleRepo.findByName(role.getName());
+		if(ro != null)
+			throw new MyManagerException("该名称【"+ro.getName()+"】角色已存在");
+		roleRepo.save(role);
+	}
+
+	@Override
+	@Transactional
+	public void update(Role role) throws MyManagerException {
+		roleValid(role);
+		Role ro = roleRepo.findById(role.getId()).orElse(null);
+		if(ro == null)
+			throw new MyManagerException("该角色信息不存在");
+		if(ro.isSystem())
+			throw new MyManagerException("系统内置角色不允许修改");
+		ro = roleRepo.findByName(role.getName());
+		if(ro != null && !ro.getId().equals(role.getId()))
+			throw new MyManagerException("该名称【"+ro.getName()+"】角色已存在");
+		roleRepo.save(role);
+	}
+
+	@Override
+	@Transactional
+	public void deleteById(String id) throws MyManagerException {
+		Assert.hasText(id, "id不能为空");
+		roleRepo.deleteById(id);
+	}
+
+	private void roleValid(Role role) throws MyManagerException {
+		if(!StringUtils.hasText(role.getName()))
+			throw new MyManagerException("角色名称不能为空");
+		if(role.getList() == null)
+			throw new MyManagerException("角色序号不能为空");
+		if(role.getName().length() > 20)
+			throw new MyManagerException("角色名称长度超长");
+	}
+
+	@Override
+	public Role findById(String id) {
+		Assert.hasText(id, "id不能为空");
+		return roleRepo.findById(id).orElse(null);
+	}
 }
