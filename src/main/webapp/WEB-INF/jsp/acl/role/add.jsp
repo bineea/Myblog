@@ -18,7 +18,6 @@ $(document).ready(function() {
 				$.showWarnMsg(responseText.msg);
 			}else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE) && '${!isRootMenu}'){
 				$._handleTableData(responseText, "add");
-				$('#jstree-default').jstree(true).refresh(); //刷新树
 				$.showMsg(new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
 			}
 		},
@@ -32,48 +31,14 @@ $(document).ready(function() {
 <body>
 	<div class="modal-header">
 	  	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	  	<h4 class="modal-title">添加资源</h4>
+	  	<h4 class="modal-title">添加角色</h4>
 	</div>
-	<form:form modelAttribute="addModel" id="myForm" name="myForm" cssClass="form-horizontal" action="${rootUrl }app/acl/resource/addResource" method="post">
+	<form:form modelAttribute="addModel" id="myForm" name="myForm" cssClass="form-horizontal" action="${rootUrl }app/acl/role/addRole" method="post">
 	<div class="modal-body">
-         <input type="hidden" id="menuId" name="menuId" value="${menuId }" />
-         <input type="hidden" id="menuType" name="menuType" value="${menuType }" />
-         <c:if test="${!isRootMenu }">
-         <div class="form-group">
-             <label class="col-md-3 control-label">所属上级资源</label>
-             <div class="col-md-7">
-                 <p class="form-control-static">${parentName }</p>
-             </div>
-         </div>
-         </c:if>
 		 <div class="form-group">
-             <label class="col-md-3 control-label">资源名称</label>
+             <label class="col-md-3 control-label">角色名称</label>
              <div class="col-md-7">
-                 <input name="name" type="text" class="form-control" placeholder="资源名称" />
-             </div>
-         </div>
-         <c:if test="${menuType ne 'COLUMN' }">
-         	<div class="form-group">
-	             <label class="col-md-3 control-label">URL</label>
-	             <div class="col-md-7">
-	                 <input name="url" type="text" class="form-control" placeholder="URL" />
-	             </div>
-	        </div>
-	        <div class="form-group">
-	             <label class="col-md-3 control-label">请求方式</label>
-	             <div class="col-md-7">
-	                 <select name="requestMethod" class="form-control">
-	                 	<option value=""></option>
-	                    <option value="GET">GET</option>
-	                    <option value="POST">POST</option>
-	                 </select>
-	             </div>
-	        </div>
-         </c:if>
-         <div class="form-group">
-             <label class="col-md-3 control-label">菜单类型</label>
-             <div class="col-md-7">
-                <p class="form-control-static">${menuType.value }</p>
+                 <input name="name" type="text" class="form-control" placeholder="角色名称" />
              </div>
          </div>
          <div class="form-group">
@@ -83,9 +48,9 @@ $(document).ready(function() {
              </div>
          </div>
          <div class="form-group">
-             <label class="col-md-3 control-label">样式</label>
+             <label class="col-md-3 control-label">备注</label>
              <div class="col-md-7">
-                 <input name="logoStyle" type="text" class="form-control" placeholder="样式" />
+                 <textarea name="info" class="form-control" placeholder="备注"></textarea>
              </div>
          </div>
 	</div>
