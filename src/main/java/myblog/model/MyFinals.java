@@ -16,8 +16,6 @@ public class MyFinals {
 	public static final int DEFAULT_BLOG_SIZE = 5;
 //	jstree请求根目录ID
 	public static final String jsTreeRootReq = "#";
-//	昵称长度
-	public static final int NAME_LENGTH = 25;
 	
 //	手机号码正则
 	public static final String mobileRegexp = "^1[3|4|5|7|8|9]{1}[0-9]{9}$";
