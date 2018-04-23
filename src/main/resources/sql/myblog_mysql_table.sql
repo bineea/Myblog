@@ -80,7 +80,7 @@ DROP TABLE IF EXISTS `blog_user`;
 CREATE TABLE `blog_user` (
 `id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 `name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '昵称' ,
-`male`  tinyint(1) NULL DEFAULT NULL COMMENT '性别' ,
+`male`  varchar(16) NULL DEFAULT NULL COMMENT '性别' ,
 `email`  varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邮箱' ,
 `login_name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '账号' ,
 `pass_wd`  varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码' ,
