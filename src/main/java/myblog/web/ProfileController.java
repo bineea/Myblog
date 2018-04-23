@@ -34,6 +34,7 @@ public class ProfileController extends AbstractController {
 	
 	@RequestMapping(value = "/modProfile", method = RequestMethod.POST)
 	public void modProfilePost(@ModelAttribute("userInfoModel") UserInfoModel userInfoModel, Model model) {
-		
+		System.out.println(userInfoModel.toJson());
+		System.out.println(userInfoModel.getProfilePic().getSize());
 	}
 }
