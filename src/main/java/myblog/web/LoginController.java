@@ -26,7 +26,7 @@ import myblog.model.MySession;
 import myblog.model.acl.UserInfoModel;
 
 @Controller
-public class LoginController 
+public class LoginController extends AbstractController 
 {
 	@Autowired
 	private UserManager userManager;
