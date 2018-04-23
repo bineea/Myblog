@@ -36,3 +36,19 @@
 <script src="${rootUrl}assets/js/jquery/jquery.custom-1.0.js"></script>
 <script src="${rootUrl}assets/js/apps.min.js"></script>
 <!-- ================== END BASE JS ================== -->
+<script>
+$(document).ready(function() {
+	$("#modProfile,#modPasswd").click(function(){
+		$.ajax({
+			url: this.href,
+			success: function(data, textStatus, jqXHR) {
+				$._showModal({size:"modal-lg",backdrop:true},data);
+			},
+			error:function(XMLHttpRequest, textStatus, errorThrown) {
+				$.showWarnMsg("系统异常，请稍后重试！");
+			}
+		});
+		return false;
+	});
+});
+</script>

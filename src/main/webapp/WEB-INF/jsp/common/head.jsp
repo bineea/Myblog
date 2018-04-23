@@ -25,10 +25,10 @@
 				</a>
 				<ul class="dropdown-menu animated fadeInLeft">
 					<li class="arrow"></li>
-					<li><a href="javascript:;">Edit Profile</a></li>
-					<li><a href="javascript:;">Modify Password</a></li>
+					<li><a id="modProfile" href="${rootUrl }app/modProfile">Edit Profile</a></li>
+					<li><a id="modPasswd" href="${rootUrl }app/modPasswd">Modify Password</a></li>
 					<li class="divider"></li>
-					<li><a href="javascript:;">Log Out</a></li>
+					<li><a href="${rootUrl }app/common/logout">Log Out</a></li>
 				</ul>
 			</li>
 		</ul>
