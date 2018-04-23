@@ -9,6 +9,23 @@
 
 <script>
 	$(document).ready(function() {
+		$('#myForm').ajaxForm({
+			type: "post", //提交方式 
+			complete: function(xhr) {
+				$._hideModal();
+			},
+			success: function(responseText, status, xhr){
+				if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)){
+					$.showMsg(responseText.msg);
+				}else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)){
+					$.showMsg(new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
+				}
+			},
+			error: function(xhr, status, error) {
+				$.showMsg("系统异常，请稍后重试！");
+			}
+		});
+		
 		$("#profilePic").change(function(event){
 			var files = event.target.files, file;
 		    if (files && files.length > 0) {

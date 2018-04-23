@@ -28,7 +28,7 @@ public class ProfileController extends AbstractController {
 	
 	@RequestMapping(value = "/modProfile", method = RequestMethod.GET)
 	public String modProfileGet(@ModelAttribute("userInfoModel") UserInfoModel userInfoModel, Model model) {
-		
+		model.addAttribute("userInfoModel", new UserInfoModel());
 		return "modProfile";
 	}
 	
