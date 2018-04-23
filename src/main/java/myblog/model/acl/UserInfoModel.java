@@ -1,5 +1,7 @@
 package myblog.model.acl;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import myblog.dao.entity.Role;
 import myblog.dao.entity.User.UserStatus;
 import myblog.model.BaseModel;
@@ -17,6 +19,7 @@ public class UserInfoModel extends BaseModel {
 	private String oldPasswd;// 老密码
 	private String confirmPw;// 确认密码
 	private boolean rememberMe;// 记住账号
+	private MultipartFile profilePic;//头像
 
 	public String getName() {
 		return name;
@@ -104,6 +107,14 @@ public class UserInfoModel extends BaseModel {
 
 	public void setRememberMe(boolean rememberMe) {
 		this.rememberMe = rememberMe;
+	}
+
+	public MultipartFile getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(MultipartFile profilePic) {
+		this.profilePic = profilePic;
 	}
 
 }
