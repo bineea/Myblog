@@ -4,12 +4,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import myblog.dao.entity.Role;
 import myblog.dao.entity.User.UserStatus;
+import myblog.dao.entity.dict.Male;
 import myblog.model.BaseModel;
 
 public class UserInfoModel extends BaseModel {
 
 	private String name;
-	private Boolean male;
+	private Male male;
 	private String email;
 	private String loginName;// 账号（字母+数字）
 	private String passwd;
@@ -29,11 +30,11 @@ public class UserInfoModel extends BaseModel {
 		this.name = name;
 	}
 
-	public Boolean getMale() {
+	public Male getMale() {
 		return male;
 	}
 
-	public void setMale(Boolean male) {
+	public void setMale(Male male) {
 		this.male = male;
 	}
 
