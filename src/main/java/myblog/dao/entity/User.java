@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import myblog.common.entity.StringUUIDEntity;
+import myblog.dao.entity.dict.Male;
 
 @Entity
 @Table(name = "blog_user")
@@ -23,7 +24,7 @@ public class User extends StringUUIDEntity {
 	@NotNull
 	@Size(max = 50, message = "{userName.error}")
 	private String name;//昵称
-	private Boolean male;
+	private Male male;
 	@NotNull
 	@Email
 	private String email;//唯一
@@ -44,12 +45,13 @@ public class User extends StringUUIDEntity {
 		this.name = name;
 	}
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "male")
-	public Boolean getMale() {
+	public Male getMale() {
 		return male;
 	}
 
-	public void setMale(Boolean male) {
+	public void setMale(Male male) {
 		this.male = male;
 	}
 
