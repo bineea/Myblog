@@ -9,6 +9,7 @@ import myblog.model.BaseModel;
 
 public class UserInfoModel extends BaseModel {
 
+	private String id;
 	private String name;
 	private Male male;
 	private String email;
@@ -21,6 +22,14 @@ public class UserInfoModel extends BaseModel {
 	private String confirmPw;// 确认密码
 	private boolean rememberMe;// 记住账号
 	private MultipartFile profilePic;//头像
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;

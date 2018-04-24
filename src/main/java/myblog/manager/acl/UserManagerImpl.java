@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import myblog.common.pub.MyManagerException;
 import myblog.common.tools.SecurityTools;
@@ -102,7 +103,8 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 
 	@Override
 	public User updateProfile(UserInfoModel model) throws MyManagerException {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 
@@ -125,6 +127,12 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 			throw new MyManagerException("账号格式错误");
 		if(model.getName().length() > 25)
 			throw new MyManagerException("昵称长度超长，最多25个字符");
+	}
+
+	@Override
+	public String updateProfilePic(String userId, MultipartFile profilePic) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

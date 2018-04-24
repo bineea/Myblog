@@ -1,6 +1,7 @@
 package myblog.manager.acl;
 
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 import myblog.common.pub.MyManagerException;
 import myblog.dao.entity.User;
@@ -72,5 +73,13 @@ public interface UserManager {
 	 * @throws MyManagerException
 	 */
 	User updatePasswd(UserInfoModel model) throws MyManagerException;
+	
+	/**
+	 * 更新头像
+	 * @param userId
+	 * @param profilePic
+	 * @return
+	 */
+	String updateProfilePic(String userId, MultipartFile profilePic);
 	
 }
