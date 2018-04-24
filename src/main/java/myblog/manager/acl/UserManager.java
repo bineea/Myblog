@@ -1,5 +1,7 @@
 package myblog.manager.acl;
 
+import java.io.IOException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -80,6 +82,6 @@ public interface UserManager {
 	 * @param profilePic
 	 * @return
 	 */
-	String updateProfilePic(String userId, MultipartFile profilePic);
+	String updateProfilePic(String userId, MultipartFile profilePic) throws MyManagerException, IOException;
 	
 }

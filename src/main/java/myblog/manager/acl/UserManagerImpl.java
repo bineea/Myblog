@@ -1,5 +1,8 @@
 package myblog.manager.acl;
 
+import java.io.IOException;
+
+import org.hibernate.engine.jdbc.NonContextualLobCreator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Transient;
@@ -103,9 +106,18 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 
 	@Override
 	public User updateProfile(UserInfoModel model) throws MyManagerException {
-		
-		
-		return null;
+		User user = userRepo.findById(model.getUserId()).orElse(null);
+		if(user == null)
+			throw new MyManagerException("用户信息不存在，请重新登录");
+		profileInfoValid(model);
+		User u = userRepo.findByEmailUnequalId(model.getEmail(), user.getId());
+		if(u != null)
+			throw new MyManagerException("该邮箱地址也被注册");
+		user.setName(model.getName());
+		user.setEmail(model.getEmail());
+		user.setMale(model.getMale());
+		userRepo.save(user);
+		return user;
 	}
 
 	@Override
@@ -117,22 +129,30 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 	private void userInfoValid(UserInfoModel model) throws MyManagerException {
 		if(!StringUtils.hasText(model.getLoginName()))
 			throw new MyManagerException("账号不能为空");
+		if(!MyFinals.checkLoginNameFormat(model.getLoginName()))
+			throw new MyManagerException("账号格式错误");
+		profileInfoValid(model);
+	}
+	
+	private void profileInfoValid(UserInfoModel model) throws MyManagerException {
 		if(!StringUtils.hasText(model.getName()))
 			throw new MyManagerException("昵称不能为空");
 		if(!StringUtils.hasText(model.getEmail()))
 			throw new MyManagerException("邮箱不能为空");
 		if(!MyFinals.checkEmailFormat(model.getEmail()))
 			throw new MyManagerException("邮箱格式错误");
-		if(!MyFinals.checkLoginNameFormat(model.getLoginName()))
-			throw new MyManagerException("账号格式错误");
 		if(model.getName().length() > 25)
 			throw new MyManagerException("昵称长度超长，最多25个字符");
 	}
 
 	@Override
-	public String updateProfilePic(String userId, MultipartFile profilePic) {
-		// TODO Auto-generated method stub
-		return null;
+	public String updateProfilePic(String userId, MultipartFile profilePic) throws MyManagerException, IOException {
+		User user = userRepo.findById(userId).orElse(null);
+		if(user == null)
+			throw new MyManagerException("用户信息不存在，请重新登录");
+		user.setProfilePicture(NonContextualLobCreator.INSTANCE.createBlob(profilePic.getBytes()));
+		userRepo.save(user);
+		return user.getId();
 	}
 
 }

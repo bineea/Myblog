@@ -49,7 +49,6 @@
     		                keys: ['enter'],
     		                action: function(){
     		                	var formData = new FormData();//初始化一个FormData对象
-    		                	formData.append("userId", $("userId").val());
     		                    formData.append("profilePic", $("#profilePic")[0].files[0]);//将文件塞入FormData
     		 					$.ajax({
     		 						url: '${rootUrl}app/modProfilePic',
@@ -100,10 +99,9 @@
                 <div class="profile-section">
                     <!-- begin profile-left -->
                     <div class="profile-left">
-                    	<input type="hidden" id="userId" name="userId">
                         <!-- begin profile-image -->
                         <div class="profile-image">
-                            <img id="picture" name="picture" src="${rootUrl }assets/img/profile-cover.jpg" />
+                            <img id="picture" name="picture" src="${rootUrl }app/user/showProfilePic/${userId}" />
                             <i class="fa fa-user hide"></i>
                         </div>
                         <!-- end profile-image -->

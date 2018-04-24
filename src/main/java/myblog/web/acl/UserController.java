@@ -1,6 +1,7 @@
 package myblog.web.acl;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import myblog.common.pub.MyManagerException;
+import myblog.common.tools.HttpResponseHelper;
 import myblog.dao.entity.Role;
 import myblog.dao.entity.User;
 import myblog.dao.entity.User.UserStatus;
@@ -95,5 +97,12 @@ public class UserController extends AbstractController {
 		model.addAttribute("data", user);
 		addSuccess(response, "成功变更账号："+user.getLoginName()+"状态");
 		return prefix + "result";
+	}
+	
+	@RequestMapping(value = "/showProfilePic/{userId}")
+	public void showProfilePic(@PathVariable("userId") String userId, HttpServletResponse response) 
+			throws IOException, SQLException {
+		User user = manager.findById(userId);
+		HttpResponseHelper.showPicture(user.getProfilePicture().getBinaryStream(), response);
 	}
 }
