@@ -220,5 +220,13 @@
 		    <artifactId>hibernate-validator</artifactId>
 		    <version>6.0.7.Final</version>
 		</dependency>
+		
+		<!-- 在multipart/form-data下正常提交表单数据 -->
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.6</version>
+		</dependency>
 	</dependencies>
 </project>
