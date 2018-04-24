@@ -1,6 +1,8 @@
 package myblog.config.web;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -26,6 +28,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 		return new String[] { "/app/*" };
 	}
 	
+	//配置log
 	@Override
 	public void registerContextLoaderListener(ServletContext servletContext) {
 		servletContext.setInitParameter("logbackConfigLocation", "classpath:config/logback.xml");
@@ -33,4 +36,11 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 		super.registerContextLoaderListener(servletContext);
 	}
 	
+	//在AbstractAnnotationConfigDispatcherServletInitializer将DispatcherServlet注册到Servlet容器中之后，就会调用customizeRegistration()，并将Servlet注册后得到的Registration.Dynamic传递进来。通过重载customizeRegistration()方法，我们可以对DispatcherServlet进行额外的配置。
+	//重写customizeRegistration方法，添加额外配置
+	public void customizeRegistration(Dynamic registration) {
+		super.customizeRegistration(registration);
+		MultipartConfigElement multipartConfig = new MultipartConfigElement("", 1000000000L, -1, 0);
+		registration.setMultipartConfig(multipartConfig);
+	}
 }
