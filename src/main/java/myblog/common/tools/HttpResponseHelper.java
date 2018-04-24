@@ -2,6 +2,8 @@ package myblog.common.tools;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.zip.GZIPOutputStream;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
 public class HttpResponseHelper {
 
 	protected static Logger logger = LoggerFactory.getLogger(HttpResponseHelper.class);
+	public static final int BUFFER = 1024;
 
 	public static void responseJson(String jsonStr, final HttpServletResponse response) throws IOException
 	{
@@ -22,6 +25,40 @@ public class HttpResponseHelper {
 		response.getWriter().print(jsonStr);
 		response.getWriter().flush();
 		response.getWriter().close();
+	}
+	
+	public static void showPicture(InputStream input,HttpServletResponse response) throws IOException
+	{
+		response.setHeader("Cache-Control", "no-cache");
+		response.setHeader("Pragma", "No-cache");
+		response.setHeader("Expires", "0");
+		response.setContentType("image/jpeg");
+		OutputStream  output = response.getOutputStream();
+		try
+		{
+			byte[] b = new byte[BUFFER];
+			int off = 0;
+			while(input.read(b, off, BUFFER) > -1)
+			{
+				output.write(b);
+				off += BUFFER;
+				b = new byte[BUFFER];
+			}
+			output.flush();
+		}
+		finally
+		{
+			if(input != null)
+			{
+				input.close();
+				input = null;
+			}
+			if(output != null)
+			{
+				output.close();
+				output = null;
+			}
+		}
 	}
 
 	/**
