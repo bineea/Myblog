@@ -39,10 +39,47 @@
 		        var URL = window.URL || window.webkitURL;
 		        // 通过 file 生成目标 url
 		        var imgURL = URL.createObjectURL(file);
-		        //用attr将img的src属性改成获得的url
-		        $("#picture").attr("src",imgURL);
-		        // 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
-		        // URL.revokeObjectURL(imgURL);
+		        $.confirm({
+                    theme: 'white',
+    		        title: 'Are you sure',
+    		        content: '<img src="'+imgURL+'">',
+    		        buttons: {   
+    		        	confirm: {
+    		            	text: '确认',
+    		                keys: ['enter'],
+    		                action: function(){
+    		                	var formData = new FormData();//初始化一个FormData对象
+    		                	formData.append("userId", $("userId").val());
+    		                    formData.append("profilePic", $("#profilePic")[0].files[0]);//将文件塞入FormData
+    		 					$.ajax({
+    		 						url: '${rootUrl}app/modProfilePic',
+    		 						type: 'POST',
+    		 						data: formData,
+    		 						processData: false,// 告诉jQuery不要去处理发送的数据
+    		 				        contentType: false,// 告诉jQuery不要去设置Content-Type请求头
+    		 						success: function(data, textStatus, jqXHR) {
+    									if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
+    			 							$.showMsg(data.msg);
+    									} else if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
+    										//用attr将img的src属性改成获得的url
+    								        $("#picture").attr("src",imgURL);
+    									}
+    		 						},
+    		 						error:function(XMLHttpRequest, textStatus, errorThrown) {
+    		 							$.showMsg("系统异常，请稍后重试！");
+    		 						}
+    		 					});
+    		                }
+    		            },
+    		            cancel: {
+    		            	text: '取消',
+    		            	action: function(){
+    		            		// 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
+        				        URL.revokeObjectURL(imgURL);
+    		            	}
+    		            }
+    		        }
+                });
 		    }
 		});
 	});
@@ -56,7 +93,6 @@
 	  	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	  	<h4 class="modal-title">Edit Profile</h4>
 	</div>
-	<form:form modelAttribute="userInfoModel" id="myForm" name="myForm" enctype="multipart/form-data" cssClass="form-horizontal" action="${rootUrl }app/modProfile" method="post">
 	<div class="modal-body">
 		 <!-- begin profile-container -->
             <div class="profile-container">
@@ -64,19 +100,22 @@
                 <div class="profile-section">
                     <!-- begin profile-left -->
                     <div class="profile-left">
+                    	<input type="hidden" id="userId" name="userId">
                         <!-- begin profile-image -->
                         <div class="profile-image">
-                            <img id="picture" src="assets/img/profile-cover.jpg" />
+                            <img id="picture" name="picture" src="${rootUrl }assets/img/profile-cover.jpg" />
                             <i class="fa fa-user hide"></i>
                         </div>
                         <!-- end profile-image -->
                         <div class="m-b-10">
                             <a href="javascript:;" onclick="changePic()" class="btn btn-warning btn-block btn-sm">Change Picture</a>
-                            <input id="profilePic" type="file" name="profilePic" style="display:none;" class="form-control" accept="image/gif, image/jpeg, image/jpg, image/png" />
+                            <input id="profilePic" type="file" style="display:none;" class="form-control" accept="image/gif, image/jpeg, image/jpg, image/png" />
                         </div>
                     </div>
                     <!-- end profile-left -->
                     <!-- begin profile-right -->
+                    <form:form modelAttribute="userInfoModel" id="myForm" name="myForm" cssClass="form-horizontal" action="${rootUrl }app/modProfile" method="post">
+                    <input type="hidden" id="id" name="id">
                     <div class="profile-right">
                         <!-- begin profile-info -->
                         <div class="profile-info">
@@ -117,6 +156,7 @@
                         </div>
                         <!-- end profile-info -->
                     </div>
+                    </form:form>
                     <!-- end profile-right -->
                 </div>
                 <!-- end profile-section -->
@@ -125,8 +165,7 @@
 	</div>
 	<div class="modal-footer">
 	  	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
-	  	<button type="submit" class="btn btn-inverse btn-sm">保存</button>
+	  	<button id="button" type="button" class="btn btn-inverse btn-sm">保存</button>
 	</div>
-	</form:form>
 </body>
 </html>
