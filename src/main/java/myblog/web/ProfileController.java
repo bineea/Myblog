@@ -32,21 +32,26 @@ public class ProfileController extends AbstractController {
 	private UserManager userManager;
 
 	@RequestMapping(value = "/modPasswd", method = RequestMethod.GET)
-	public String modPasswdGet(@ModelAttribute("userInfoModel") UserInfoModel userInfoModel, Model model) {
-		
+	public String modPasswdGet(@ModelAttribute("userInfoModel") UserInfoModel userInfoModel, Model model,
+			HttpServletRequest request) {
+		User user = LoginHelper.getLoginUser(request);
+		model.addAttribute("userId", user.getId());
 		return "modPasswd";
 	}
 	
 	@RequestMapping(value = "/modPasswd", method = RequestMethod.POST)
-	public void modPasswdPost() {
-		
+	public void modPasswdPost(@ModelAttribute("userInfoModel") UserInfoModel userInfoModel, 
+			HttpServletResponse response, HttpServletRequest request) throws IOException, MyManagerException {
+		User user = userManager.updatePasswd(userInfoModel);
+		WebUtils.setSessionAttribute(request, MySession.LOGIN_USER, user.toJson());
+		addSuccess(response, "成功重置密码");
 	}
 	
 	@RequestMapping(value = "/modProfile", method = RequestMethod.GET)
 	public String modProfileGet(@ModelAttribute("userInfoModel") UserInfoModel userInfoModel, Model model,
 			HttpServletRequest request) {
 		User user = LoginHelper.getLoginUser(request);
-		model.addAttribute("id", user.getId());
+		model.addAttribute("userId", user.getId());
 		model.addAttribute("name", user.getName());
 		model.addAttribute("email", user.getEmail());
 		model.addAttribute("male", user.getMale());
