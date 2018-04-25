@@ -13,6 +13,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import myblog.common.entity.StringUUIDEntity;
 import myblog.dao.entity.dict.Male;
 
@@ -34,7 +36,8 @@ public class User extends StringUUIDEntity {
 	private String passwd;
 	private UserStatus status = UserStatus.NORMAL;
 	private Role role;
-	private Blob profilePicture; //头像
+	@JsonIgnore
+	private Blob profilePicture; //头像（昵称首字母或数字图片）
 
 	@Column(name = "name")
 	public String getName() {
