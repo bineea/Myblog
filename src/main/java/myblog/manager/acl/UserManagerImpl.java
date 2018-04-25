@@ -132,8 +132,23 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 
 	@Override
 	public User updatePasswd(UserInfoModel model) throws MyManagerException {
-		// TODO Auto-generated method stub
-		return null;
+		User user = userRepo.findById(model.getUserId()).orElse(null);
+		if(user == null)
+			throw new MyManagerException("用户信息不存在，请重新登录");
+		if(!StringUtils.hasText(model.getOldPasswd()))
+			throw new MyManagerException("原密码不能为空");
+		if(!StringUtils.hasText(model.getPasswd()))
+			throw new MyManagerException("新密码不能为空");
+		if(!StringUtils.hasText(model.getConfirmPw()))
+			throw new MyManagerException("确认密码不能为空");
+		if(!model.getPasswd().equals(model.getConfirmPw()))
+			throw new MyManagerException("新密码输入不一致，请重新确认");
+		String oldPasswd = SecurityTools.encryStr(model.getOldPasswd(), DigestType.SHA_1);
+		if(!oldPasswd.equals(user.getPasswd()))
+			throw new MyManagerException("原密码输入错误");
+		user.setPasswd(SecurityTools.encryStr(model.getPasswd(), DigestType.SHA_1));
+		userRepo.save(user);
+		return user;
 	}
 	
 	private void userInfoValid(UserInfoModel model) throws MyManagerException {
