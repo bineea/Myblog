@@ -42,6 +42,7 @@
 		        $.confirm({
                     theme: 'white',
     		        title: 'Are you sure',
+    		      	//用attr将img的src属性改成获得的url
     		        content: '<img src="'+imgURL+'">',
     		        buttons: {   
     		        	confirm: {
@@ -60,11 +61,14 @@
     									if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
     			 							$.showMsg(data.msg);
     									} else if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
-    										//用attr将img的src属性改成获得的url
-    								        $("#picture").attr("src",imgURL);
+    								        $("#picture").attr("src", "${rootUrl }app/acl/user/showProfilePic/"+$("#userId").val());
     									}
+    									// 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
+    	        				        URL.revokeObjectURL(imgURL);
     		 						},
     		 						error:function(XMLHttpRequest, textStatus, errorThrown) {
+    		 							// 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
+    	        				        URL.revokeObjectURL(imgURL);
     		 							$.showMsg("系统异常，请稍后重试！");
     		 						}
     		 					});
@@ -101,7 +105,7 @@
                     <div class="profile-left">
                         <!-- begin profile-image -->
                         <div class="profile-image">
-                            <img id="picture" name="picture" src="${rootUrl }app/user/showProfilePic/${userId}" />
+                            <img id="picture" name="picture" src="${rootUrl }app/acl/user/showProfilePic/${userId}" />
                             <i class="fa fa-user hide"></i>
                         </div>
                         <!-- end profile-image -->
@@ -113,7 +117,7 @@
                     <!-- end profile-left -->
                     <!-- begin profile-right -->
                     <form:form modelAttribute="userInfoModel" id="myForm" name="myForm" cssClass="form-horizontal" action="${rootUrl }app/modProfile" method="post">
-                    <input type="hidden" id="id" name="id">
+                    <input type="hidden" id="userId" name="userId" value="${userId }">
                     <div class="profile-right">
                         <!-- begin profile-info -->
                         <div class="profile-info">
@@ -130,20 +134,20 @@
                                     <tbody>
                                         <tr class="highlight">
                                             <td class="field" style="vertical-align: middle;">昵称</td>
-                                            <td><input name="name" type="text" class="form-control" placeholder="昵称" /></td>
+                                            <td><input name="name" type="text" class="form-control" placeholder="昵称" value="${name }"/></td>
                                         </tr>
                                         <tr>
                                             <td class="field" style="vertical-align: middle;">邮箱</td>
-                                            <td><input name="email" type="email" class="form-control" placeholder="邮箱" /></td>
+                                            <td><input name="email" type="email" class="form-control" placeholder="邮箱" value="${email }"/></td>
                                         </tr>
                                         <tr>
                                             <td class="field" style="vertical-align: middle;">性别</td>
                                             <td>
                                                  <select name="male" class="form-control">
 								                 	<option value="">请选择...</option>
-								                    <option value="MALE">男</option>
-								                    <option value="FEMALE">女</option>
-								                    <option value="NEUTER">要你管</option>
+								                    <option value="MALE" ${'MALE'==male?'selected':''}>男</option>
+								                    <option value="FEMALE" ${'FEMALE'==male?'selected':''}>女</option>
+								                    <option value="NEUTER" ${'NEUTER'==male?'selected':''}>要你管</option>
 								                 </select>
                                             </td>
                                         </tr>

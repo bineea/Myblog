@@ -20,7 +20,7 @@
 		<ul class="nav navbar-nav navbar-right">
 			<li class="dropdown navbar-user">
 				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-					<img src="${rootUrl }assets/img/user-13.jpg" alt="" /> 
+					<img src="${rootUrl }app/acl/user/showProfilePic/${loginUser.id}" alt="" /> 
 					<span class="hidden-xs">${loginUser.loginName }</span> <b class="caret"></b>
 				</a>
 				<ul class="dropdown-menu animated fadeInLeft">

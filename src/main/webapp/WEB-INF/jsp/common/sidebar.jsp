@@ -9,7 +9,7 @@
 		<ul class="nav">
 			<li class="nav-profile">
 				<div class="image">
-					<a href="javascript:;"><img src="${rootUrl }assets/img/user-13.jpg" alt="头像" /></a>
+					<a href="javascript:;"><img src="${rootUrl }app/acl/user/showProfilePic/${loginUser.id}" alt="头像" /></a>
 				</div>
 				<div class="info">
 					${loginUser.loginName}
