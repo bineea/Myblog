@@ -1,5 +1,7 @@
 package myblog.manager.acl;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import org.hibernate.engine.jdbc.NonContextualLobCreator;
@@ -10,9 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import myblog.common.pub.MyManagerException;
+import myblog.common.tools.MyTools;
 import myblog.common.tools.SecurityTools;
 import myblog.common.tools.SecurityTools.DigestType;
 import myblog.dao.entity.Role;
@@ -56,7 +61,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 
 	@Override
 	@Transient
-	public User add(UserInfoModel model) throws MyManagerException {
+	public User add(UserInfoModel model) throws MyManagerException, IOException {
 		userInfoValid(model);
 		User user = userRepo.findByLoginName(model.getLoginName());
 		if(user != null)
@@ -68,6 +73,11 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 		BeanUtils.copyProperties(model, user);
 		user.setPasswd(SecurityTools.encryStr(User.DEFAULT_PWD, DigestType.SHA_1));
 		user.setStatus(UserStatus.NORMAL);
+		if(user.getProfilePicture() == null) {
+			char firstChar = MyTools.handleStr2Spell(user.getName()).toCharArray()[0];
+			File profilePic = new ServletContextResource(ContextLoader.getCurrentWebApplicationContext().getServletContext(), "/assets/img/profile/"+String.valueOf(firstChar)+".png").getFile();
+			user.setProfilePicture(NonContextualLobCreator.INSTANCE.createBlob(new FileInputStream(profilePic), profilePic.length()));
+		}
 		userRepo.save(user);
 		return user;
 	}

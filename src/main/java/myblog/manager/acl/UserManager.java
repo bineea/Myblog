@@ -33,7 +33,7 @@ public interface UserManager {
 	 * @param model
 	 * @return
 	 */
-	User add(UserInfoModel model) throws MyManagerException;
+	User add(UserInfoModel model) throws MyManagerException, IOException;
 	
 	/**
 	 * 通过id查询用户
