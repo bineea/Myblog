@@ -37,11 +37,9 @@ public class HttpResponseHelper {
 		try
 		{
 			byte[] b = new byte[BUFFER];
-			int off = 0;
-			while(input.read(b, off, BUFFER) > -1)
+			while(input.read(b) > -1)
 			{
 				output.write(b);
-				off += BUFFER;
 				b = new byte[BUFFER];
 			}
 			output.flush();
