@@ -75,7 +75,7 @@ public class UserManagerImpl extends AbstractManager implements UserManager {
 		user.setStatus(UserStatus.NORMAL);
 		if(user.getProfilePicture() == null) {
 			char firstChar = MyTools.handleStr2Spell(user.getName()).toCharArray()[0];
-			File profilePic = new ServletContextResource(ContextLoader.getCurrentWebApplicationContext().getServletContext(), "/assets/img/profile/"+String.valueOf(firstChar)+".png").getFile();
+			File profilePic = new ServletContextResource(ContextLoader.getCurrentWebApplicationContext().getServletContext(), "/assets/img/profile/user-"+String.valueOf(firstChar)+".jpg").getFile();
 			user.setProfilePicture(NonContextualLobCreator.INSTANCE.createBlob(new FileInputStream(profilePic), profilePic.length()));
 		}
 		userRepo.save(user);

@@ -1,5 +1,7 @@
 package myblog.web.acl;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.support.ServletContextResource;
 
 import myblog.common.pub.MyManagerException;
 import myblog.common.tools.HttpResponseHelper;
@@ -103,6 +107,11 @@ public class UserController extends AbstractController {
 	public void showProfilePic(@PathVariable("userId") String userId, HttpServletResponse response) 
 			throws IOException, SQLException {
 		User user = manager.findById(userId);
-		HttpResponseHelper.showPicture(user.getProfilePicture().getBinaryStream(), response);
+		if(user.getProfilePicture() == null) {
+			File profilePic = new ServletContextResource(ContextLoader.getCurrentWebApplicationContext().getServletContext(), "/assets/img/profile/default-user.png").getFile();
+			HttpResponseHelper.showPicture(new FileInputStream(profilePic), response);
+		} else {
+			HttpResponseHelper.showPicture(user.getProfilePicture().getBinaryStream(), response);
+		}
 	}
 }

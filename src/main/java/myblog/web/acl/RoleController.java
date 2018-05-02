@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,7 +48,7 @@ public class RoleController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/configRole/{id}", method = RequestMethod.GET)
-	public String configGet(@PathParam("id") String id, HttpServletRequest request, Model model) throws IOException {
+	public String configGet(@PathVariable("id") String id, HttpServletRequest request, Model model) throws IOException {
 		List<ResourceTreeModel> treeList = manager.getAllResource(id);
 		model.addAttribute("treeJson", JsonTools.writeValueAsString(treeList));
 		model.addAttribute("roleId", id);
