@@ -55,7 +55,7 @@ public class LoginController extends AbstractController
 	}
 	
 	@RequestMapping(value="common/login",method=RequestMethod.POST)
-	public String login(HttpServletRequest request, HttpServletResponse response, Model model, 
+	public void login(HttpServletRequest request, HttpServletResponse response, Model model, 
 			@ModelAttribute("userInfoModel") UserInfoModel userInfoModel) throws MyManagerException, IOException
 	{
 		User user = userManager.toLogin(userInfoModel);
@@ -64,8 +64,11 @@ public class LoginController extends AbstractController
 			LoginHelper.addLoginCookie(user.getLoginName(), response);
 		String lastUri = (String) WebUtils.getSessionAttribute(request, MySession.LAST_URI);
 		if(!StringUtils.hasText(lastUri) || lastUri.startsWith("/app/common/welcome"))
-			return "index";
+		{
+			toJump(response, request.getContextPath() + "/app/index?myMenuId=index");
+			return;
+		}
 		WebUtils.setSessionAttribute(request, MySession.LAST_URI, null);
-		return "redirect:" + lastUri;
+		toJump(response, lastUri);
 	}
 }

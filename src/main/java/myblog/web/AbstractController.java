@@ -16,10 +16,16 @@ public abstract class AbstractController extends CommonAbstract {
 	
 	private static final String HEADER_NOTE = "header_note";
 	private static final String HEADER_ERROR = "header_error";
+	private static final String HEADER_JUMP = "header_jump";
 
 	public void addSuccess(HttpServletResponse response, String message) throws IOException {
 		logger.debug("success:{}", message);
 		response.setHeader(HEADER_NOTE, Base64Utils.encodeToString(message.getBytes()));
+	}
+	
+	public void toJump(HttpServletResponse response, String uri) throws IOException {
+		logger.debug("to jump:{}", uri);
+		response.setHeader(HEADER_JUMP, Base64Utils.encodeToString(uri.getBytes()));
 	}
 	
 	@ExceptionHandler(value = MyManagerException.class)
