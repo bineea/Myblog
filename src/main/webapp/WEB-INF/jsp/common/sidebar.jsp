@@ -12,7 +12,7 @@
 					<a href="javascript:;"><img src="${rootUrl }app/acl/user/showProfilePic/${loginUser.id}" alt="头像" /></a>
 				</div>
 				<div class="info">
-					${loginUser.loginName}
+					${loginUser.name}
 					<small>My place,My rule</small>
 				</div>
 			</li>
