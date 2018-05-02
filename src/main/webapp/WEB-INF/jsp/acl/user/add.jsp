@@ -73,18 +73,6 @@ $(document).ready(function() {
                  </select>
              </div>
          </div>
-         <div class="form-group">
-             <label class="col-md-3 control-label">密码</label>
-             <div class="col-md-7">
-                 <input name="passwd" type="password" class="form-control" placeholder="密码" />
-             </div>
-         </div>
-         <div class="form-group">
-             <label class="col-md-3 control-label">确认密码</label>
-             <div class="col-md-7">
-                 <input name=confirmPw type="password" class="form-control" placeholder="确认密码" />
-             </div>
-         </div>
 	</div>
 	<div class="modal-footer">
 	  	<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
