@@ -34,14 +34,13 @@ public class ProfileController extends AbstractController {
 	@RequestMapping(value = "/modPasswd", method = RequestMethod.GET)
 	public String modPasswdGet(@ModelAttribute("userInfoModel") UserInfoModel userInfoModel, Model model,
 			HttpServletRequest request) {
-		User user = LoginHelper.getLoginUser(request);
-		model.addAttribute("userId", user.getId());
 		return "modPasswd";
 	}
 	
 	@RequestMapping(value = "/modPasswd", method = RequestMethod.POST)
 	public void modPasswdPost(@ModelAttribute("userInfoModel") UserInfoModel userInfoModel, 
 			HttpServletResponse response, HttpServletRequest request) throws IOException, MyManagerException {
+		userInfoModel.setUserId(LoginHelper.getLoginUser(request).getId());
 		User user = userManager.updatePasswd(userInfoModel);
 		WebUtils.setSessionAttribute(request, MySession.LOGIN_USER, user.toJson());
 		addSuccess(response, "成功重置密码");
