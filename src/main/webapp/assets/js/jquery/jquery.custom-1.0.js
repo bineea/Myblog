@@ -2,7 +2,8 @@
     $.extend({
     	Constans:{
 			RESPONSE_HEADER_NOTE:"header_note",
-			RESPONSE_HEADER_ERROR:"header_error"
+			RESPONSE_HEADER_ERROR:"header_error",
+			RESPONSE_HEADER_JUMP:"header_jump"
 		},
 		/**************************************************************************
 		 * 
