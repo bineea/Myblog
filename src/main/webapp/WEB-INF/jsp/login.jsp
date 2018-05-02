@@ -13,6 +13,18 @@
 	<script>
 		$(document).ready(function() {
 			App.init();
+			$('#myForm').ajaxForm({
+				async: false,
+				type: "post", //提交方式 
+				success: function(responseText, status, xhr){
+					if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
+						$.showWarnMsg(responseText.msg);
+					}
+				},
+				error: function(xhr, status, error) {
+					$.showWarnMsg("系统异常，请稍后重试！");
+				}
+			});
 		});
 	</script>
 </head>
@@ -44,7 +56,7 @@
                 <div class="login-header">
                     <div class="brand">
                         <span class="logo"></span> My Blog
-                        <small>responsive bootstrap 3 admin template</small>
+                        <small>My place My rule</small>
                     </div>
                     <div class="icon">
                         <i class="fa fa-sign-in"></i>
@@ -52,8 +64,8 @@
                 </div>
                 <!-- end login-header -->
                 <!-- begin login-content -->
-                <div class="login-content">
-                    <form:form action="${rootUrl }app/common/login" modelAttribute="userInfoModel" method="POST" class="margin-bottom-0">
+                <div id="myManager" class="login-content">
+                    <form:form modelAttribute="userInfoModel" id="myForm" name="myForm" action="${rootUrl }app/common/login" method="POST" class="margin-bottom-0">
                         <div class="form-group m-b-15">
                             <form:input type="text" path="loginName" class="form-control input-lg" placeholder="LoginName" />
                         </div>

@@ -212,18 +212,31 @@
 		/**************************************************************************
 		 * 
 		 * 显示信息
-		 * 
+		 * isSuccess:true/false
+		 * type:blue/green/red/orange/purple/dark
 		 *************************************************************************/
-		showMsg: function(message) {
+		showMsg: function(isSuccess,message) {
 			if(message == null || message == undefined) {
 				message = '';
 			}
-			console.log(message);
-			$.dialog({
-			        title: '操作成功！',
-			        content: message,
-			        backgroundDismiss: true,
-			});
+			console.log(isSuccess+','+message);
+			if(isSuccess) {
+				$.dialog({
+					theme: 'light',
+					title: '操作成功！',
+					content: message,
+					backgroundDismiss: true,
+					type: 'dark',
+				});
+			} else {
+				$.dialog({
+					theme: 'light',
+					title: '操作失败！',
+					content: message,
+					backgroundDismiss: true,
+					type: 'red',
+				});
+			}
 		},
 	});
     

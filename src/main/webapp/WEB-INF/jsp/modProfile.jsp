@@ -16,13 +16,13 @@
 			},
 			success: function(responseText, status, xhr){
 				if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)){
-					$.showMsg(responseText.msg);
+					$.showMsg(false,responseText.msg);
 				}else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)){
-					$.showMsg(new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
+					$.showMsg(true,new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
 				}
 			},
 			error: function(xhr, status, error) {
-				$.showMsg("系统异常，请稍后重试！");
+				$.showMsg(false,"系统异常，请稍后重试！");
 			}
 		});
 		
@@ -59,7 +59,7 @@
     		 				        contentType: false,// 告诉jQuery不要去设置Content-Type请求头
     		 						success: function(data, textStatus, jqXHR) {
     									if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
-    			 							$.showMsg(data.msg);
+    			 							$.showMsg(false,data.msg);
     									} else if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
     								        $("#picture").attr("src", "${rootUrl }app/acl/user/showProfilePic/"+$("#userId").val());
     									}
@@ -69,7 +69,7 @@
     		 						error:function(XMLHttpRequest, textStatus, errorThrown) {
     		 							// 使用下面这句可以在内存中释放对此 url 的伺服，跑了之后那个 URL 就无效了
     	        				        URL.revokeObjectURL(imgURL);
-    		 							$.showMsg("系统异常，请稍后重试！");
+    		 							$.showMsg(false,"系统异常，请稍后重试！");
     		 						}
     		 					});
     		                }

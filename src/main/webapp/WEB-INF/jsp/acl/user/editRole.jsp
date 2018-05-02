@@ -40,7 +40,7 @@ $(document).ready(function() {
 					$.showWarnMsg(responseText.msg);
 				}else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)){
 					$._handleTableData(responseText, "update");
-					$.showMsg(new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
+					$.showMsg(true,new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
 				}
 			},
 			error: function(xhr, status, error) {

@@ -6,6 +6,27 @@
 <head>
 <meta http-equiv="expires" content="0" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+<script>
+	$(document).ready(function() {
+		$('#myForm').ajaxForm({
+			type: "post", //提交方式 
+			complete: function(xhr) {
+				$._hideModal();
+			},
+			success: function(responseText, status, xhr){
+				if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)){
+					$.showMsg(false,responseText.msg);
+				}else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)){
+					$.showMsg(true,new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
+				}
+			},
+			error: function(xhr, status, error) {
+				$.showMsg(false,"系统异常，请稍后重试！");
+			}
+		});
+	});
+</script>
 </head>
 <body>
 	<div class="modal-header">

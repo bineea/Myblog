@@ -11,7 +11,7 @@
 <link href="${rootUrl}assets/css/style.min.css" rel="stylesheet" />
 <link href="${rootUrl}assets/css/style-responsive.min.css" rel="stylesheet" />
 <link href="${rootUrl}assets/css/theme/default.css" rel="stylesheet" id="theme" />
-<link href="${rootUrl}assets/plugins/jquery-confirm/dist/jquery-confirm.min.css" rel="stylesheet" id="theme" />
+<link href="${rootUrl}assets/plugins/jquery-confirm/dist/jquery-confirm.min.css" rel="stylesheet"/>
 <!-- ================== END BASE CSS STYLE ================== -->
 
 <!-- ================== BEGIN BASE JS ================== -->

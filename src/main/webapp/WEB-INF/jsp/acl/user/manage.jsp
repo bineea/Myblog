@@ -71,7 +71,7 @@
 			 							$.showWarnMsg(data.msg);
 									} else if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
 										$._handleTableData(data,"update");
-										$.showMsg(new Base64().decode(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
+										$.showMsg(true,new Base64().decode(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
 									}
 		 						},
 		 						error:function(XMLHttpRequest, textStatus, errorThrown) {
