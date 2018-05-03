@@ -45,12 +45,28 @@
                             </div>
                             <h4 class="panel-title">创建文章</h4>
                         </div>
-                        <div id="myManager" class="panel-toolbar">
+                        <div id="myManager">
+                        <form:form class="form-horizontal" action="/" name="/" method="POST">
+                        <div class="panel-toolbar">
+                        	<div class="form-group m-5">
+                                <input name="title" type="text" class="form-control" placeholder="请输入文章标题" />
+                            </div>
                         </div>
                         <div class="panel-body">
-                        	<form class="form-horizontal" action="/" name="wysihtml5" method="POST">
-								<textarea class="ckeditor" id="editor1" name="editor1" rows="20">&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://ckeditor.com/"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;</textarea>
-                            </form>
+							<textarea class="ckeditor" id="editor" name="editor" rows="20"></textarea>
+                        </div>
+                        <div class="panel-toolbar">
+                        	<div class="form-group m-5 form-inline">
+                                <label class="control-label">类别:</label>
+                                <input name="loginName" type="text" class="form-control" placeholder="账号" />
+                            </div>
+                            <div class="form-group m-5 form-inline">
+                                <label class="control-label">封面:</label>
+                                <input name="loginName" type="text" class="form-control" placeholder="账号" />
+                            </div>
+                            <button type="submit" class="btn btn-inverse btn-sm m-r-5 m-b-5">提交</button>
+                        </div>
+                        </form:form>
                         </div>
                     </div>
                     <!-- end panel -->
