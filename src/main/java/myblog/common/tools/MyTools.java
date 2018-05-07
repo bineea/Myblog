@@ -49,4 +49,25 @@ public class MyTools {
 			return null;
 		}
 	}
+	
+	/**
+	 * byte数组转换成16进制字符串
+	 * @param b 待转换byte数组
+	 * @param length 共转换byte数组长度 
+	 * @return
+	 */
+	public static String bytesToHexString(byte[] b, int length) {
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i = 0; i<b.length&&i<length; i++)
+		{
+			int v = b[i] & 0xFF;
+		    String hv = Integer.toHexString(v);  
+		    if (hv.length() < 2)
+		    {
+		        stringBuilder.append(0);  
+		    }  
+		    stringBuilder.append(hv);
+		}
+		return stringBuilder.toString();
+	}
 }
