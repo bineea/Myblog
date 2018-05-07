@@ -38,6 +38,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 	
 	//在AbstractAnnotationConfigDispatcherServletInitializer将DispatcherServlet注册到Servlet容器中之后，就会调用customizeRegistration()，并将Servlet注册后得到的Registration.Dynamic传递进来。通过重载customizeRegistration()方法，我们可以对DispatcherServlet进行额外的配置。
 	//重写customizeRegistration方法，添加额外配置
+	@Override
 	public void customizeRegistration(Dynamic registration) {
 		super.customizeRegistration(registration);
 		MultipartConfigElement multipartConfig = new MultipartConfigElement("", 1000000000L, -1, 0);
