@@ -2,9 +2,14 @@ package myblog.config.web;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.springframework.util.Assert;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import com.ckfinder.connector.ConnectorServlet;
 
 import ch.qos.logback.ext.spring.web.LogbackConfigListener;
 import myblog.config.manager.AppConfig;
@@ -44,4 +49,31 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 		MultipartConfigElement multipartConfig = new MultipartConfigElement("", 1000000000L, -1, 0);
 		registration.setMultipartConfig(multipartConfig);
 	}
+	
+	//重写onStartup方法，添加额外servlet
+	@Override
+	public void onStartup(ServletContext servletContext) throws ServletException {
+		super.onStartup(servletContext);
+		registerCkfinderServlet(servletContext);
+	}
+	
+	public void registerCkfinderServlet(ServletContext servletContext) {
+		String servletName = "connectorServlet";
+		Assert.hasLength(servletName, "getServletName() must not return empty or null");
+		ConnectorServlet ckfinderServlet = new ConnectorServlet();
+		ServletRegistration.Dynamic ckfinderRegistration = servletContext.addServlet(servletName, ckfinderServlet);
+		Assert.notNull(ckfinderRegistration,
+				"Failed to register servlet with name '" + servletName + "'." +
+				"Check if there is another servlet registered under the same name.");
+
+		ckfinderRegistration.addMapping(getCkfinderServletMappings());
+		ckfinderRegistration.setAsyncSupported(isAsyncSupported());
+		ckfinderRegistration.setInitParameter("XMLConfig", "/WEB-INF/ckfinder-config.xml");
+		ckfinderRegistration.setInitParameter("debug", "false");
+	}
+	
+	public String[] getCkfinderServletMappings() {
+		return new String[] { "/assets/plugins/ckfinder/core/connector/java/connector.java" };
+	}
+	
 }
