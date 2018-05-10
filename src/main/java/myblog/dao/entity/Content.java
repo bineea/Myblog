@@ -18,7 +18,7 @@ public class Content extends StringUUIDEntity {
 	private String text;// 内容
 	private String summany;// 摘要
 	private boolean markdownEnable;// 是否启用markdown
-	private Blob thumbnail;// 缩略图
+	private Blob cover;// 封面
 	private ContentStatus contentStatus;// 文章状态
 	private int voteUp;// “顶”的数量
 	private int commentCount;// 评论数量
@@ -65,15 +65,15 @@ public class Content extends StringUUIDEntity {
 		this.markdownEnable = markdownEnable;
 	}
 
-	@Column(name = "thumbnail")
-	public Blob getThumbnail() {
-		return thumbnail;
+	@Column(name = "cover")
+	public Blob getCover() {
+		return cover;
 	}
 
-	public void setThumbnail(Blob thumbnail) {
-		this.thumbnail = thumbnail;
+	public void setCover(Blob cover) {
+		this.cover = cover;
 	}
-
+	
 	@Column(name = "content_status")
 	public ContentStatus getContentStatus() {
 		return contentStatus;
