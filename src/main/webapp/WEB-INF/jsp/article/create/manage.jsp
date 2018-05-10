@@ -23,6 +23,10 @@
 	$(document).ready(function() {
 		 $('.dropify').dropify();
 		 $('.selectpicker').selectpicker('render');
+		 
+		 $('publish').click(function() {
+			 
+		 });
 	});
 </script>
 </head>
@@ -54,20 +58,20 @@
                             <h4 class="panel-title">创建文章</h4>
                         </div>
                         <div id="myManager">
-                        <form:form class="form-horizontal" action="/" name="/" method="POST">
+                        <form:form class="form-horizontal" modelAttribute="articleModel"  id="articleCreateForm" name="articleCreateForm" method="post" enctype="multipart/form-data" action="${rootUrl}app/article/create/publish" >
                         <div class="panel-toolbar">
                         	<div class="form-group m-5">
                                 <input name="title" type="text" class="form-control" placeholder="请输入文章标题" />
                             </div>
                         </div>
                         <div class="panel-body">
-							<textarea id="editor" name="editor" class="ckeditor" rows="20"></textarea>
+							<textarea id="editor" name="text" class="ckeditor" rows="20"></textarea>
                         </div>
                         <div class="panel-toolbar">
                             <div class="form-group m-5">
 					            <label class="control-label" style="display: inline-block;margin: auto;">类别:</label>
 					            <div style="min-width: 300px;max-width: 800px;margin: 10px;display: inline-block;">
-									<select name="category" class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-inverse " multiple data-selected-text-format="count>3" >
+									<select name="categoryIds" class="form-control selectpicker" data-size="10" data-live-search="true" data-style="btn-inverse " multiple data-selected-text-format="count>3" >
 					                   <c:forEach items="${categorys}" var="category">
 									   		<option value="${category.id}">${category.name}</option>
 									   </c:forEach>
@@ -77,12 +81,18 @@
                             <div class="form-group m-5" >
                                 <label class="control-label" style="display: inline-block;margin: auto;">封面:</label>
                                 <div style="min-width: 500px;max-width: 800px;margin: 10px;display: inline-block;">
-                                	<input id="coverImg" name="coverImg" type="file" class="dropify" data-default-file="{$info.img|default=''}" data-allowed-file-extensions="jpg png jpeg gif"  required>
+                                	<input id="cover" name="cover" type="file" class="dropify" data-default-file="{$info.img|default=''}" data-allowed-file-extensions="jpg png jpeg gif"  required>
                                 </div>
                             </div>
                             <div class="form-group m-5" >
-                            <button type="button" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">发布</button>
-                            <button type="button" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">暂存</button>
+                                <label class="control-label" style="display: inline-block;margin: auto;">摘要:</label>
+                                <div style="min-width: 500px;max-width: 800px;margin: 10px;display: inline-block;">
+                                	<textarea name="summany" rows="5" cols="64" style="border:2px solid #E5E5E5;padding: 10px;"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group m-5" >
+	                            <button id="publish" type="submit" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">发布</button>
+	                            <button id="draft" type="button" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">暂存</button>
                             </div>
                         </div>
                         </form:form>
