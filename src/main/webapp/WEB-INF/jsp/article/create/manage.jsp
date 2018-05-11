@@ -24,10 +24,50 @@
 		 $('.dropify').dropify();
 		 $('.selectpicker').selectpicker('render');
 		 
-		 $('publish').click(function() {
+		 $('#publish').click(function() {
+			 $('#articleCreateForm').ajaxForm({
+				 url: '${rootUrl}app/article/create/publish',
+				 type: 'POST',
+				 beformSubmit:function() {
+					 
+				 },
+				 success:function() {
+					 
+				 },
+				 error:function() {
+					 
+				 },
+				 clearForm:true,//提交成功后是否清空表单中的字段值
+			　　　 restForm:true,//提交成功后是否重置表单中的字段值，即恢复到页面加载时的状态
+			 });
+		 });
+		 
+		 $('#draft').click(function() {
+			 $('#articleCreateForm').ajaxForm({
+				 url: '${rootUrl}app/article/create/draft',
+				 type: 'POST',
+				 beformSubmit:function() {
+					 
+				 },
+				 success:function() {
+					 
+				 },
+				 error:function() {
+					 
+				 },
+				 clearForm:true,//提交成功后是否清空表单中的字段值
+				 restForm:true,//提交成功后是否重置表单中的字段值，即恢复到页面加载时的状态
+			 });
+		 });
+		 
+		 $('#test').click(function() {
 			 
 		 });
 	});
+	
+	function handleSuccess() {
+		
+	}
 </script>
 </head>
 <body>
@@ -58,7 +98,7 @@
                             <h4 class="panel-title">创建文章</h4>
                         </div>
                         <div id="myManager">
-                        <form:form class="form-horizontal" modelAttribute="articleModel"  id="articleCreateForm" name="articleCreateForm" method="post" enctype="multipart/form-data" action="${rootUrl}app/article/create/publish" >
+                        <form:form class="form-horizontal" modelAttribute="articleModel"  id="articleCreateForm" name="articleCreateForm" method="post" enctype="multipart/form-data" >
                         <div class="panel-toolbar">
                         	<div class="form-group m-5">
                                 <input name="title" type="text" class="form-control" placeholder="请输入文章标题" />
@@ -91,8 +131,9 @@
                                 </div>
                             </div>
                             <div class="form-group m-5" >
-	                            <button id="publish" type="submit" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">发布</button>
+	                            <button id="publish" type="button" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">发布</button>
 	                            <button id="draft" type="button" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">暂存</button>
+	                            <button id="test" type="button" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">test</button>
                             </div>
                         </div>
                         </form:form>
