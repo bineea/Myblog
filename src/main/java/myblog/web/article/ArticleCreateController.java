@@ -32,12 +32,13 @@ public class ArticleCreateController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/publish", method = RequestMethod.POST)
-	public void articlePublishPost(@ModelAttribute("articleModel") ArticleModel articleModel) {
-		logger.info(articleModel.toJson());
+	public String articlePublishPost(@ModelAttribute("articleModel") ArticleModel articleModel) {
+		
+		return prefix + "";
 	}
 	
 	@RequestMapping(value = "/draft", method = RequestMethod.POST)
 	public void articleDraftPost(@ModelAttribute("articleModel") ArticleModel articleModel) {
-		logger.info(articleModel.toJson());
+		
 	}
 }

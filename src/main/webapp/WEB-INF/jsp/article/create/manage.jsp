@@ -28,27 +28,6 @@
 			 $('#articleCreateForm').ajaxForm({
 				 url: '${rootUrl}app/article/create/publish',
 				 type: 'POST',
-				 beformSubmit:function() {
-					 
-				 },
-				 success:function() {
-					 
-				 },
-				 error:function() {
-					 
-				 },
-				 clearForm:true,//提交成功后是否清空表单中的字段值
-			　　　 restForm:true,//提交成功后是否重置表单中的字段值，即恢复到页面加载时的状态
-			 });
-		 });
-		 
-		 $('#draft').click(function() {
-			 $('#articleCreateForm').ajaxForm({
-				 url: '${rootUrl}app/article/create/draft',
-				 type: 'POST',
-				 beformSubmit:function() {
-					 
-				 },
 				 success:function() {
 					 
 				 },
@@ -60,9 +39,21 @@
 			 });
 		 });
 		 
-		 $('#test').click(function() {
-			 
+		 $('#draft').click(function() {
+			 $('#articleCreateForm').ajaxForm({
+				 url: '${rootUrl}app/article/create/draft',
+				 type: 'POST',
+				 success:function() {
+					 
+				 },
+				 error:function() {
+					 
+				 },
+				 clearForm:true,//提交成功后是否清空表单中的字段值
+				 restForm:true,//提交成功后是否重置表单中的字段值，即恢复到页面加载时的状态
+			 });
 		 });
+		 
 	});
 	
 	function handleSuccess() {
@@ -105,7 +96,7 @@
                             </div>
                         </div>
                         <div class="panel-body">
-							<textarea id="editor" name="text" class="ckeditor" rows="20"></textarea>
+							<textarea name="text" class="ckeditor" rows="20"></textarea>
                         </div>
                         <div class="panel-toolbar">
                             <div class="form-group m-5">
@@ -121,7 +112,7 @@
                             <div class="form-group m-5" >
                                 <label class="control-label" style="display: inline-block;margin: auto;">封面:</label>
                                 <div style="min-width: 500px;max-width: 800px;margin: 10px;display: inline-block;">
-                                	<input id="cover" name="cover" type="file" class="dropify" data-default-file="{$info.img|default=''}" data-allowed-file-extensions="jpg png jpeg gif"  required>
+                                	<input name="cover" type="file" class="dropify" data-default-file="{$info.img|default=''}" data-allowed-file-extensions="jpg png jpeg gif" >
                                 </div>
                             </div>
                             <div class="form-group m-5" >
@@ -133,7 +124,6 @@
                             <div class="form-group m-5" >
 	                            <button id="publish" type="button" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">发布</button>
 	                            <button id="draft" type="button" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">暂存</button>
-	                            <button id="test" type="button" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">test</button>
                             </div>
                         </div>
                         </form:form>
