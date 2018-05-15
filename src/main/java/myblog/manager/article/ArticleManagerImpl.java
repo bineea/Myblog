@@ -37,20 +37,21 @@ public class ArticleManagerImpl extends AbstractManager implements ArticleManage
 	@Override
 	public String createArticle(ArticleModel articleModel, ContentStatus status) throws MyManagerException, IOException {
 		validateArticle(articleModel);
-		Content con = getContentByArticleModel(articleModel);
+		Content con = getContentByArticleModel(articleModel, status);
 		List<ContentCategoryMapping> contentCateList = getContentCategory(con, articleModel.getCategoryIds());
 		contentRepo.save(con);
 		contentCategoryRepo.saveAll(contentCateList);
 		return con.getId();
 	}
 	
-	private Content getContentByArticleModel(ArticleModel articleModel) throws IOException {
+	private Content getContentByArticleModel(ArticleModel articleModel, ContentStatus status) throws IOException {
 		Content content = new Content();
 		content.setTitle(articleModel.getTitle());
 		content.setText(articleModel.getText());
 		content.setSummany(articleModel.getSummany());
 		content.setCover(NonContextualLobCreator.INSTANCE.createBlob(articleModel.getCover().getBytes()));
 		content.setMarkdownEnable(articleModel.isMarkdownEnable());
+		content.setContentStatus(status);
 		return content;
 	}
 	
@@ -70,11 +71,11 @@ public class ArticleManagerImpl extends AbstractManager implements ArticleManage
 	}
 	
 	private void validateArticle(ArticleModel articleModel) throws MyManagerException {
-		if(StringUtils.hasText(articleModel.getTitle()))
+		if(!StringUtils.hasText(articleModel.getTitle()))
 			throw new MyManagerException("文章标题不能为空");
-		if(StringUtils.hasText(articleModel.getText()))
+		if(!StringUtils.hasText(articleModel.getText()))
 			throw new MyManagerException("文章内容不能为空");
-		if(StringUtils.hasText(articleModel.getSummany()))
+		if(!StringUtils.hasText(articleModel.getSummany()))
 			throw new MyManagerException("文章摘要不能为空");
 		if(CollectionUtils.isEmpty(articleModel.getCategoryIds()))
 			throw new MyManagerException("文章类别不能为空");

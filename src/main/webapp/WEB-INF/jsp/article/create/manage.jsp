@@ -25,14 +25,21 @@
 		 $('.selectpicker').selectpicker('render');
 		 
 		 $('#publish').click(function() {
-			 $('#articleCreateForm').ajaxForm({
+			 updateCkeditor();
+			 $('#articleCreateForm').ajaxSubmit({
 				 url: '${rootUrl}app/article/create/publish',
 				 type: 'POST',
-				 success:function() {
-					 
+				 processData: false,// 告诉jQuery不要去处理发送的数据
+			     contentType: false,// 告诉jQuery不要去设置Content-Type请求头
+				 success:function(responseText, status, xhr) {
+					 if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
+						 $.showWarnMsg(responseText.msg);
+					 } else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
+						 $._showModal({size:"",backdrop:"static"},responseText);
+					 }
 				 },
-				 error:function() {
-					 
+				 error:function(xhr, status, error) {
+					 $.showWarnMsg("系统异常，请稍后重试！"); 
 				 },
 				 clearForm:true,//提交成功后是否清空表单中的字段值
 				 restForm:true,//提交成功后是否重置表单中的字段值，即恢复到页面加载时的状态
@@ -40,14 +47,15 @@
 		 });
 		 
 		 $('#draft').click(function() {
-			 $('#articleCreateForm').ajaxForm({
+			 updateCkeditor();
+			 $('#articleCreateForm').ajaxSubmit({
 				 url: '${rootUrl}app/article/create/draft',
 				 type: 'POST',
-				 success:function() {
-					 
+				 success:function(responseText, status, xhr) {
+					 $._showModal({},responseText);
 				 },
-				 error:function() {
-					 
+				 error:function(xhr, status, error) {
+					 $.showWarnMsg("系统异常，请稍后重试！");
 				 },
 				 clearForm:true,//提交成功后是否清空表单中的字段值
 				 restForm:true,//提交成功后是否重置表单中的字段值，即恢复到页面加载时的状态
@@ -58,6 +66,12 @@
 	
 	function handleSuccess() {
 		
+	}
+	
+	function updateCkeditor() {
+		for (instance in CKEDITOR.instances) {
+			CKEDITOR.instances[instance].updateElement();
+		}
 	}
 </script>
 </head>
@@ -89,7 +103,7 @@
                             <h4 class="panel-title">创建文章</h4>
                         </div>
                         <div id="myManager">
-                        <form:form class="form-horizontal" modelAttribute="articleModel"  id="articleCreateForm" name="articleCreateForm" method="post" enctype="multipart/form-data" >
+                        <form:form class="form-horizontal" modelAttribute="articleModel"  id="articleCreateForm" name="articleCreateForm" method="post" >
                         <div class="panel-toolbar">
                         	<div class="form-group m-5">
                                 <input name="title" type="text" class="form-control" placeholder="请输入文章标题" />
