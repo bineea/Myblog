@@ -41,14 +41,22 @@ public class ArticleCreateController extends AbstractController {
 			HttpServletResponse response, Model model) 
 			throws MyManagerException, IOException {
 		String contentId = articleManager.createArticle(articleModel, ContentStatus.NORMAL);
+		model.addAttribute("contentId", contentId);
+		model.addAttribute("contentTitle", articleModel.getTitle());
+		model.addAttribute("contentStatus", ContentStatus.NORMAL);
 		addSuccess(response, "成功发布文章");
 		return prefix + "result";
 	}
 	
 	@RequestMapping(value = "/draft", method = RequestMethod.POST)
-	public String articleDraftPost(@ModelAttribute("articleModel") ArticleModel articleModel) 
+	public String articleDraftPost(@ModelAttribute("articleModel") ArticleModel articleModel,
+			HttpServletResponse response, Model model) 
 			throws MyManagerException, IOException {
 		String contentId = articleManager.createArticle(articleModel, ContentStatus.TEMPORARY);
+		model.addAttribute("contentId", contentId);
+		model.addAttribute("contentTitle", articleModel.getTitle());
+		model.addAttribute("contentStatus", ContentStatus.TEMPORARY);
+		addSuccess(response, "成功暂存文章");
 		return prefix + "result";
 	}
 }

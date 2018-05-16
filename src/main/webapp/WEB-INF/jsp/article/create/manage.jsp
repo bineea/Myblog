@@ -26,46 +26,60 @@
 		 
 		 $('#publish').click(function() {
 			 updateCkeditor();
-			 $('#articleCreateForm').ajaxSubmit({
-				 url: '${rootUrl}app/article/create/publish',
-				 type: 'POST',
-				 processData: false,// 告诉jQuery不要去处理发送的数据
-			     contentType: false,// 告诉jQuery不要去设置Content-Type请求头
-				 success:function(responseText, status, xhr) {
-					 if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
-						 $.showWarnMsg(responseText.msg);
-					 } else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
-						 $._showModal({size:"",backdrop:"static"},responseText);
-					 }
-				 },
-				 error:function(xhr, status, error) {
-					 $.showWarnMsg("系统异常，请稍后重试！"); 
-				 },
-				 clearForm:true,//提交成功后是否清空表单中的字段值
-				 restForm:true,//提交成功后是否重置表单中的字段值，即恢复到页面加载时的状态
-			 });
+			 handleForm($('#articleCreateForm'), '${rootUrl}app/article/create/publish');
 		 });
 		 
 		 $('#draft').click(function() {
 			 updateCkeditor();
-			 $('#articleCreateForm').ajaxSubmit({
-				 url: '${rootUrl}app/article/create/draft',
-				 type: 'POST',
-				 success:function(responseText, status, xhr) {
-					 $._showModal({},responseText);
-				 },
-				 error:function(xhr, status, error) {
-					 $.showWarnMsg("系统异常，请稍后重试！");
-				 },
-				 clearForm:true,//提交成功后是否清空表单中的字段值
-				 restForm:true,//提交成功后是否重置表单中的字段值，即恢复到页面加载时的状态
-			 });
+			 handleForm($('#articleCreateForm'), '${rootUrl}app/article/create/draft');
 		 });
 		 
 	});
 	
 	function handleSuccess() {
 		
+	}
+	
+	function handleForm(form, url) {
+		var $files = $(":file",  $(form));
+		if($files.size() === 0) {
+			$(form).removeProp("enctype");
+		} else {
+			var filesSize = $files.size();
+			$files.each(function() {
+				if (!$(this).val()){
+					filesSize--;
+					$(this).prop("disabled", true);
+				}
+			});
+			if(filesSize === 0){
+				$(form).removeProp("enctype");
+			}else{
+				$(form).prop("enctype","multipart/form-data");
+			}
+		}
+		
+		$(form).ajaxSubmit({
+			url: url,
+			type: 'POST',
+			success:function(responseText, status, xhr) {
+				if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
+					$.showWarnMsg(responseText.msg);
+				} else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
+					$('#articleCreateForm')[0].reset();
+					//jquery 没有reset方法，reset方法是DOM中的方法
+					//document.getElementById("articleCreateForm").reset(); 
+					$._showModal({size:"",backdrop:"static"},responseText);
+				}
+			},
+			error:function(xhr, status, error) {
+				$.showWarnMsg("系统异常，请稍后重试！"); 
+			},
+		 });
+		
+		$(":file", $(form)).each(function() {
+			$(this).prop("disabled", false);
+		});
 	}
 	
 	function updateCkeditor() {
