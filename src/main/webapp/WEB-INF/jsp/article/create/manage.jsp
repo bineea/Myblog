@@ -26,12 +26,12 @@
 		 
 		 $('#publish').click(function() {
 			 updateCkeditor();
-			 handleForm($('#articleCreateForm'), '${rootUrl}app/article/create/publish');
+			 handleForm($('#articleCreateForm'), '${rootUrl}app/article/create/publish', true);
 		 });
 		 
 		 $('#draft').click(function() {
 			 updateCkeditor();
-			 handleForm($('#articleCreateForm'), '${rootUrl}app/article/create/draft');
+			 handleForm($('#articleCreateForm'), '${rootUrl}app/article/create/draft', false);
 		 });
 		 
 	});
@@ -40,7 +40,7 @@
 		
 	}
 	
-	function handleForm(form, url) {
+	function handleForm(form, url, toClear) {
 		var $files = $(":file",  $(form));
 		if($files.size() === 0) {
 			$(form).removeProp("enctype");
@@ -65,10 +65,15 @@
 			success:function(responseText, status, xhr) {
 				if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
 					$.showWarnMsg(responseText.msg);
-				} else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
+				} else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE) && toClear) {
 					$('#articleCreateForm')[0].reset();
 					//jquery 没有reset方法，reset方法是DOM中的方法
 					//document.getElementById("articleCreateForm").reset(); 
+					CKEDITOR.instances.text.setData('');
+					//其中‘text’是textarea的ID或NAME值
+					$._showModal({size:"",backdrop:"static"},responseText);
+				} else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE) && !toClear) {
+					//其中‘text’是textarea的ID或NAME值
 					$._showModal({size:"",backdrop:"static"},responseText);
 				}
 			},
