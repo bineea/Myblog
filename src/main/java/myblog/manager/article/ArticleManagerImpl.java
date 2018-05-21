@@ -1,6 +1,7 @@
 package myblog.manager.article;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,9 +50,11 @@ public class ArticleManagerImpl extends AbstractManager implements ArticleManage
 		content.setTitle(articleModel.getTitle());
 		content.setText(articleModel.getText());
 		content.setSummany(articleModel.getSummany());
-		content.setCover(NonContextualLobCreator.INSTANCE.createBlob(articleModel.getCover().getBytes()));
+		content.setCover(articleModel.getCover() != null ? NonContextualLobCreator.INSTANCE.createBlob(articleModel.getCover().getBytes()) : null);
 		content.setMarkdownEnable(articleModel.isMarkdownEnable());
 		content.setContentStatus(status);
+		content.setCreateTime(LocalDateTime.now());
+		content.setUpdateTime(LocalDateTime.now());
 		return content;
 	}
 	
