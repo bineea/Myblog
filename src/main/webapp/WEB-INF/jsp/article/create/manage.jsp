@@ -25,11 +25,13 @@
 		 $('.selectpicker').selectpicker('render');
 		 
 		 $('#publish').click(function() {
+			 $.showLoading();
 			 updateCkeditor();
 			 handleForm($('#articleCreateForm'), '${rootUrl}app/article/create/publish', true);
 		 });
 		 
 		 $('#draft').click(function() {
+			 $.showLoading();
 			 updateCkeditor();
 			 handleForm($('#articleCreateForm'), '${rootUrl}app/article/create/draft', false);
 		 });
@@ -63,6 +65,7 @@
 			url: url,
 			type: 'POST',
 			success:function(responseText, status, xhr) {
+				$.hideLoading();
 				if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
 					$.showWarnMsg(responseText.msg);
 				} else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE) && toClear) {
@@ -78,6 +81,7 @@
 				}
 			},
 			error:function(xhr, status, error) {
+				$.hideLoading();
 				$.showWarnMsg("系统异常，请稍后重试！"); 
 			},
 		 });
