@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 import myblog.common.entity.StringUUIDEntity;
@@ -17,12 +19,12 @@ public class Content extends StringUUIDEntity {
 	private String title;// 标题
 	private String text;// 内容
 	private String summany;// 摘要
-	private boolean markdownEnable;// 是否启用markdown
+	private Boolean markdownEnable = false;// 是否启用markdown
 	private Blob cover;// 封面
 	private ContentStatus contentStatus;// 文章状态
-	private int voteUp;// “顶”的数量
-	private int commentCount;// 评论数量
-	private int viewCount;// 访问量
+	private Integer voteUp = 0;// “顶”的数量
+	private Integer commentCount = 0;// 评论数量
+	private Integer viewCount = 0;// 访问量
 	private LocalDateTime createTime;// 创建时间
 	private LocalDateTime updateTime;// 更新时间
 	private String flag;// 标识
@@ -57,11 +59,11 @@ public class Content extends StringUUIDEntity {
 	}
 
 	@Column(name = "markdown_enable")
-	public boolean isMarkdownEnable() {
+	public Boolean isMarkdownEnable() {
 		return markdownEnable;
 	}
 
-	public void setMarkdownEnable(boolean markdownEnable) {
+	public void setMarkdownEnable(Boolean markdownEnable) {
 		this.markdownEnable = markdownEnable;
 	}
 
@@ -74,6 +76,7 @@ public class Content extends StringUUIDEntity {
 		this.cover = cover;
 	}
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "content_status")
 	public ContentStatus getContentStatus() {
 		return contentStatus;
@@ -84,29 +87,29 @@ public class Content extends StringUUIDEntity {
 	}
 
 	@Column(name = "vote_up")
-	public int getVoteUp() {
+	public Integer getVoteUp() {
 		return voteUp;
 	}
 
-	public void setVoteUp(int voteUp) {
+	public void setVoteUp(Integer voteUp) {
 		this.voteUp = voteUp;
 	}
 
 	@Column(name = "comment_count")
-	public int getCommentCount() {
+	public Integer getCommentCount() {
 		return commentCount;
 	}
 
-	public void setCommentCount(int commentCount) {
+	public void setCommentCount(Integer commentCount) {
 		this.commentCount = commentCount;
 	}
 
 	@Column(name = "view_count")
-	public int getViewCount() {
+	public Integer getViewCount() {
 		return viewCount;
 	}
 
-	public void setViewCount(int viewCount) {
+	public void setViewCount(Integer viewCount) {
 		this.viewCount = viewCount;
 	}
 
