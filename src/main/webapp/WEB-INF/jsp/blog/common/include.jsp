@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ include file="tag.jsp"%>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-
 <!-- ================== BEGIN BASE CSS STYLE ================== -->
 <link href="${rootUrl}assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <link href="${rootUrl}assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
