@@ -91,19 +91,6 @@
 		
 		/**************************************************************************
 		 * 
-		 * 表格数据处理
-		 * 
-		 *************************************************************************/
-		_handleTableData: function(responseText,table) {
-			var $row = $(responseText).find(".result_data tr");
-			if(table=="add"){
-				var $tbody=$('#data-table', this.currentTarget).find("> tbody");
-				$tbody.prepend($row);
-			}
-		},
-		
-		/**************************************************************************
-		 * 
 		 * 显示loading
 		 * 
 		 *************************************************************************/
@@ -123,24 +110,7 @@
 		 * 
 		 *************************************************************************/
 		hideLoading: function() {
-			$("#alert-loading").addClass("hide");
-		},
-		
-		/**************************************************************************
-		 * 
-		 * 显示警告信息
-		 * 
-		 *************************************************************************/
-		showWarnMsg: function(message) {
-			$warnMsgDiv = $("#warn-message");
-			if(!$warnMsgDiv.length) {
-				var html = '<div id="warn-message" class="alert alert-warning alert-dismissible" role="alert">'
-						 + 		'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
-						 + 		'<strong>Warning!</strong>'
-						 + 		'<span></span>'
-						 + '</div>';
-			}
-			$warnMsgDiv.find("span").text(message);
+			$("#page-loader").addClass("hide");
 		},
 		
 	});

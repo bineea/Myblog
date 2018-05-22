@@ -19,28 +19,7 @@
             <!-- begin row -->
             <div class="row row-space-30">
                 <!-- begin col-9 -->
-                <div class="col-md-9">
-                    <!-- begin post-list -->
-                    <ul class="post-list">
-                        
-                    </ul>
-                    <!-- end post-list -->
-                    
-                    <div class="section-container">
-                        <!-- begin pagination -->
-                        <div class="pagination-container text-center">
-                            <ul class="pagination m-t-0 m-b-0">
-                                <li class="disabled"><a href="javascript:;">Prev</a></li>
-                                <li class="active"><a href="javascript:;">1</a></li>
-                                <li><a href="javascript:;">2</a></li>
-                                <li><a href="javascript:;">3</a></li>
-                                <li><span class="text">...</span></li>
-                                <li><a href="javascript:;">1797</a></li>
-                                <li><a href="javascript:;">Next</a></li>
-                            </ul>
-                        </div>
-                        <!-- end pagination -->
-                    </div>
+                <div id="page_pager" class="col-md-9">
                 </div>
                 <!-- end col-9 -->
                 <!-- begin col-3 -->

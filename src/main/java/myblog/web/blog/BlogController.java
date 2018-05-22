@@ -21,6 +21,6 @@ public class BlogController extends AbstractController {
 	@RequestMapping(value = "/home", method = RequestMethod.POST)
 	public String blogHomtPost() {
 		
-		return "";
+		return prefix + "";
 	}
 }
