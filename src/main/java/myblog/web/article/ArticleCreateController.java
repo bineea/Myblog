@@ -42,7 +42,7 @@ public class ArticleCreateController extends AbstractController {
 			throws MyManagerException, IOException {
 		String contentId = articleManager.createArticle(articleModel, ContentStatus.NORMAL);
 		model.addAttribute("contentId", contentId);
-		model.addAttribute("contentTitle", articleModel.getTitle());
+		model.addAttribute("contentTitle", articleModel.getCover() != null ? new String(articleModel.getTitle().getBytes("ISO-8859-1"), "UTF-8") : articleModel.getTitle());
 		model.addAttribute("contentStatus", ContentStatus.NORMAL);
 		addSuccess(response, "成功发布文章");
 		return prefix + "result";

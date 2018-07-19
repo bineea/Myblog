@@ -47,9 +47,9 @@ public class ArticleManagerImpl extends AbstractManager implements ArticleManage
 	
 	private Content getContentByArticleModel(ArticleModel articleModel, ContentStatus status) throws IOException {
 		Content content = new Content();
-		content.setTitle(articleModel.getTitle());
-		content.setText(articleModel.getText());
-		content.setSummany(articleModel.getSummany());
+		content.setTitle(articleModel.getCover() != null ? new String(articleModel.getTitle().getBytes("ISO-8859-1"), "UTF-8") : articleModel.getTitle());
+		content.setText(articleModel.getCover() != null ? new String(articleModel.getText().getBytes("ISO-8859-1"), "UTF-8") : articleModel.getText());
+		content.setSummany(articleModel.getCover() != null ? new String(articleModel.getSummany().getBytes("ISO-8859-1"), "UTF-8") : articleModel.getSummany());
 		content.setCover(articleModel.getCover() != null ? NonContextualLobCreator.INSTANCE.createBlob(articleModel.getCover().getBytes()) : null);
 		content.setMarkdownEnable(articleModel.isMarkdownEnable());
 		content.setContentStatus(status);
