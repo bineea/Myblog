@@ -5,6 +5,7 @@
 			RESPONSE_HEADER_ERROR:"header_error",
 			RESPONSE_HEADER_JUMP:"header_jump"
 		},
+		
 		/**************************************************************************
 		 * 
 		 * 处理分页
@@ -241,4 +242,21 @@
 		},
 	});
     
+    //查询
+    $.fn.manage = function() {
+    	// 区别ajaxSubmit
+    	this.ajaxForm({
+			type: "post", //提交方式 
+	        success: function (responseText, status, xhr) { //提交成功的回调函数
+	        	var $responseText = $(responseText);
+	        	//处理分页
+	        	$._bindPager($responseText.find("#page_query_pager"));
+	        	//显示列表
+	        	$._handleSearchReasult($responseText);
+	        },
+	        error: function (xhr, status, error) {
+	        	$.showWarnMsg("系统异常，请稍后重试！");
+	        }
+		});
+    }
 })(jQuery,window,document);

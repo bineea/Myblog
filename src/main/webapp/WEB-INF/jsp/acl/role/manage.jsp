@@ -10,19 +10,7 @@
 <%@ include file="/WEB-INF/jsp/common/sidebarInit.jsp"%>
 <script>
 	$(document).ready(function() {
-		$("#pageQueryForm").ajaxForm({
-			type: "post", //提交方式 
-	        success: function (responseText, status, xhr) { //提交成功的回调函数
-	        	var $responseText = $(responseText);
-	        	//处理分页
-	        	$._bindPager($responseText.find("#page_query_pager"));
-	        	//显示列表
-	        	$._handleSearchReasult($responseText);
-	        },
-	        error: function (xhr, status, error) {
-	        	$.showWarnMsg("系统异常，请稍后重试！");
-	        }
-		});
+		$("#pageQueryForm").manage();
 		
 		$("#data-table").on("click", ".config_op", function() {
 			$.ajax({
