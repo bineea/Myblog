@@ -243,7 +243,7 @@
 	});
     
     //查询
-    $.fn.manage = function() {
+    $.fn.manage = function(options) {
     	// 区别ajaxSubmit
     	this.ajaxForm({
 			type: "post", //提交方式 

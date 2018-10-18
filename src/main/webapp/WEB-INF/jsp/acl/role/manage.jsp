@@ -10,7 +10,7 @@
 <%@ include file="/WEB-INF/jsp/common/sidebarInit.jsp"%>
 <script>
 	$(document).ready(function() {
-		$("#pageQueryForm").manage();
+		$("#pageQueryForm").manage({});
 		
 		$("#data-table").on("click", ".config_op", function() {
 			$.ajax({
