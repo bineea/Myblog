@@ -152,12 +152,12 @@
                                 	<input name="cover" type="file" class="dropify" data-default-file="{$info.img|default=''}" data-allowed-file-extensions="jpg png jpeg gif" >
                                 </div>
                             </div>
-                            <div class="form-group m-5" >
-                                <label class="control-label" style="display: inline-block;margin: auto;">摘要:</label>
-                                <div style="min-width: 500px;max-width: 800px;margin: 10px;display: inline-block;">
-                                	<textarea name="summany" rows="5" cols="64" style="border:2px solid #E5E5E5;padding: 10px;"></textarea>
-                                </div>
-                            </div>
+<!--                             <div class="form-group m-5" > -->
+<!--                                 <label class="control-label" style="display: inline-block;margin: auto;">摘要:</label> -->
+<!--                                 <div style="min-width: 500px;max-width: 800px;margin: 10px;display: inline-block;"> -->
+<!--                                 	<textarea name="summany" rows="5" cols="64" style="border:2px solid #E5E5E5;padding: 10px;"></textarea> -->
+<!--                                 </div> -->
+<!--                             </div> -->
                             <div class="form-group m-5" >
 	                            <button id="publish" type="button" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">发布</button>
 	                            <button id="draft" type="button" class="btn btn-inverse m-r-5 m-b-5" style="margin: auto 5px;">暂存</button>

@@ -4,25 +4,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-<title>My Blog | 用户管理</title>
+<title>My Blog | 文章管理</title>
 
 <%@ include file="/WEB-INF/jsp/common/include.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/sidebarInit.jsp"%>
 <script>
 	$(document).ready(function (){
-		$("#pageQueryForm").manage({});
-		
-		$("#addUser").click(function() {
-			$.ajax({
-				url: this.href,
-				success: function(data, textStatus, jqXHR) {
-					$._showModal({},data);
-				},
-				error:function(XMLHttpRequest, textStatus, errorThrown) {
-					$.showWarnMsg("系统异常，请稍后重试！");
-				}
-			});
-			return false;
+		// 区别ajaxSubmit
+		$("#pageQueryForm").ajaxForm({
+			type: "post", //提交方式 
+	        success: function (responseText, status, xhr) { //提交成功的回调函数
+	        	var $responseText = $(responseText);
+	        	//处理分页
+	        	$._bindPager($responseText.find("#page_query_pager"));
+	        	//显示列表
+	        	$._handleSearchReasult($responseText);
+	        },
+	        error: function (xhr, status, error) {
+	        	$.showWarnMsg("系统异常，请稍后重试！");
+	        }
 		});
 		
 		$("#data-table").on("click", ".update_op", function(){
@@ -38,42 +38,6 @@
 			return false;
 		});
 		
-		$("#data-table").on("click", ".status_op", function(){
-			var trNode = this.parentNode.parentNode;
-			var hrefUrl = this.href;
-			$.confirm({
-		    	theme: 'white',
-		        title: 'Are you sure',
-		        content: '确定变更该用户状态？',
-		        buttons: {   
-		        	confirm: {
-		            	text: '确认',
-		                keys: ['enter'],
-		                action: function(){
-		 					$.ajax({
-		 						url: hrefUrl,
-		 						type: 'POST',
-		 						success: function(data, textStatus, jqXHR) {
-									if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)) {
-			 							$.showWarnMsg(data.msg);
-									} else if(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)) {
-										$._handleTableData(data,"update");
-										$.showMsg(true,new Base64().decode(jqXHR.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
-									}
-		 						},
-		 						error:function(XMLHttpRequest, textStatus, errorThrown) {
-		 							$.showWarnMsg("系统异常，请稍后重试！");
-		 						}
-		 					});
-		                }
-		            },
-		            cancel: {
-		            	text: '取消'
-		            }
-		        }
-		    });
-			return false;
-		});
 	});
 </script>
 </head>
@@ -87,7 +51,7 @@
 		<!-- begin #content -->
 		<div id="content" class="content">
 			<!-- begin page-header -->
-			<h1 class="page-header">用户管理 <small>My place,My rule</small></h1>
+			<h1 class="page-header">文章管理 <small>My place,My rule</small></h1>
 			<!-- end page-header -->
 			<!-- begin row -->
 			<div class="row">
@@ -102,13 +66,12 @@
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
                                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
                             </div>
-                            <h4 class="panel-title">用户管理</h4>
+                            <h4 class="panel-title">文章管理</h4>
                         </div>
                         <div id="myManager" class="panel-toolbar">
-                        	<a id="addUser" href="${rootUrl }app/acl/user/addUser" class="btn btn-inverse btn-sm m-r-5 m-b-5">添加用户</a>
                         	<form:form class="form-horizontal form-inline" modelAttribute="queryModel"  id="pageQueryForm" name="pageQueryForm" method="post" action="${rootUrl}app/acl/user/manage">
 	                        	<div class="form-group m-5">
-                                    <label class="control-label">账号:</label>
+                                    <label class="control-label">:</label>
                                     <input name="loginName" type="text" class="form-control" placeholder="账号" />
                                 </div>
 	                        	<div class="form-group m-5">
