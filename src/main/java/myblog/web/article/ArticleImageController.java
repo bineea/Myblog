@@ -16,6 +16,7 @@ import myblog.common.tools.ImageUploadTools;
 import myblog.model.article.CkeditorImageModel;
 import myblog.web.AbstractController;
 
+@Deprecated
 @Controller
 public class ArticleImageController extends AbstractController {
 	
