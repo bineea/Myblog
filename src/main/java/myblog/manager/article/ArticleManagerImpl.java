@@ -8,8 +8,10 @@ import java.util.Optional;
 
 import org.hibernate.engine.jdbc.NonContextualLobCreator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -18,6 +20,7 @@ import myblog.dao.entity.Category;
 import myblog.dao.entity.Content;
 import myblog.dao.entity.ContentCategoryMapping;
 import myblog.dao.entity.dict.ContentStatus;
+import myblog.dao.repo.Spe.ContentPageSpe;
 import myblog.dao.repo.jpa.CategoryRepo;
 import myblog.dao.repo.jpa.ContentCategoryRepo;
 import myblog.dao.repo.jpa.ContentRepo;
@@ -87,5 +90,11 @@ public class ArticleManagerImpl extends AbstractManager implements ArticleManage
 			if(!categoryOptional.isPresent())
 				throw new MyManagerException("文章类别不存在");
 		}
+	}
+
+	@Override
+	public Page<Content> pageQuery(ContentPageSpe spe) {
+		Assert.notNull(spe, "contentPageSpe不能为NULL");
+		return contentRepo.findAll(spe.handleSpecification(), spe.getPageRequest());
 	}
 }
