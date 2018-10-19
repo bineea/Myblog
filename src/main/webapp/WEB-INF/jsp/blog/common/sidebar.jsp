@@ -1,15 +1,35 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ include file="/WEB-INF/jsp/common/tag.jsp"%>
+
+<script>
+	$(document).ready(function() {
+		$('#blogQueryForm').ajaxForm({
+			
+		});
+		
+		$.ajax({
+			
+		});
+		
+		$.ajax({
+			
+		});
+	});
+</script>
 
 <!-- begin col-3 -->
 <div class="col-md-3">
 	<!-- begin section-container -->
 	<div class="section-container">
 		<div class="input-group sidebar-search">
-			<input type="text" class="form-control" placeholder="Search Our Stories..." />
+			<!-- 若翻页时，删除输入框内容，则为全文搜索。。。 -->
+			<form:form id="blogQueryForm" name="blogQueryForm" method="post" action="${rootUrl}app/blog/">
+			<input id="" name="" type="text" class="form-control" placeholder="Search blogs..." />
 			<span class="input-group-btn">
-				<button class="btn btn-inverse" type="button"><i class="fa fa-search"></i></button>
+				<button class="btn btn-inverse" type="submit"><i class="fa fa-search"></i></button>
 			</span>
+			</form:form>
 		</div>
 	</div>
 	<!-- end section-container -->

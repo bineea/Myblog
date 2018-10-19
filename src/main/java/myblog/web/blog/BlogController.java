@@ -18,9 +18,9 @@ public class BlogController extends AbstractController {
 		return prefix + "home";
 	}
 	
-	@RequestMapping(value = "/home", method = RequestMethod.POST)
+	@RequestMapping(value = "/home/result", method = RequestMethod.POST)
 	public String blogHomtPost() {
 		
-		return prefix + "";
+		return prefix + "result";
 	}
 }
