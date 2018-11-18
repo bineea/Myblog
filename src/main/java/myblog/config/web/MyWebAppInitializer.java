@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -38,6 +39,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 	public void registerContextLoaderListener(ServletContext servletContext) {
 		servletContext.setInitParameter("logbackConfigLocation", "classpath:config/logback.xml");
 		servletContext.addListener(LogbackConfigListener.class);
+		servletContext.setInitParameter("debug", "true");
 		super.registerContextLoaderListener(servletContext);
 	}
 	
@@ -54,12 +56,14 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		super.onStartup(servletContext);
+		registerCxfServlet(servletContext);
 		registerCkfinderServlet(servletContext);
 	}
 	
 	public void registerCkfinderServlet(ServletContext servletContext) {
-		String servletName = "connectorServlet";
+		String servletName = "ckfinderServlet";
 		Assert.hasLength(servletName, "getServletName() must not return empty or null");
+		//ckfinder自定义servlet
 		ConnectorServlet ckfinderServlet = new ConnectorServlet();
 		ServletRegistration.Dynamic ckfinderRegistration = servletContext.addServlet(servletName, ckfinderServlet);
 		Assert.notNull(ckfinderRegistration,
@@ -68,12 +72,33 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 
 		ckfinderRegistration.addMapping(getCkfinderServletMappings());
 		ckfinderRegistration.setAsyncSupported(isAsyncSupported());
-		ckfinderRegistration.setInitParameter("XMLConfig", "/WEB-INF/ckfinder-config.xml");
-		ckfinderRegistration.setInitParameter("debug", "false");
+		//ckfinder的jar包代码中xml文件对应参数名称已写死为“XMLConfig”，且路径必须为绝对路径
+		ckfinderRegistration.setInitParameter("XMLConfig", "/WEB-INF/classes/config/ckfinder.xml");
+		ckfinderRegistration.setInitParameter("debug", "true");
+		ckfinderRegistration.setLoadOnStartup(3);
 	}
 	
 	public String[] getCkfinderServletMappings() {
+		//指定需要由ckfinderServlet映射的路径（同理/app/*）
 		return new String[] { "/assets/plugins/ckfinder/core/connector/java/connector.java" };
 	}
 	
+	public void registerCxfServlet(ServletContext servletContext) {
+		String servletName = "cxfServlet";
+		Assert.hasLength(servletName, "getServletName() must not return empty or null");
+		ServletRegistration.Dynamic cxfRegistration = servletContext.addServlet(servletName, CXFServlet.class);
+		Assert.notNull(cxfRegistration,
+				"Failed to register servlet with name '" + servletName + "'." +
+				"Check if there is another servlet registered under the same name.");
+
+		cxfRegistration.addMapping(getCxfServletMappings());
+		cxfRegistration.setInitParameter("cxfConfigLocation", "classpath:config/webservice.xml");
+		cxfRegistration.setInitParameter("debug", "true");
+		cxfRegistration.setLoadOnStartup(2);
+	}
+	
+	public String[] getCxfServletMappings() {
+		//指定需要由cxfServlet映射的路径（同理/app/*）
+		return new String[] {"/webservice/*"};
+	}
 }
