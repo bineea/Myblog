@@ -26,8 +26,7 @@
 		http://cxf.apache.org/schemas/jaxws.xsd">
 	    
 		<!-- Import Apache CXF Bean Definition -->
-<!-- 	    <import resource="classpath:META-INF/cxf/cxf.xml"/> -->
-<!-- 	    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/> -->
-<!-- 	    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/> -->
+	    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+	    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 	    
 </beans>
