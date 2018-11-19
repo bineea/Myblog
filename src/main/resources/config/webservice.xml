@@ -27,6 +27,8 @@
 	    
 		<!-- Import Apache CXF Bean Definition -->
 	    <import resource="classpath:META-INF/cxf/cxf.xml"/>
-	    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 	    
+	    <!-- 可以直接引用annotation定义的bean -->
+		<jaxws:endpoint id="myFirst" implementor="#myFirstWebserviceImpl" address="/myFirst">
+		</jaxws:endpoint>
 </beans>
