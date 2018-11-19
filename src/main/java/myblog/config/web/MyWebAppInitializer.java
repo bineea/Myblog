@@ -86,13 +86,16 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 	public void registerCxfServlet(ServletContext servletContext) {
 		String servletName = "cxfServlet";
 		Assert.hasLength(servletName, "getServletName() must not return empty or null");
-		ServletRegistration.Dynamic cxfRegistration = servletContext.addServlet(servletName, CXFServlet.class);
+		CXFServlet cxfServlet = new CXFServlet();
+		ServletRegistration.Dynamic cxfRegistration = servletContext.addServlet(servletName, cxfServlet);
 		Assert.notNull(cxfRegistration,
 				"Failed to register servlet with name '" + servletName + "'." +
 				"Check if there is another servlet registered under the same name.");
 
 		cxfRegistration.addMapping(getCxfServletMappings());
-		cxfRegistration.setInitParameter("cxfConfigLocation", "classpath:config/webservice.xml");
+		//ckf的jar包代码中xml文件对应参数名称已写死为“config-location”
+		//如果未查找到“config-location”对应参数，则直接查找文件“/WEB-INF/cxf-servlet.xml”
+		cxfRegistration.setInitParameter("config-location", "classpath:config/webservice.xml");
 		cxfRegistration.setInitParameter("debug", "true");
 		cxfRegistration.setLoadOnStartup(2);
 	}
