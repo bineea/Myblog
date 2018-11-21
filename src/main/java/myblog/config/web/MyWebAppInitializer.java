@@ -73,7 +73,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 		ckfinderRegistration.addMapping(getCkfinderServletMappings());
 		ckfinderRegistration.setAsyncSupported(isAsyncSupported());
 		//ckfinder的jar包代码中xml文件对应参数名称已写死为“XMLConfig”，且路径必须为绝对路径
-		ckfinderRegistration.setInitParameter("XMLConfig", "/WEB-INF/classes/config/ckfinder.xml");
+		ckfinderRegistration.setInitParameter("XMLConfig", "/WEB-INF/classes/config/ckfinderServlet.xml");
 		ckfinderRegistration.setInitParameter("debug", "true");
 		ckfinderRegistration.setLoadOnStartup(3);
 	}
@@ -83,6 +83,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 		return new String[] { "/assets/plugins/ckfinder/core/connector/java/connector.java" };
 	}
 	
+	//TODO 如何完全使用java配置取代xml文件，同时webservice服务的发布能否通过@WebListener实现自动发布
 	public void registerCxfServlet(ServletContext servletContext) {
 		String servletName = "cxfServlet";
 		Assert.hasLength(servletName, "getServletName() must not return empty or null");
@@ -95,7 +96,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 		cxfRegistration.addMapping(getCxfServletMappings());
 		//ckf的jar包代码中xml文件对应参数名称已写死为“config-location”
 		//如果未查找到“config-location”对应参数，则直接查找文件“/WEB-INF/cxf-servlet.xml”
-		cxfRegistration.setInitParameter("config-location", "classpath:config/webservice.xml");
+		cxfRegistration.setInitParameter("config-location", "classpath:config/cxfServlet.xml");
 		cxfRegistration.setInitParameter("debug", "true");
 		cxfRegistration.setLoadOnStartup(2);
 	}
