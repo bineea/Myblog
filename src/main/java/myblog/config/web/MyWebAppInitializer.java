@@ -83,7 +83,8 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 		return new String[] { "/assets/plugins/ckfinder/core/connector/java/connector.java" };
 	}
 	
-	//TODO 如何完全使用java配置取代xml文件，同时webservice服务的发布能否通过@WebListener实现自动发布
+	//TODO 如何完全使用java配置取代xml文件
+	//通过@WebListener实现webservice服务的发布
 	public void registerCxfServlet(ServletContext servletContext) {
 		String servletName = "cxfServlet";
 		Assert.hasLength(servletName, "getServletName() must not return empty or null");
