@@ -34,7 +34,7 @@ public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServl
 		return new String[] { "/app/*" };
 	}
 	
-	//配置log
+	//重写registerContextLoaderListener方法，添加额外的Listener
 	@Override
 	public void registerContextLoaderListener(ServletContext servletContext) {
 		servletContext.setInitParameter("logbackConfigLocation", "classpath:config/logback.xml");
