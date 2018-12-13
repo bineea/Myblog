@@ -22,21 +22,23 @@
 <div class="col-md-3">
 	<!-- begin section-container -->
 	<div class="section-container">
-		<div class="input-group sidebar-search">
-			<!-- 若翻页时，删除输入框内容，则为全文搜索。。。 -->
-			<form:form id="blogQueryForm" name="blogQueryForm" method="post" action="${rootUrl}app/blog/">
-			<input id="" name="" type="text" class="form-control" placeholder="Search blogs..." />
-			<span class="input-group-btn">
-				<button class="btn btn-inverse" type="submit"><i class="fa fa-search"></i></button>
-			</span>
-			</form:form>
-		</div>
+		<!-- 若翻页时，删除输入框内容，则为全文搜索。。。 -->
+		<form:form id="blogQueryForm" name="blogQueryForm" method="post" action="${rootUrl}app/blog/">
+			<div class="input-group sidebar-search">
+				<input id="" name="" type="text" class="form-control" placeholder="Search blogs..." />
+				<span class="input-group-btn">
+					<button class="btn btn-inverse" type="submit"><i class="fa fa-search"></i></button>
+				</span>
+			</div>
+		</form:form>
 	</div>
+	
 	<!-- end section-container -->
 	<!-- begin section-container -->
 	<div class="section-container">
 		<h4 class="section-title"><span>Categories</span></h4>
 		<ul class="sidebar-list">
+			<!-- c:foreach 循环list -->
 			<li><a href="#">Sports (20)</a></li>
 			<li><a href="#">Outdoor Sports (45)</a></li>
 			<li><a href="#">Indoor Sports (1,292)</a></li>

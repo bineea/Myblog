@@ -1,6 +1,19 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"
     pageEncoding="utf-8"%>
 
+<script>
+	$(document).ready(function() {
+		
+		$.ajax({
+			
+		});
+		
+		$.ajax({
+			
+		});
+	});
+</script>
+
 <!-- begin #footer -->
 <div id="footer" class="footer">
 	<!-- begin container -->
