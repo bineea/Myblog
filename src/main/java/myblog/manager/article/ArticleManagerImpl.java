@@ -81,8 +81,6 @@ public class ArticleManagerImpl extends AbstractManager implements ArticleManage
 			throw new MyManagerException("文章标题不能为空");
 		if(!StringUtils.hasText(articleModel.getText()))
 			throw new MyManagerException("文章内容不能为空");
-		if(!StringUtils.hasText(articleModel.getSummany()))
-			throw new MyManagerException("文章摘要不能为空");
 		if(CollectionUtils.isEmpty(articleModel.getCategoryIds()))
 			throw new MyManagerException("文章类别不能为空");
 		for(String id:articleModel.getCategoryIds()) {
