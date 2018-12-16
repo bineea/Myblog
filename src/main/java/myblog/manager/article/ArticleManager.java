@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import myblog.common.pub.MyManagerException;
 import myblog.dao.entity.Content;
 import myblog.dao.entity.dict.ContentStatus;
+import myblog.dao.repo.Spe.BlogContentPageSpe;
 import myblog.dao.repo.Spe.ContentPageSpe;
 import myblog.model.article.ArticleModel;
 
@@ -28,4 +29,11 @@ public interface ArticleManager {
 	 * @return
 	 */
 	Page<Content> pageQuery(ContentPageSpe spe);
+	
+	/**
+	 * blog分页查询
+	 * @param spe
+	 * @return
+	 */
+	Page<Content> blogPageQuery(BlogContentPageSpe spe);
 }

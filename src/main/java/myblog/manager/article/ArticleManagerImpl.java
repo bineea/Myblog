@@ -20,6 +20,7 @@ import myblog.dao.entity.Category;
 import myblog.dao.entity.Content;
 import myblog.dao.entity.ContentCategoryMapping;
 import myblog.dao.entity.dict.ContentStatus;
+import myblog.dao.repo.Spe.BlogContentPageSpe;
 import myblog.dao.repo.Spe.ContentPageSpe;
 import myblog.dao.repo.jpa.CategoryRepo;
 import myblog.dao.repo.jpa.ContentCategoryRepo;
@@ -93,6 +94,12 @@ public class ArticleManagerImpl extends AbstractManager implements ArticleManage
 	@Override
 	public Page<Content> pageQuery(ContentPageSpe spe) {
 		Assert.notNull(spe, "contentPageSpe不能为NULL");
+		return contentRepo.findAll(spe.handleSpecification(), spe.getPageRequest());
+	}
+
+	@Override
+	public Page<Content> blogPageQuery(BlogContentPageSpe spe) {
+		Assert.notNull(spe, "blogContentPageSpe不能为NULL");
 		return contentRepo.findAll(spe.handleSpecification(), spe.getPageRequest());
 	}
 }
