@@ -18,7 +18,7 @@ import myblog.web.AbstractController;
 
 @Controller
 @RequestMapping(value = "blog")
-public class BlogController extends AbstractController {
+public class HomeController extends AbstractController {
 	
 	private final String prefix = "blog/";
 	
@@ -40,4 +40,5 @@ public class BlogController extends AbstractController {
 		model.addAttribute("totalElements", page.getTotalElements());
 		return prefix + "result";
 	}
+	
 }

@@ -102,4 +102,10 @@ public class ArticleManagerImpl extends AbstractManager implements ArticleManage
 		Assert.notNull(spe, "blogContentPageSpe不能为NULL");
 		return contentRepo.findAll(spe.handleSpecification(), spe.getPageRequest());
 	}
+
+	@Override
+	public Content findById(String id) {
+		Assert.hasText(id, "id不能为空");
+		return contentRepo.findById(id).orElse(null);
+	}
 }

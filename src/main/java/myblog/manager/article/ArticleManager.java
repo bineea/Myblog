@@ -36,4 +36,11 @@ public interface ArticleManager {
 	 * @return
 	 */
 	Page<Content> blogPageQuery(BlogContentPageSpe spe);
+	
+	/**
+	 * 通过id查询
+	 * @param id
+	 * @return
+	 */
+	Content findById(String id);
 }
