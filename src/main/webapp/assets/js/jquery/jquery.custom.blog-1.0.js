@@ -18,10 +18,10 @@
 			}else{
 				$("#page_pager", this.currentTarget)
 					.each(function() {
-					var $ul = $("<ul class='pagination m-t-0 m-b-10 pull-right'>");
-					var $li_prev = $("<li ><a href='javascript:;' class='pager_item' value='"+(currentPage-1)+"'>«</a></li>").appendTo($ul);
+					var $ul = $("<ul class='pagination m-t-0 m-b-0'>");
+					var $li_prev = $("<li ><a href='javascript:;' value='"+(currentPage-1)+"'>Prev</a></li>").appendTo($ul);
 					if(currentPage === 0){
-						$li_prev.addClass("disabled").find("a").removeClass("pager_item");
+						$li_prev.addClass("disabled").find("a");
 					}
 					var startPoint = 0,endPoint = 4;
 					if(currentPage > 2){
@@ -36,14 +36,14 @@
 						startPoint = 0;
 					}
 					for(var point = startPoint;point<=endPoint;point++){
-						var $li_point = $("<li ><a href='javascript:;' class='pager_item' value='"+point+"'>"+(point+1)+"</a></li>").appendTo($ul);
+						var $li_point = $("<li ><a href='javascript:;' value='"+point+"'>"+(point+1)+"</a></li>").appendTo($ul);
 						if(point === currentPage){
-							$li_point.addClass("active").find("a").removeClass("pager_item");
+							$li_point.addClass("active").find("a");
 						}
 					}
-					var $li_next = $("<li ><a href='javascript:;' class='pager_item' value='"+(currentPage + 1)+"'>»</a></li>").appendTo($ul); 
+					var $li_next = $("<li ><a href='javascript:;' value='"+(currentPage + 1)+"'>Next</a></li>").appendTo($ul); 
 					if(currentPage === totalPages){
-						$li_next.addClass("disabled").find("a").removeClass("pager_item");
+						$li_next.addClass("disabled").find("a");
 					}
 					$(this).html($ul);
 				}).show();
@@ -56,37 +56,15 @@
 		 * 
 		 *************************************************************************/
 		_handleSearchReasult: function($responseText) {
-			var hasText = $responseText.find("#page_query tbody").children().size() > 0;
+			var hasText = $responseText.find("#page_query ul").children().size() > 0;
 			if(hasText) {
-				var $tbody=$responseText.find("#page_query tbody");
-				$('#data-table').find("> tbody").empty().append($tbody.html());
+				var $ubody=$responseText.find("#page_query");
+				$('#data_result').empty().append($ubody.html());
 			}
 			else {
-				$('#data-table').find("> tbody").empty()
-				.append("<tr><td colspan='15' ><div class='taiji_not_found'>没有检索到符合条件的数据！</div></td></tr>");
+				$('#data_result').empty()
+				.append("<div class='data-not-found'>没有检索到符合条件的数据！</div>");
 			}
-		},
-		
-		/**************************************************************************
-		 * 
-		 * 处理分页跳转
-		 * 
-		 *************************************************************************/
-		_handlePageClick: function(pageclickednumber) {
-			// 分页标签点击处理
-			var $pageNo = $("input[name='pageNo']", this.currentTarget);
-			if ($pageNo.attr("name")) {
-				// 如果pageNo存在，则直接修改其值
-				$pageNo.val(pageclickednumber);
-			} else {
-				// 否则，创建pageNo，并追加到form标签下。
-				$pageNo = $(
-				"<input type='text' id='pageNo' name='pageNo'/>")
-				.val(pageclickednumber)
-				.appendTo($("#pageQueryForm"), this.currentTarget);
-			}
-			// 提交表单
-			$("#pageQueryForm", this.currentTarget).trigger("submit");
 		},
 		
 		/**************************************************************************
@@ -95,9 +73,9 @@
 		 * 
 		 *************************************************************************/
 		showLoading: function() {
-			$loadingDiv = $("#page-loader");
+			$loadingDiv = $("#page_loader");
 			if(!$loadingDiv.length) {
-				var html = '<div id="page-loader" class="fade in" style="filter:alpha(opacity=60);opacity:0.6;">'
+				var html = '<div id="page_loader" class="fade in" style="filter:alpha(opacity=60);opacity:0.6;">'
 						 +		'<span class="spinner"></span>'
 						 + '</div>';
 				$loadingDiv=$(html).prependTo(document.body);
@@ -110,9 +88,26 @@
 		 * 
 		 *************************************************************************/
 		hideLoading: function() {
-			$("#page-loader").addClass("hide");
+			$("#page_loader").addClass("hide");
 		},
 		
 	});
     
+    //查询
+    $.fn.manage = function(options) {
+    	// 区别ajaxSubmit
+    	this.ajaxForm({
+			type: "post", //提交方式 
+	        success: function (responseText, status, xhr) { //提交成功的回调函数
+	        	var $responseText = $(responseText);
+	        	//处理分页
+	        	$._bindPager($responseText.find("#page_query_pager"));
+	        	//显示列表
+	        	$._handleSearchReasult($responseText);
+	        },
+	        error: function (xhr, status, error) {
+	        	$.showWarnMsg("系统异常，请稍后重试！");
+	        }
+		});
+    }
 })(jQuery,window,document);
