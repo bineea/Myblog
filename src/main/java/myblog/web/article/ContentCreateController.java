@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import myblog.common.pub.MyManagerException;
 import myblog.dao.entity.dict.ContentStatus;
-import myblog.manager.article.ArticleManager;
 import myblog.manager.article.CategoryManager;
+import myblog.manager.article.ContentManager;
 import myblog.model.article.ArticleModel;
 import myblog.web.AbstractController;
 
 @Controller
 @RequestMapping(value = "article/create")
-public class ArticleCreateController extends AbstractController {
+public class ContentCreateController extends AbstractController {
 	
 	@Autowired
 	private CategoryManager categoryManager;
 	@Autowired
-	private ArticleManager articleManager;
+	private ContentManager contentManager;
 	
 	private static final String prefix = "article/create/";
 
@@ -40,7 +40,7 @@ public class ArticleCreateController extends AbstractController {
 	public String articlePublishPost(@ModelAttribute("articleModel") ArticleModel articleModel, 
 			HttpServletResponse response, Model model) 
 			throws MyManagerException, IOException {
-		String contentId = articleManager.createArticle(articleModel, ContentStatus.NORMAL);
+		String contentId = contentManager.createArticle(articleModel, ContentStatus.NORMAL);
 		model.addAttribute("contentId", contentId);
 		model.addAttribute("contentTitle", articleModel.getCover() != null ? new String(articleModel.getTitle().getBytes("ISO-8859-1"), "UTF-8") : articleModel.getTitle());
 		model.addAttribute("contentStatus", ContentStatus.NORMAL);
@@ -52,7 +52,7 @@ public class ArticleCreateController extends AbstractController {
 	public String articleDraftPost(@ModelAttribute("articleModel") ArticleModel articleModel,
 			HttpServletResponse response, Model model) 
 			throws MyManagerException, IOException {
-		String contentId = articleManager.createArticle(articleModel, ContentStatus.TEMPORARY);
+		String contentId = contentManager.createArticle(articleModel, ContentStatus.TEMPORARY);
 		model.addAttribute("contentId", contentId);
 		model.addAttribute("contentTitle", articleModel.getTitle());
 		model.addAttribute("contentStatus", ContentStatus.TEMPORARY);

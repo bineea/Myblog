@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import myblog.dao.entity.Content;
 import myblog.dao.entity.dict.ContentStatus;
 import myblog.dao.repo.Spe.ContentPageSpe;
-import myblog.manager.article.ArticleManager;
+import myblog.manager.article.ContentManager;
 import myblog.web.AbstractController;
 
 @Controller
 @RequestMapping(value = "article/operate")
-public class ArticleOperateController extends AbstractController {
+public class ContentOperateController extends AbstractController {
 
 	@Autowired
-	private ArticleManager articleManager;
+	private ContentManager contentManager;
 	
 	private final String prefix = "article/operate/";
 	
@@ -33,7 +33,7 @@ public class ArticleOperateController extends AbstractController {
 	@RequestMapping(value = "/manage", method = RequestMethod.POST)
 	public String managePost(@ModelAttribute("queryModel") ContentPageSpe spe, Model model) {
 		
-		Page<Content> page= articleManager.pageQuery(spe);
+		Page<Content> page= contentManager.pageQuery(spe);
 		model.addAttribute("queryResult", page.getContent());
 		model.addAttribute("currentPage", page.getNumber());
 		model.addAttribute("totalPages", page.getTotalPages());
