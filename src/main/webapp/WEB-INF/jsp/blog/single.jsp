@@ -26,9 +26,11 @@
         </c:if>
         <!-- begin post-info -->
         <div class="post-info">
-            <h4 class="post-title">
-                <a href="###">${fn:escapeXml(data.title) }</a>
-            </h4>
+        	<blockquote>
+	            <h4 class="post-title">
+	                <a href="###">${fn:escapeXml(data.title) }</a>
+	            </h4>
+            </blockquote>
             <div class="post-by">
                 Posted By <a href="###">BINEEA</a> <span class="divider">|</span> 
                 <a href="#">Sports</a>, <a href="#">Mountain</a>, <a href="#">Bike</a> 

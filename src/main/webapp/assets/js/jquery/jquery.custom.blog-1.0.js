@@ -95,8 +95,7 @@
     
     //查询
     $.fn.manage = function(options) {
-    	// 区别ajaxSubmit
-    	this.ajaxForm({
+    	this.ajaxSubmit({
 			type: "post", //提交方式 
 	        success: function (responseText, status, xhr) { //提交成功的回调函数
 	        	var $responseText = $(responseText);
