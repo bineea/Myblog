@@ -9,7 +9,6 @@ import myblog.model.BaseModel;
 public class ArticleModel extends BaseModel {
 	private String title;// 标题
 	private String text;// 内容
-	private String summany;// 摘要
 	private boolean markdownEnable;// 是否启用markdown
 	private MultipartFile cover;// 封面
 	private List<String> categoryIds;// 类别
@@ -28,14 +27,6 @@ public class ArticleModel extends BaseModel {
 
 	public void setText(String text) {
 		this.text = text;
-	}
-
-	public String getSummany() {
-		return summany;
-	}
-
-	public void setSummany(String summany) {
-		this.summany = summany;
 	}
 
 	public boolean isMarkdownEnable() {

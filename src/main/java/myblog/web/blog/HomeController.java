@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import myblog.dao.entity.Content;
 import myblog.dao.entity.dict.ContentStatus;
 import myblog.dao.repo.Spe.BlogContentPageSpe;
-import myblog.manager.article.ArticleManager;
+import myblog.manager.article.ContentManager;
 import myblog.web.AbstractController;
 
 @Controller
@@ -23,7 +23,7 @@ public class HomeController extends AbstractController {
 	private final String prefix = "blog/";
 	
 	@Autowired
-	private ArticleManager articleManager;
+	private ContentManager contentManager;
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String blogHomeGet(@ModelAttribute("spe") BlogContentPageSpe spe) {
@@ -33,7 +33,7 @@ public class HomeController extends AbstractController {
 	@RequestMapping(value = "/home", method = RequestMethod.POST)
 	public String blogHomtPost(@ModelAttribute("spe") BlogContentPageSpe spe, Model model) {
 		spe.setContentStatuses(Arrays.asList(ContentStatus.NORMAL,ContentStatus.FORBIDCOMMENT));
-		Page<Content> page = articleManager.blogPageQuery(spe);
+		Page<Content> page = contentManager.blogPageQuery(spe);
 		model.addAttribute("queryResult", page.getContent());
 		model.addAttribute("currentPage", page.getNumber());
 		model.addAttribute("totalPages", page.getTotalPages());

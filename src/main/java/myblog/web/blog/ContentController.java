@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import myblog.common.tools.HttpResponseHelper;
 import myblog.dao.entity.Content;
-import myblog.manager.article.ArticleManager;
+import myblog.manager.article.ContentManager;
 import myblog.web.AbstractController;
 
 @Controller
@@ -20,11 +20,11 @@ import myblog.web.AbstractController;
 public class ContentController extends AbstractController {
 	
 	@Autowired
-	private ArticleManager articleManager;
+	private ContentManager contentManager;
 	
 	@RequestMapping(value = "/showCover/{id}")
 	public void showCover(@PathVariable("id") String id, HttpServletResponse response) throws IOException, SQLException {
-		Content content = articleManager.findById(id);
+		Content content = contentManager.findById(id);
 		if(content != null && content.getCover() != null)
 			HttpResponseHelper.showPicture(content.getCover().getBinaryStream(), response);
 	}

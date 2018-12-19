@@ -7,7 +7,7 @@
     <div class="post-left-info">
         <div class="post-date">
             <span class="day"><javatime:format value="${data.createTime}" pattern="dd"  /></span>
-            <span class="month"><javatime:format value="${data.createTime}" pattern="yyyy.mm"  /></span>
+            <span class="month"><javatime:format value="${data.createTime}" pattern="yyyy.MM"  /></span>
         </div>
         <div class="post-likes">
             <i class="fa fa-heart-o"></i>

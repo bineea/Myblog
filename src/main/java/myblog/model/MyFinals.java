@@ -16,6 +16,8 @@ public class MyFinals {
 	public static final int DEFAULT_BLOG_SIZE = 5;
 //	jstree请求根目录ID
 	public static final String jsTreeRootReq = "#";
+//	默认文章摘要字符长度
+	public static final int DEFAULT_SUMMANY_LENGTH = 27;
 	
 //	手机号码正则
 	public static final String mobileRegexp = "^1[3|4|5|7|8|9]{1}[0-9]{9}$";
