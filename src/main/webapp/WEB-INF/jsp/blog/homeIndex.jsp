@@ -9,7 +9,8 @@
 
 <script>
 	$(document).ready(function() {
-		$("#blogQueryForm").manage({});
+		$("#contentForm").pageAjaxSubmit({});
+		$("#contentForm").pageAjaxForm({});
 	});
 </script>
 </head>
@@ -41,9 +42,9 @@
 					<!-- begin section-container -->
 					<div class="section-container">
 						<!-- 若翻页时，删除输入框内容，则为全文搜索。。。 -->
-						<form:form id="blogQueryForm" name="blogQueryForm" method="post" action="${rootUrl}app/blog/home">
+						<form:form id="contentForm" name="contentForm" method="post" action="${rootUrl}app/blog/content">
 							<div class="input-group sidebar-search">
-								<input id="" name="" type="text" class="form-control" placeholder="Search blogs..." />
+								<input id="keywords" name="keywords" type="text" class="form-control" placeholder="Search blogs..." />
 								<span class="input-group-btn">
 									<button class="btn btn-inverse" type="submit"><i class="fa fa-search"></i></button>
 								</span>
