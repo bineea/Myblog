@@ -4,13 +4,8 @@
 
 <script>
 	$(document).ready(function() {
-		$.ajax({
-			
-		});
-		
-		$.ajax({
-			
-		});
+		$.listAjax('${rootUrl}app/blog/category', $('#category_result', this.currentTarget));
+		$.listAjax('${rootUrl}app/blog/recent', $('#recent_result', this.currentTarget));
 	});
 </script>
 
@@ -18,52 +13,15 @@
 	<!-- begin section-container -->
 	<div class="section-container">
 		<h4 class="section-title"><span>Categories</span></h4>
-		<ul class="sidebar-list">
-			<!-- c:foreach 循环list -->
-			<li><a href="#">Sports (20)</a></li>
-			<li><a href="#">Outdoor Sports (45)</a></li>
-			<li><a href="#">Indoor Sports (1,292)</a></li>
-			<li><a href="#">Video Shooting (12)</a></li>
-			<li><a href="#">Drone (229)</a></li>
-			<li><a href="#">Uncategorized (1,482)</a></li>
-		</ul>
+		<div id = "category_result">
+		</div>
 	</div>
 	<!-- end section-container -->
 	<!-- begin section-container -->
 	<div class="section-container">
 		<h4 class="section-title"><span>Recent Post</span></h4>
-		<ul class="sidebar-recent-post">
-			<li>
-				<div class="info">
-					<h4 class="title"><a href="#">Lorem ipsum dolor sit amet.</a></h4>
-					<div class="date">23 December 2015</div>
-				</div>
-			</li>
-			<li>
-				<div class="info">
-					<h4 class="title"><a href="#">Vestibulum a cursus arcu.</a></h4>
-					<div class="date">16 December 2015</div>
-				</div>
-			</li>
-			<li>
-				<div class="info">
-					<h4 class="title"><a href="#">Nullam vel condimentum lectus. </a></h4>
-					<div class="date">7 December 2015</div>
-				</div>
-			</li>
-			<li>
-				<div class="info">
-					<h4 class="title"><a href="#">Proin in dui egestas libero posuere ullamcorper. </a></h4>
-					<div class="date">20 November 2015</div>
-				</div>
-			</li>
-			<li>
-				<div class="info">
-					<h4 class="title"><a href="#">Interdum et malesuada fames ac ante.</a></h4>
-					<div class="date">5 November 2015</div>
-				</div>
-			</li>
-		</ul>
+		<div id = "recent_result">
+		</div>
 	</div>
 	<!-- end section-container -->
 	<!-- begin section-container -->

@@ -16,8 +16,7 @@
 					isNaN(totalElements) || totalElements <= 0){
 				$("#page_pager", this.currentTarget).hide();
 			}else{
-				$("#page_pager", this.currentTarget)
-					.each(function() {
+				$("#page_pager", this.currentTarget).each(function() {
 					var $ul = $("<ul class='pagination m-t-0 m-b-0'>");
 					var $li_prev = $("<li ><a href='javascript:;' value='"+(currentPage-1)+"'>Prev</a></li>").appendTo($ul);
 					if(currentPage === 0){
@@ -55,14 +54,17 @@
 		 * 处理列表
 		 * 
 		 *************************************************************************/
-		_handleSearchReasult: function($responseText) {
-			var hasText = $responseText.find("#page_query ul").children().size() > 0;
+		_handleSearchReasult: function($dataResultTarget, $responseText) {
+			if($dataResultTarget === null || $dataResultTarget === "") {
+				$dataResultTarget = $("#data_result", this.currentTarget);
+			}
+			var hasText = $responseText.find("#query_result ul").children().size() > 0;
 			if(hasText) {
-				var $ubody=$responseText.find("#page_query");
-				$('#data_result').empty().append($ubody.html());
+				var $ubody=$responseText.find("#query_result");
+				$dataResultTarget.empty().append($ubody.html());
 			}
 			else {
-				$('#data_result').empty()
+				$dataResultTarget.empty()
 				.append("<div class='data-not-found'>没有检索到符合条件的数据！</div>");
 			}
 		},
@@ -91,22 +93,70 @@
 			$("#page_loader").addClass("hide");
 		},
 		
+		/**************************************************************************
+		 * 
+		 * 显示警告信息
+		 * 
+		 *************************************************************************/
+		showWarnMsg: function(message) {
+			console.log(message);
+			alert(message);
+		},
+		
+		/**************************************************************************
+		 * 
+		 * 查询列表信息
+		 * 
+		 *************************************************************************/
+	    listAjax : function(url, $dataResultTarget) {
+	    	$.ajax({
+	    		url:url,
+	    		type:'post',
+	    		success:function(data, textStatus, jqXHR) {
+					var $responseText = $(data);
+		        	//显示列表
+		        	$._handleSearchReasult($dataResultTarget,$responseText);
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown) {
+					$.showWarnMsg("系统异常，请稍后重试！");
+				}
+	    	});
+	    },
 	});
     
-    //查询
-    $.fn.manage = function(options) {
+    //分页查询
+    $.fn.pageAjaxSubmit = function(options) {
     	this.ajaxSubmit({
+			type: "post", //提交方式 
+	        success: function (responseText, status, xhr) { //提交成功的回调函数
+	        	var $responseText = $(responseText);
+	        	//处理分页
+	        	$._bindPager($responseText.find("#query_pager"));
+	        	//显示列表
+	        	$._handleSearchReasult(null,$responseText);
+	        },
+	        error: function (xhr, status, error) {
+	        	$.showWarnMsg("系统异常，请稍后重试！");
+	        }
+		});
+    	return false;
+    };
+    
+    //分页查询
+    $.fn.pageAjaxForm = function(options) {
+    	this.ajaxForm({
 			type: "post", //提交方式 
 	        success: function (responseText, status, xhr) { //提交成功的回调函数
 	        	var $responseText = $(responseText);
 	        	//处理分页
 	        	$._bindPager($responseText.find("#page_query_pager"));
 	        	//显示列表
-	        	$._handleSearchReasult($responseText);
+	        	$._handleSearchReasult(null,$responseText);
 	        },
 	        error: function (xhr, status, error) {
 	        	$.showWarnMsg("系统异常，请稍后重试！");
 	        }
 		});
-    }
+    };
+    
 })(jQuery,window,document);
