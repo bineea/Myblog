@@ -7,7 +7,7 @@
 	<!-- begin post-list -->
 	<ul class="post-list">
 	    <c:forEach items="${queryResult}" var="data"  varStatus="voStatus">
-			<%@ include file="single.jsp"%>
+			<%@ include file="singleIndex.jsp"%>
 		</c:forEach>
 	</ul>
 	<!-- end post-list -->

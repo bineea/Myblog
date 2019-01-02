@@ -6,9 +6,9 @@ import myblog.model.BaseModel;
 public class CategoryModel extends BaseModel {
 
 	private Category category;
-	private int contentSum;
+	private long contentSum;
 	
-	public CategoryModel(Category category, int contentSum) {
+	public CategoryModel(Category category, long contentSum) {
 		this.category = category;
 		this.contentSum = contentSum;
 	}
@@ -21,11 +21,11 @@ public class CategoryModel extends BaseModel {
 		this.category = category;
 	}
 
-	public int getContentSum() {
+	public long getContentSum() {
 		return contentSum;
 	}
 
-	public void setContentSum(int contentSum) {
+	public void setContentSum(long contentSum) {
 		this.contentSum = contentSum;
 	}
 

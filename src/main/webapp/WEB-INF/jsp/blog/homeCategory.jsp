@@ -27,10 +27,8 @@
             <div id="myManager" class="row row-space-30">
                 <!-- begin col-9 -->
                 <div class="col-md-9">
+                	<h4 class="section-title m-b-20"><span>CONTACT US</span></h4>
                 	<!-- 若翻页时，删除输入框内容，则为全文搜索。。。 -->
-                	<!-- 多个form是否可行？？？？？ -->
-					<form:form id="contentForm" name="contentForm" method="post" action="${rootUrl}app/blog/content">
-					</form:form>
                 	<div id="data_result">
                 	</div>
                 	<div class="section-container">

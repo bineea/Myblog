@@ -11,4 +11,11 @@ public interface CategoryManager {
 	 * @return
 	 */
 	List<Category> findAll();
+	
+	/**
+	 * 通过id查询类别数据
+	 * @param id
+	 * @return
+	 */
+	Category findById(String id);
 }

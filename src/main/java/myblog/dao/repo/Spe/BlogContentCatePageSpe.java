@@ -15,6 +15,7 @@ import myblog.dao.entity.dict.ContentStatus;
 public class BlogContentCatePageSpe extends AbstractPageSpecification<ContentCategoryMapping>{
 
 	private String categoryId;
+	private String keywords;
 	private List<ContentStatus> contentStatuses;
 	
 	@Override
@@ -23,6 +24,8 @@ public class BlogContentCatePageSpe extends AbstractPageSpecification<ContentCat
 			List<Predicate> predicateList = new ArrayList<Predicate>();
 			if(StringUtils.hasText(categoryId))
 				predicateList.add(criteriaBuilder.equal(root.get("category.id").as(String.class), categoryId));
+			if(StringUtils.hasText(keywords))
+				predicateList.add(criteriaBuilder.or(criteriaBuilder.like(root.get("content.title").as(String.class), like(keywords)), criteriaBuilder.like(root.get("content.text").as(String.class), like(keywords))));
 			if(contentStatuses != null && !contentStatuses.isEmpty())
 				predicateList.add(criteriaBuilder.in(root.get("content.contentStatus")).value(contentStatuses));
 			query.where(predicateList.stream().toArray(Predicate[]::new));
@@ -38,6 +41,14 @@ public class BlogContentCatePageSpe extends AbstractPageSpecification<ContentCat
 
 	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 
 	public List<ContentStatus> getContentStatuses() {

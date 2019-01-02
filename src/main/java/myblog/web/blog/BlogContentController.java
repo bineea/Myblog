@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import myblog.common.tools.HttpResponseHelper;
 import myblog.dao.entity.Content;
+import myblog.dao.entity.ContentCategoryMapping;
 import myblog.dao.entity.dict.ContentStatus;
+import myblog.dao.repo.Spe.BlogContentCatePageSpe;
 import myblog.dao.repo.Spe.BlogContentPageSpe;
+import myblog.manager.article.ContentCateManager;
 import myblog.manager.article.ContentManager;
 import myblog.web.AbstractController;
 
@@ -30,6 +33,8 @@ public class BlogContentController extends AbstractController {
 	
 	@Autowired
 	private ContentManager contentManager;
+	@Autowired
+	private ContentCateManager contentCateManager;
 	
 	@RequestMapping(value = "/content/showCover/{id}")
 	public void showCover(@PathVariable("id") String id, HttpServletResponse response) throws IOException, SQLException {
@@ -38,15 +43,26 @@ public class BlogContentController extends AbstractController {
 			HttpResponseHelper.showPicture(content.getCover().getBinaryStream(), response);
 	}
 	
-	@RequestMapping(value = "/content", method = RequestMethod.POST)
-	public String contentPost(@ModelAttribute("spe") BlogContentPageSpe spe, Model model) {
+	@RequestMapping(value = "/contentIndex", method = RequestMethod.POST)
+	public String contentIndexPost(@ModelAttribute("spe") BlogContentPageSpe spe, Model model) {
 		spe.setContentStatuses(Arrays.asList(ContentStatus.NORMAL,ContentStatus.FORBIDCOMMENT));
 		Page<Content> page = contentManager.blogPageQuery(spe);
 		model.addAttribute("queryResult", page.getContent());
 		model.addAttribute("currentPage", page.getNumber());
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalElements", page.getTotalElements());
-		return prefix + "contentResult";
+		return prefix + "contentIndexResult";
+	}
+	
+	@RequestMapping(value = "/contentCategory", method = RequestMethod.POST)
+	public String contentCategoryPost(@ModelAttribute("spe") BlogContentCatePageSpe spe, Model model) {
+		spe.setContentStatuses(Arrays.asList(ContentStatus.NORMAL,ContentStatus.FORBIDCOMMENT));
+		Page<ContentCategoryMapping> page = contentCateManager.blogPageQuery(spe);
+		model.addAttribute("queryResult", page.getContent());
+		model.addAttribute("currentPage", page.getNumber());
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalElements", page.getTotalElements());
+		return prefix + "contentCategoryResult";
 	}
 	
 	@RequestMapping(value = "/content/recent", method = RequestMethod.POST)
