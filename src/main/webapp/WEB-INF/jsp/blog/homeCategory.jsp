@@ -27,7 +27,7 @@
             <div id="myManager" class="row row-space-30">
                 <!-- begin col-9 -->
                 <div class="col-md-9">
-                	<h4 class="section-title m-b-20"><span>CONTACT US</span></h4>
+                	<h4 class="section-title m-b-20"><span>CATEGORY：${category.name }</span></h4>
                 	<!-- 若翻页时，删除输入框内容，则为全文搜索。。。 -->
                 	<div id="data_result">
                 	</div>
@@ -44,7 +44,8 @@
 					<!-- begin section-container -->
 					<div class="section-container">
 						<!-- 若翻页时，删除输入框内容，则为全文搜索。。。 -->
-						<form:form id="contentForm" name="contentForm" method="post" action="${rootUrl}app/blog/content">
+						<form:form id="contentForm" name="contentForm" method="post" action="${rootUrl}app/blog/contentCategory">
+							<input name="categoryId" value="${category.id }" hidden="hidden"/>
 							<div class="input-group sidebar-search">
 								<input id="keywords" name="keywords" type="text" class="form-control" placeholder="Search blogs..." />
 								<span class="input-group-btn">

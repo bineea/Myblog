@@ -23,13 +23,13 @@ public class BlogContentCatePageSpe extends AbstractPageSpecification<ContentCat
 		Specification<ContentCategoryMapping> spe = (root, query, criteriaBuilder) -> {
 			List<Predicate> predicateList = new ArrayList<Predicate>();
 			if(StringUtils.hasText(categoryId))
-				predicateList.add(criteriaBuilder.equal(root.get("category.id").as(String.class), categoryId));
+				predicateList.add(criteriaBuilder.equal(root.get("category").get("id").as(String.class), categoryId));
 			if(StringUtils.hasText(keywords))
-				predicateList.add(criteriaBuilder.or(criteriaBuilder.like(root.get("content.title").as(String.class), like(keywords)), criteriaBuilder.like(root.get("content.text").as(String.class), like(keywords))));
+				predicateList.add(criteriaBuilder.or(criteriaBuilder.like(root.get("content").get("title").as(String.class), like(keywords)), criteriaBuilder.like(root.get("content").get("text").as(String.class), like(keywords))));
 			if(contentStatuses != null && !contentStatuses.isEmpty())
-				predicateList.add(criteriaBuilder.in(root.get("content.contentStatus")).value(contentStatuses));
+				predicateList.add(criteriaBuilder.in(root.get("content").get("contentStatus")).value(contentStatuses));
 			query.where(predicateList.stream().toArray(Predicate[]::new));
-			query.orderBy(criteriaBuilder.desc(root.get("content.createTime").as(LocalDateTime.class)),criteriaBuilder.desc(root.get("content.id").as(String.class)));
+			query.orderBy(criteriaBuilder.desc(root.get("content").get("createTime").as(LocalDateTime.class)),criteriaBuilder.desc(root.get("content").get("id").as(String.class)));
 			return query.getRestriction();
 		};
 		return spe;

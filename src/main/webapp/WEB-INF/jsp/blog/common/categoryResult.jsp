@@ -7,7 +7,7 @@
 	<!-- begin sidebar-list -->
 	<ul class="sidebar-list">
 		<c:forEach items="${queryResult}" var="data"  varStatus="voStatus">
-			<li><a href="#">Sports (20)</a></li>
+			<li><a href="${rootUrl }app/blog/homeCategory/${data.category.id}">${data.category.name } (${data.contentSum })</a></li>
 		</c:forEach>
 	</ul>
 	<!-- end sidebar-list -->
