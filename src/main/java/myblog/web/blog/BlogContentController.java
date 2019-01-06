@@ -3,6 +3,7 @@ package myblog.web.blog;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -65,9 +66,17 @@ public class BlogContentController extends AbstractController {
 		return prefix + "contentCategoryResult";
 	}
 	
-	@RequestMapping(value = "/content/recent", method = RequestMethod.POST)
+	@RequestMapping(value = "/recent", method = RequestMethod.POST)
 	public String contentRecentPost(Model model) {
-		Arrays.asList(ContentStatus.NORMAL,ContentStatus.FORBIDCOMMENT);
-		return prefix + "common/contentResult";
+		List<Content> queryResult = contentManager.findRecentContent();
+		model.addAttribute("queryResult", queryResult);
+		return prefix + "common/recentResult";
+	}
+	
+	@RequestMapping(value = "/content/{id}", method = RequestMethod.GET)
+	public String contentDetailPost(@PathVariable("id") String id, Model model) {
+		Content content = contentManager.findById(id);
+		model.addAttribute("content", content);
+		return prefix + "contentDetail";
 	}
 }

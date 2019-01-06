@@ -43,7 +43,7 @@
         <!-- end post-info -->
         <!-- begin read-btn-container -->
         <div class="read-btn-container">
-            <a href="###">Read More <i class="fa fa-angle-double-right"></i></a>
+            <a href="${rootUrl }app/blog/content/${data.id}">Read More <i class="fa fa-angle-double-right"></i></a>
         </div>
         <!-- end read-btn-container -->
     </div>
