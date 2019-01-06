@@ -9,8 +9,8 @@
 		<c:forEach items="${queryResult}" var="data"  varStatus="voStatus">
 			<li>
 				<div class="info">
-					<h4 class="title"><a href="#">Lorem ipsum dolor sit amet.</a></h4>
-					<div class="date">23 December 2015</div>
+					<h4 class="title"><a href="${rootUrl }app/blog/content/${data.id}">${data.title }</a></h4>
+					<div class="date"><javatime:format value="${data.createTime}" pattern="yyyy.MM.dd"  /></div>
 				</div>
 			</li>
 		</c:forEach>

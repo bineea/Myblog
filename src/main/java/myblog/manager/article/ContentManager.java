@@ -1,6 +1,7 @@
 package myblog.manager.article;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 
@@ -43,4 +44,10 @@ public interface ContentManager {
 	 * @return
 	 */
 	Content findById(String id);
+	
+	/**
+	 * 查询最新的文章
+	 * @return
+	 */
+	List<Content> findRecentContent();
 }

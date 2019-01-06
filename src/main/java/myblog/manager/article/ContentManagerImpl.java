@@ -3,6 +3,7 @@ package myblog.manager.article;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,5 +112,15 @@ public class ContentManagerImpl extends AbstractManager implements ContentManage
 	public Content findById(String id) {
 		Assert.hasText(id, "id不能为空");
 		return contentRepo.findById(id).orElse(null);
+	}
+
+	@Override
+	public List<Content> findRecentContent() {
+		BlogContentPageSpe spe = new BlogContentPageSpe();
+		spe.setContentStatuses(Arrays.asList(ContentStatus.NORMAL,ContentStatus.FORBIDCOMMENT));
+		spe.setPageNo(MyFinals.DEFAULT_PAGE_NUM);
+		spe.setPageSize(MyFinals.DEFAULT_BLOG_SIZE);
+		Page<Content> page= contentRepo.findAll(spe.handleSpecification(), spe.getPageRequest());
+		return page.getContent();
 	}
 }
