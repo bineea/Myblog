@@ -28,4 +28,6 @@
 		<!-- Import Apache CXF Bean Definition -->
 	    <import resource="classpath:META-INF/cxf/cxf.xml"/>
 	    
+	    <jaxws:endpoint implementor="#myFirstWebserviceImpl" address="http://127.0.0.1:8180/myblog/webservice/myFirst">
+	    </jaxws:endpoint>
 </beans>
