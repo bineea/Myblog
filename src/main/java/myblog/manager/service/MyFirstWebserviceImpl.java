@@ -8,13 +8,13 @@ import javax.jws.WebMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import myblog.dao.entity.Role;
 import myblog.dao.repo.jpa.RoleRepo;
+import myblog.manager.AbstractManager;
 
 @Service
-public class MyFirstWebserviceImpl extends SpringBeanAutowiringSupport implements MyFirstWebservice {
+public class MyFirstWebserviceImpl extends AbstractManager implements MyFirstWebservice {
 
 	@Autowired
 	private RoleRepo roleRepo;
@@ -22,7 +22,7 @@ public class MyFirstWebserviceImpl extends SpringBeanAutowiringSupport implement
 	@WebMethod
 	@Override
 	public String sayHello(){
-		System.out.println("----->>>>进入sayHello方法------");
+		logger.info("----->>>>进入sayHello方法------");
 		return "Hello World!!!";
 	}
 
@@ -30,9 +30,7 @@ public class MyFirstWebserviceImpl extends SpringBeanAutowiringSupport implement
 	@Override
 	public List<Role> findRoleByName(String name) {
 		Assert.hasText(name, "name不能为空");
-		System.out.println("---------------->>>name:"+name);
 		List<Role> list = roleRepo.findAll();
-		System.out.println("---------------->>>list:"+list.toString());
 		if(list == null || list.isEmpty())
 			return new ArrayList<Role>();
 		return list;
