@@ -21,7 +21,7 @@ import myblog.manager.AclHandlerInterceptor;
 //注解该类为配置类
 @Configuration
 //注解需要扫描的包
-@ComponentScan(basePackages = AppConfig.APP_NAME + ".web")
+@ComponentScan(basePackages = {AppConfig.APP_NAME + ".web"})
 public class WebConfig implements WebMvcConfigurer
 {
 	//配置视图解析器
