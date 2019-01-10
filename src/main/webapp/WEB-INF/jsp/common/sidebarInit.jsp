@@ -2,7 +2,7 @@
     pageEncoding="utf-8"%>
 <script>
 	$(document).ready(function() {
-			$("#sidebarNav").append(toMenuHtml(eval('${roleMenu}'), true));
+			$("#sidebarNav").append(toMenuHtml(JSON.parse('${roleMenu}'), true));
 			$("#${currentResource.id}").parents("#sidebarNav li").andSelf().addClass("active");
 			App.init();
 	});

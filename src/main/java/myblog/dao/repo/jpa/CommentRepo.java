@@ -1,5 +1,7 @@
 package myblog.dao.repo.jpa;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,4 +17,10 @@ public interface CommentRepo extends JpaRepository<Comment, String>, JpaSpecific
 	Page<Comment> pageQuery(String contentId, Pageable pageable);
 	
 	Page<Comment> findAll(Specification<Comment> spec, Pageable pageable);
+	
+	@Query(value = "select c from Comment c where c.content.id = ?1")
+	List<Comment> findByContentId(String contentId);
+	
+	@Query(value = "select c from Comment c where c.parentComment.id = ?1")
+	List<Comment> findByParentCommentId(String commentId);
 }

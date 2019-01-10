@@ -9,8 +9,54 @@
 
 <script>
 	$(document).ready(function() {
-		
+		$.ajax({
+			url: '${rootUrl}app/blog/comment/all',
+			type: 'POST',
+			data: {
+				'contentId' : $('#contentId').val()
+			},
+			success: function(data, textStatus, jqXHR) {
+				$('#allComments').append('<ul class="comment-list">' + toAllCommentsHtml(eval(data)) + '</ul>');
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				$.showWarnMsg("系统异常，请稍后重试！");
+			}
+		});
 	});
+	
+	function toAllCommentsHtml(allComments) {
+		var allCommentHtml = '';
+		for(var i=0; i<allComments.length; i++) {
+			allComments[i].hasParentComment ? allCommentHtml += '<ul class="comment-list">' : allCommentHtml;
+			allCommentHtml += 	'<li>';
+			allCommentHtml += 		'<div class="comment-avatar">';
+			allCommentHtml +=			'<i class="fa fa-user"></i>';
+			allCommentHtml +=		'</div>';
+			allCommentHtml +=		'<div class="comment-container">';
+			allCommentHtml +=			'<div class="comment-author">';
+			allCommentHtml +=				allComments[i].comment.author;
+			allCommentHtml +=				'<span class="comment-date">';
+			allCommentHtml +=					' on <span class="underline">' + allComments[i].comment.createTime + '</span>';
+			allCommentHtml +=				'</span>';
+			allCommentHtml +=			'</div>';
+			allCommentHtml +=			'<div class="comment-content">';
+			allCommentHtml +=				allComments[i].text;
+			allCommentHtml +=			'</div>';
+			allCommentHtml +=			'<div class="comment-btn pull-left">';
+			allCommentHtml +=				'<a href="#"><i class="fa fa-reply"></i> Reply</a>';
+			allCommentHtml +=			'</div>';
+			allCommentHtml +=			'<div class="comment-rating">';
+			allCommentHtml +=				'Like or Dislike: ';
+			allCommentHtml +=				'<a href="#" class="m-l-10 text-inverse"><i class="fa fa-thumbs-up text-success"></i> 154</a>';
+			allCommentHtml +=				'<a href="#" class="m-l-10 text-inverse"><i class="fa fa-thumbs-down text-danger"></i> 112</a>';
+			allCommentHtml +=			'</div>';
+			allComments[i].hasReplies ? allCommentHtml += toAllCommentsHtml(allComments[i].replyComment) : allCommentHtml;
+			allCommentHtml +=		'</div>';
+			allCommentHtml += 	'</li>';
+			allComments[i].hasParentComment ? allCommentHtml += '</ul>' : allCommentHtml;
+		}
+		return allCommentHtml;
+	}
 </script>
 </head>
 <body>
@@ -28,139 +74,51 @@
                 <div class="col-md-9">
                 	<!-- begin post-detail -->
                     <div class="post-detail section-container">
+                        <input id="contentId" type="text" value="${content.id }" hidden="hidden"/>
                         <ul class="breadcrumb">
                             <li><a href="#">Home</a></li>
-                            <li class="active">Bootstrap Carousel Blog Post</li>
+                            <li class="active">${content.title }</li>
                         </ul>
                         <h4 class="post-title">
-                            <a href="post_detail.html">Bootstrap Carousel Blog Post</a>
+                            <a href="#">${content.title }</a>
                         </h4>
                         <div class="post-by">
-                            Posted By <a href="#">admin</a> <span class="divider">|</span> 10 June 2015 <span class="divider">|</span> <a href="#">Sports</a>, <a href="#">Mountain</a>, <a href="#">Bike</a> <span class="divider">|</span> 2 Comments
+                            Posted By <a href="#">admin</a> <span class="divider">|</span> <javatime:format value="${content.createTime}" pattern="yyyy.MM.dd"  /> <span class="divider">|</span>  <span id="commentCount"></span> Comments
                         </div>
+                        <c:if test="${content.cover ne null } && ${content.cover ne ''  }">
+	                        <!-- begin post-image -->
+	                        <div class="post-image">
+	                            <img src="${rootUrl }app/" alt="cover" />
+	                        </div>
+	                        <!-- end post-image -->
+                        </c:if>
                         <!-- begin post-desc -->
                         <div class="post-desc">
-                          ceshi
+                        	${content.text }
                         </div>
                         <!-- end post-desc -->
                     </div>
                     <!-- end post-detail -->
                     
                     <!-- begin section-container -->
-                    <div class="section-container">
-                        <h4 class="section-title"><span>All Comments (3)</span></h4>
-                        <!-- begin comment-list -->
-                        <ul class="comment-list">
-                            <li>
-                                <!-- begin comment-avatar -->
-                                <div class="comment-avatar">
-                                    <i class="fa fa-user"></i>
-                                </div>
-                                <!-- end comment-avatar -->
-                                <!-- begin comment-container -->
-                                <div class="comment-container">
-                                    <div class="comment-author">
-                                        Aquila Erik 
-                                        <span class="comment-date">
-                                            on <span class="underline">June 6, 2015</span> at <span class="underline">6:17 pm</span>
-                                        </span>
-                                    </div>
-                                    <div class="comment-content">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec gravida blandit risus at finibus. 
-                                        In suscipit ligula velit, vel commodo libero viverra nec. Aenean luctus eleifend enim quis luctus. 
-                                        Aliquam vulputate placerat ullamcorper.
-                                    </div>
-                                    <div class="comment-btn pull-left">
-                                        <a href="#"><i class="fa fa-reply"></i> Reply</a>
-                                    </div>
-                                    <div class="comment-rating">
-                                        Like or Dislike: 
-                                        <a href="#" class="m-l-10 text-inverse"><i class="fa fa-thumbs-up text-success"></i> 154</a>
-                                        <a href="#" class="m-l-10 text-inverse"><i class="fa fa-thumbs-down text-danger"></i> 112</a>
-                                    </div>
-                                    <!-- begin comment-list -->
-                                    <ul class="comment-list">
-                                        <li>
-                                            <!-- begin comment-avatar -->
-                                            <div class="comment-avatar">
-                                                <i class="fa fa-user"></i>
-                                            </div>
-                                            <!-- end comment-avatar -->
-                                            <!-- begin comment-container -->
-                                            <div class="comment-container">
-                                                <div class="comment-author">
-                                                    Gevorg Silvester 
-                                                    <span class="comment-date">
-                                                        on <span class="underline">June 6, 2015</span> at <span class="underline">8:17 pm</span>
-                                                    </span>
-                                                </div>
-                                                <div class="comment-content">
-                                                    Quisque aliquam arcu nec nibh eleifend, ac varius ante lacinia. 
-                                                    Nam nec varius enim, vel mollis dui. Duis malesuada lorem metus, 
-                                                    ut placerat turpis vulputate vitae.
-                                                </div>
-                                                <div class="comment-btn pull-left">
-                                                    <a href="#"><i class="fa fa-reply"></i> Reply</a>
-                                                </div>
-                                                <div class="comment-rating">
-                                                    Like or Dislike: 
-                                                    <a href="#" class="m-l-10 text-inverse"><i class="fa fa-thumbs-up text-success"></i> 5</a> 
-                                                    <a href="#" class="m-l-10 text-inverse"><i class="fa fa-thumbs-down text-danger"></i> 0</a>
-                                                </div>
-                                            </div>
-                                            <!-- end comment-container -->
-                                        </li>
-                                    </ul>
-                                    <!-- end comment-list -->
-                                </div>
-                                <!-- end comment-container -->
-                            </li>
-                            <li>
-                                <!-- begin comment-avatar -->
-                                <div class="comment-avatar">
-                                    <img src="assets/img/user-1.jpg" alt="" />
-                                </div>
-                                <!-- end comment-avatar -->
-                                <!-- begin comment-container -->
-                                <div class="comment-container">
-                                    <div class="comment-author">
-                                        Isador Ennio 
-                                        <span class="comment-date">
-                                            on <span class="underline">June 6, 2015</span> at <span class="underline">11:23 pm</span>
-                                        </span>
-                                    </div>
-                                    <div class="comment-content">
-                                        Fusce urna massa, pellentesque eget interdum nec, lacinia nec velit.
-                                    </div>
-                                    <div class="comment-btn pull-left">
-                                        <a href="#"><i class="fa fa-reply"></i> Reply</a>
-                                    </div>
-                                    <div class="comment-rating">
-                                        Like or Dislike: 
-                                        <a href="#" class="m-l-10 text-inverse"><i class="fa fa-thumbs-up text-success"></i> 2</a> 
-                                        <a href="#" class="m-l-10 text-inverse"><i class="fa fa-thumbs-down text-danger"></i> 0</a>
-                                    </div>
-                                </div>
-                                <!-- end comment-container -->
-                            </li>
-                        </ul>
-                        <!-- end comment-list -->
+                    <div id="allComments" class="section-container">
+                        <h4 class="section-title"><span>All Comments</span></h4>
                     </div>
                     <!-- end section-container -->
                     
                     <!-- begin section-container -->
-                    <div class="section-container">
+                    <div id="addComment" class="section-container">
                         <h4 class="section-title m-b-20"><span>Add a Comment</span></h4>
                         <div class="alert alert-warning f-s-12">
                             Suspendisse vulputate pulvinar nisl, quis rutrum risus pretium ut. Nulla at risus facilisis, consectetur erat nec, 
                             posuere justo. Ut elementum, elit pellentesque eleifend semper, elit metus venenatis libero, 
                             non fermentum mi est eu neque. Ut vel metus eget tortor viverra varius et quis eros.
                         </div>
-                        <form class="form-horizontal" action="" method="POST">
+                        <form:form cssClass="form-horizontal" action="${rootUrl }app/" method="POST">
                             <div class="form-group">
                                 <label class="control-label f-s-12 col-md-2">Your Name <span class="text-danger">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" />
+<%--                                     <form:input type="text" path="name" cssClass="form-control" /> --%>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -190,7 +148,7 @@
                                     <button type="submit" class="btn btn-inverse btn-lg">Submit Comment</button>
                                 </div>
                             </div>
-                        </form> 
+                        </form:form> 
                     </div>
                     <!-- end section-container -->
                 </div>
