@@ -23,17 +23,16 @@ public class Comment extends StringUUIDEntity {
 	private Content content;//评论的内容ID
 	private ContentModule contentModule;//评论的内容模型
 	private int commentCount;//评论的回复数量
-	private int orderNum;//排序编号，常用语置顶等
-	private User user;//评论的用户ID
-	private String ip;//评论的IP地址
-	private String author;//评论的作者
+	private int orderNum;//排序编号，常用于置顶等
 	private CommentType commentType;//评论的类型，默认是comment
+	private CommentStatus status;//评论的状态
+	private String author;//评论的作者
+	private String email;//评论用户的email
 	private String text;//评论的内容
+	private String ip;//评论的IP地址
 	private String agent;//提交评论的浏览器信息
 	private LocalDateTime createTime;//评论的时间
 	private String slug;//评论的slug(伪静态)
-	private String email;//评论用户的email
-	private CommentStatus status;//评论的状态
 	private int voteUp;//“顶”的数量
 	private int voteDown;//“踩”的数量
 	private String flag;//标识
@@ -81,15 +80,6 @@ public class Comment extends StringUUIDEntity {
 	}
 	public void setOrderNum(int orderNum) {
 		this.orderNum = orderNum;
-	}
-	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 	
 	@Column(name = "ip")

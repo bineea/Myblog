@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import myblog.common.entity.StringUUIDEntity;
@@ -16,6 +18,7 @@ import myblog.dao.entity.dict.ContentStatus;
 @Table(name = "blog_content")
 public class Content extends StringUUIDEntity {
 
+	private User user;// 作者
 	private String title;// 标题
 	private String text;// 内容
 	private String summany;// 摘要
@@ -30,6 +33,16 @@ public class Content extends StringUUIDEntity {
 	private String flag;// 标识
 	private Double lat;// 纬度
 	private Double lng;// 经度
+
+	@JoinColumn(name = "user_id")
+	@ManyToOne
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	@Column(name = "title")
 	public String getTitle() {

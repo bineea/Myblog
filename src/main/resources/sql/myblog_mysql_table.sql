@@ -6,20 +6,20 @@ DROP TABLE IF EXISTS `blog_comment`;
 CREATE TABLE `blog_comment` (
   `id` varchar(32) NOT NULL COMMENT '主键ID',
   `parent_id` varchar(32) DEFAULT NULL COMMENT '回复的评论ID',
-  `content_id` varchar(32) DEFAULT NULL COMMENT '评论的内容ID',
-  `content_module` varchar(32) DEFAULT NULL COMMENT '评论的内容模型',
+  `content_id` varchar(32) NOT NULL COMMENT '评论的内容ID',
+  `content_module` varchar(32) NOT NULL COMMENT '评论的内容模型',
   `comment_count` int(11) unsigned DEFAULT '0' COMMENT '评论的回复数量',
   `order_number` int(11) unsigned DEFAULT '0' COMMENT '排序编号，常用语置顶等',
   `user_id` varchar(32) DEFAULT NULL COMMENT '评论的用户ID(后台将评论推送给该系统用户)',
-  `ip` varchar(64) DEFAULT NULL COMMENT '评论的IP地址',
+  `ip` varchar(64) NOT NULL COMMENT '评论的IP地址',
   `author` varchar(128) DEFAULT NULL COMMENT '评论的作者',
   `comment_type` varchar(32) DEFAULT 'COMMENT' COMMENT '评论的类型，默认是COMMENT',
-  `text` longtext COMMENT '评论的内容',
+  `text` longtext NOT NULL COMMENT '评论的内容',
   `agent` text COMMENT '提交评论的浏览器信息',
-  `create_time` datetime DEFAULT NULL COMMENT '评论的时间',
+  `create_time` datetime NOT NULL COMMENT '评论的时间',
   `slug` varchar(128) DEFAULT NULL COMMENT '评论的slug(伪静态)',
   `email` varchar(64) DEFAULT NULL COMMENT '评论用户的email',
-  `comment_status` varchar(32) DEFAULT NULL COMMENT '评论的状态',
+  `comment_status` varchar(32) NOT NULL COMMENT '评论的状态',
   `vote_up` int(11) unsigned DEFAULT '0' COMMENT '“顶”的数量',
   `vote_down` int(11) unsigned DEFAULT '0' COMMENT '“踩”的数量',
   `flag` varchar(256) DEFAULT NULL COMMENT '标识',
@@ -127,6 +127,7 @@ DROP TABLE IF EXISTS `blog_content`;
 
 CREATE TABLE `blog_content` (
 `id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`user_id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户id' ,
 `title`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题' ,
 `text`  longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容' ,
 `summany`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '摘要' ,
@@ -141,6 +142,7 @@ CREATE TABLE `blog_content` (
 `flag`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标识' ,
 `lat`  double NULL DEFAULT NULL COMMENT '纬度' ,
 `lng`  double NULL DEFAULT NULL COMMENT '经度' ,
-PRIMARY KEY (`id`)
+PRIMARY KEY (`id`),
+CONSTRAINT `userId` FOREIGN KEY (`user_id`) REFERENCES `blog_user` (`id`)
 )
 ENGINE=InnoDB DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci COMMENT='文章表';
