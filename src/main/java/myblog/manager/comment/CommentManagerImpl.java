@@ -67,6 +67,7 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 	
 	private CommentModel comment2CommentModel(Comment comment) {
 		CommentModel model = new CommentModel();
+		model.setParentIsReplay(comment.getParentComment() != null && comment.getParentComment().getParentComment() != null ? true : false );
 		model.setHasParentComment(comment.getParentComment() == null ? false : true);
 		model.setComment(comment);
 		model.setParentComment(comment.getParentComment());

@@ -16,7 +16,13 @@
 				'contentId' : $('#contentId').val()
 			},
 			success: function(data, textStatus, jqXHR) {
-				$('#allComments').append('<ul class="comment-list">' + toAllCommentsHtml(eval(data)) + '</ul>');
+				var allComments = eval(data);
+				if(allComments.length === 0) {
+					$('#allComments').append("暂无评论");
+				} else {
+					$('#allComments').append('<ul class="comment-list"></ul>');
+					$('#allComments ul').append(toAllCommentsHtml(allComments));
+				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				$.showWarnMsg("系统异常，请稍后重试！");
@@ -27,7 +33,7 @@
 	function toAllCommentsHtml(allComments) {
 		var allCommentHtml = '';
 		for(var i=0; i<allComments.length; i++) {
-			allComments[i].hasParentComment ? allCommentHtml += '<ul class="comment-list">' : allCommentHtml;
+			allComments[i].hasParentComment && !allComments[i].parentIsReplay ? allCommentHtml += '<ul class="comment-list">' : allCommentHtml;
 			allCommentHtml += 	'<li>';
 			allCommentHtml += 		'<div class="comment-avatar">';
 			allCommentHtml +=			'<i class="fa fa-user"></i>';
@@ -53,7 +59,7 @@
 			allComments[i].hasReplies ? allCommentHtml += toAllCommentsHtml(allComments[i].replyComment) : allCommentHtml;
 			allCommentHtml +=		'</div>';
 			allCommentHtml += 	'</li>';
-			allComments[i].hasParentComment ? allCommentHtml += '</ul>' : allCommentHtml;
+			allComments[i].hasParentComment && !allComments[i].parentIsReplay ? allCommentHtml += '</ul>' : allCommentHtml;
 		}
 		return allCommentHtml;
 	}
