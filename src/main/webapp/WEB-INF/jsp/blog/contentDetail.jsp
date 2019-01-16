@@ -9,6 +9,24 @@
 
 <script>
 	$(document).ready(function() {
+		ajaxAllComments();
+		$("#commentForm").ajaxForm({
+			type: "post", //提交方式 
+	        success: function (responseText, status, xhr) { //提交成功的回调函数
+	        	if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_ERROR)){
+					$.showWarnMsg(responseText.msg);
+				}else if(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)){
+					$.showMsg(true,new Base64().decode(xhr.getResponseHeader($.Constans.RESPONSE_HEADER_NOTE)));
+					ajaxAllComments();
+				}
+	        },
+	        error: function (xhr, status, error) {
+	        	$.showWarnMsg("系统异常，请稍后重试！");
+	        }
+		});
+	});
+	
+	function ajaxAllComments() {
 		$.ajax({
 			url: '${rootUrl}app/blog/comment/all',
 			type: 'POST',
@@ -28,7 +46,7 @@
 				$.showWarnMsg("系统异常，请稍后重试！");
 			}
 		});
-	});
+	}
 	
 	function toAllCommentsHtml(allComments) {
 		var allCommentHtml = '';
@@ -120,17 +138,18 @@
                             posuere justo. Ut elementum, elit pellentesque eleifend semper, elit metus venenatis libero, 
                             non fermentum mi est eu neque. Ut vel metus eget tortor viverra varius et quis eros.
                         </div>
-                        <form:form cssClass="form-horizontal" action="${rootUrl }app/" method="POST">
+                        <form:form id="commentForm" modelAttribute="comment" cssClass="form-horizontal" action="${rootUrl }app/blog/comment/add" method="POST">
+                        	<form:hidden path="contentId"/>
                             <div class="form-group">
                                 <label class="control-label f-s-12 col-md-2">Your Name <span class="text-danger">*</span></label>
                                 <div class="col-md-10">
-<%--                                     <form:input type="text" path="name" cssClass="form-control" /> --%>
+                                    <form:input path="author" cssClass="form-control" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label f-s-12 col-md-2">Your Email <span class="text-danger">*</span></label>
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" />
+                                    <form:input path="email" cssClass="form-control" />
                                 </div>
                             </div>
                             <div class="form-group">

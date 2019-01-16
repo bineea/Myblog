@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import myblog.common.tools.HttpResponseHelper;
+import myblog.dao.entity.Comment;
 import myblog.dao.entity.Content;
 import myblog.dao.entity.ContentCategoryMapping;
 import myblog.dao.entity.dict.ContentStatus;
@@ -77,6 +78,7 @@ public class BlogContentController extends AbstractController {
 	public String contentDetailPost(@PathVariable("id") String id, Model model) {
 		Content content = contentManager.findById(id);
 		model.addAttribute("content", content);
+		model.addAttribute("comment", new Comment());
 		return prefix + "contentDetail";
 	}
 }

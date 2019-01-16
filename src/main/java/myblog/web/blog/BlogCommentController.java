@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import myblog.common.tools.HttpResponseHelper;
 import myblog.common.tools.JsonTools;
+import myblog.dao.entity.Comment;
 import myblog.manager.comment.CommentManager;
 import myblog.model.comment.CommentModel;
 import myblog.web.AbstractController;
@@ -32,7 +34,7 @@ public class BlogCommentController extends AbstractController {
 	}
 	
 	@RequestMapping(value = "/comment/add", method = RequestMethod.POST)
-	public void addCommentsPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void addCommentsPost(@ModelAttribute("comment") Comment comment, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		addSuccess(response, "评论成功");
 	}
 }
