@@ -1,7 +1,14 @@
 # Dump of table blog_comment
 # ------------------------------------------------------------
 
+DROP TABLE IF EXISTS `blog_content_category_mapping`;
+DROP TABLE IF EXISTS `blog_user`;
+DROP TABLE IF EXISTS `blog_role_resource`;
+DROP TABLE IF EXISTS `blog_resource`;
+DROP TABLE IF EXISTS `blog_role`;
+DROP TABLE IF EXISTS `blog_content`;
 DROP TABLE IF EXISTS `blog_comment`;
+DROP TABLE IF EXISTS `blog_category`;
 
 CREATE TABLE `blog_comment` (
   `id` varchar(32) NOT NULL COMMENT '主键ID',
@@ -36,8 +43,6 @@ CREATE TABLE `blog_comment` (
   KEY `comment_count` (`comment_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='评论表，用于保存content内容的回复、分享、推荐等信息。';
 
-DROP TABLE IF EXISTS `blog_resource`;
-
 CREATE TABLE `blog_resource` (
   `id` varchar(32) NOT NULL COMMENT '主键ID',
   `list` int(11) NOT NULL COMMENT '菜单排序',
@@ -50,8 +55,6 @@ CREATE TABLE `blog_resource` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '菜单资源表';
 
-DROP TABLE IF EXISTS `blog_role`;
-
 CREATE TABLE `blog_role` (
   `id` varchar(32) NOT NULL COMMENT '主键id',
   `info` varchar(255) DEFAULT NULL COMMENT '角色描述',
@@ -61,8 +64,6 @@ CREATE TABLE `blog_role` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '角色表';
-
-DROP TABLE IF EXISTS `blog_role_resource`;
 
 CREATE TABLE `blog_role_resource` (
   `id` varchar(32) NOT NULL,
@@ -74,8 +75,6 @@ CREATE TABLE `blog_role_resource` (
   CONSTRAINT `resource_id` FOREIGN KEY (`resource_id`) REFERENCES `blog_resource` (`id`),
   CONSTRAINT `role_id` FOREIGN KEY (`role_id`) REFERENCES `blog_role` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `blog_user`;
 
 CREATE TABLE `blog_user` (
 `id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
@@ -94,8 +93,6 @@ CONSTRAINT `roleId` FOREIGN KEY (`role_id`) REFERENCES `blog_role` (`id`)
 )
 ENGINE=InnoDB DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci COMMENT='用户表，用于保存用户信息。';
 
-DROP TABLE IF EXISTS `blog_category`;
-
 CREATE TABLE `blog_category` (
 `id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 `name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别名称' ,
@@ -107,23 +104,6 @@ CREATE TABLE `blog_category` (
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci COMMENT='类别表';
-
-DROP TABLE IF EXISTS `blog_content_category_mapping`;
-
-CREATE TABLE `blog_content_category_mapping` (
-`id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`content_id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章id' ,
-`category_id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别id' ,
-PRIMARY KEY (`id`),
-FOREIGN KEY (`category_id`) REFERENCES `blog_category` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-FOREIGN KEY (`content_id`) REFERENCES `blog_content` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-INDEX `content_id` (`content_id`) USING BTREE ,
-INDEX `category_id` (`category_id`) USING BTREE ,
-UNIQUE INDEX `content_category` (`content_id`,`category_id`) USING BTREE
-)
-ENGINE=InnoDB DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci COMMENT='文章与类别对应关联表';
-
-DROP TABLE IF EXISTS `blog_content`;
 
 CREATE TABLE `blog_content` (
 `id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
@@ -146,3 +126,16 @@ PRIMARY KEY (`id`),
 CONSTRAINT `userId` FOREIGN KEY (`user_id`) REFERENCES `blog_user` (`id`)
 )
 ENGINE=InnoDB DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci COMMENT='文章表';
+
+CREATE TABLE `blog_content_category_mapping` (
+`id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`content_id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文章id' ,
+`category_id`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别id' ,
+PRIMARY KEY (`id`),
+FOREIGN KEY (`category_id`) REFERENCES `blog_category` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+FOREIGN KEY (`content_id`) REFERENCES `blog_content` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+INDEX `content_id` (`content_id`) USING BTREE ,
+INDEX `category_id` (`category_id`) USING BTREE ,
+UNIQUE INDEX `content_category` (`content_id`,`category_id`) USING BTREE
+)
+ENGINE=InnoDB DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci COMMENT='文章与类别对应关联表';
