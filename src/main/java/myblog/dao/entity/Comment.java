@@ -25,8 +25,8 @@ public class Comment extends StringUUIDEntity {
 	private ContentModule contentModule;// 评论的内容模型
 	private int commentCount;// 评论的回复数量
 	private int orderNum;// 排序编号，常用于置顶等
-	private CommentType commentType;// 评论的类型，默认是comment
-	private CommentStatus status;// 评论的状态
+	private CommentType commentType;// 评论的类型
+	private CommentStatus status = CommentStatus.NORMAL;// 评论的状态
 	private String author;// 评论的作者
 	private String email;// 评论用户的email
 	private String text;// 评论的内容
@@ -36,6 +36,7 @@ public class Comment extends StringUUIDEntity {
 	private String slug;// 评论的slug(伪静态)
 	private int voteUp;// “顶”的数量
 	private int voteDown;// “踩”的数量
+	private boolean notify = false;// 后续回复是否通知该评论作者
 	private String flag;// 标识
 	private Double lat;// 纬度
 	private Double lng;// 经度
@@ -191,6 +192,15 @@ public class Comment extends StringUUIDEntity {
 
 	public void setVoteDown(int voteDown) {
 		this.voteDown = voteDown;
+	}
+	
+	@Column(name = "notify")
+	public boolean isNotify() {
+		return notify;
+	}
+
+	public void setNotify(boolean notify) {
+		this.notify = notify;
 	}
 
 	@Column(name = "flag")
