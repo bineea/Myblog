@@ -134,35 +134,35 @@
                     <div id="addComment" class="section-container">
                         <h4 class="section-title m-b-20"><span>Add a Comment</span></h4>
                         <div class="alert alert-warning f-s-12">
-                            Suspendisse vulputate pulvinar nisl, quis rutrum risus pretium ut. Nulla at risus facilisis, consectetur erat nec, 
-                            posuere justo. Ut elementum, elit pellentesque eleifend semper, elit metus venenatis libero, 
-                            non fermentum mi est eu neque. Ut vel metus eget tortor viverra varius et quis eros.
+                            	请开始你的表演
                         </div>
                         <form:form id="commentForm" modelAttribute="comment" cssClass="form-horizontal" action="${rootUrl }app/blog/comment/add" method="POST">
-                        	<form:hidden path="contentId"/>
+                        	<input type="text" name="parentCommentId" style="display: none;"/>
+                        	<input type="text" name="commentType" style="display: none;"/>
+                        	<input type="text" name="contentId" value="${content.id }" style="display: none;"/>
                             <div class="form-group">
                                 <label class="control-label f-s-12 col-md-2">Your Name <span class="text-danger">*</span></label>
                                 <div class="col-md-10">
-                                    <form:input path="author" cssClass="form-control" />
+                                    <form:input path="author" cssClass="form-control" placeholder="你的名字哦" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label f-s-12 col-md-2">Your Email <span class="text-danger">*</span></label>
                                 <div class="col-md-10">
-                                    <form:input path="email" cssClass="form-control" />
+                                    <form:input path="email" cssClass="form-control" placeholder="邮箱地址哦" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label f-s-12 col-md-2">Comment <span class="text-danger">*</span></label>
                                 <div class="col-md-10">
-                                    <textarea class="form-control" rows="10"></textarea>
+                                    <form:textarea path="text" class="form-control" rows="10" placeholder="留下来~~~~" ></form:textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-10 col-md-offset-2">
                                     <div class="checkbox f-s-12">
                                         <label>
-                                            <input type="checkbox" name="email_notify" value="1" />
+                                            <input type="checkbox" name="notify" value="0" />
                                             Notify me of follow-up comments by email.
                                         </label>
                                     </div>
