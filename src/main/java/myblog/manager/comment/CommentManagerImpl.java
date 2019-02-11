@@ -1,20 +1,30 @@
 package myblog.manager.comment;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import myblog.common.pub.MyManagerException;
 import myblog.common.tools.JsonTools;
+import myblog.common.tools.WebTools;
 import myblog.dao.entity.Comment;
 import myblog.dao.entity.dict.CommentStatus;
+import myblog.dao.entity.dict.CommentType;
+import myblog.dao.entity.dict.ContentModule;
 import myblog.dao.repo.Spe.CommentPageSpe;
 import myblog.dao.repo.jpa.CommentRepo;
+import myblog.dao.repo.jpa.ContentRepo;
 import myblog.manager.AbstractManager;
 import myblog.model.comment.CommentModel;
 
@@ -23,6 +33,8 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 
 	@Autowired
 	private CommentRepo commentRepo;
+	@Autowired
+	private ContentRepo contentRepo;
 	
 	@Override
 	public void test()
@@ -79,5 +91,59 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 					model.getReplyComment().add(comment2CommentModel(c));
 				});
 		return model;
+	}
+
+	@Transactional
+	@Override
+	public void addComment(Comment comment, HttpServletRequest request) throws MyManagerException {
+		validComment(comment);
+		updateParentComment(comment);
+		if(comment.getCommentType() == CommentType.REPLY)
+			comment.setParentComment(commentRepo.findById(comment.getParentCommentId()).get());
+		else
+			comment.setParentComment(null);
+		comment.setContent(contentRepo.findById(comment.getContentId()).get());
+		comment.setContentModule(ContentModule.ARTICLE);
+		comment.setCommentCount(0);
+		comment.setOrderNum(0);
+		comment.setStatus(CommentStatus.NORMAL);
+		comment.setIp(WebTools.getIpAddress(request));
+		comment.setAgent(WebTools.getAgentInfo(request));
+		comment.setCreateTime(LocalDateTime.now());
+		comment.setSlug(null);
+		comment.setVoteUp(0);
+		comment.setVoteDown(0);
+		comment.setFlag(null);
+		comment.setLat(null);
+		comment.setLng(null);
+	}
+	
+	private void validComment(Comment comment) throws MyManagerException {
+		if(!StringUtils.hasText(comment.getContentId()))
+			throw new MyManagerException("系统异常，无法获取文章");
+		if(comment.getCommentType() == null)
+			throw new MyManagerException("系统异常，无法获取评论类型");
+		if(StringUtils.hasText(comment.getAuthor()))
+			throw new MyManagerException("名称不能为空");
+		if(StringUtils.hasText(comment.getEmail()))
+			throw new MyManagerException("邮箱地址不能为空");
+		if(StringUtils.hasText(comment.getText()))
+			throw new MyManagerException("评论内容不能为空");
+		if(comment.getCommentType() == CommentType.REPLY && !StringUtils.hasText(comment.getParentCommentId()))
+			throw new MyManagerException("系统异常，无法获取原评论");
+		if(!contentRepo.findById(comment.getContentId()).isPresent())
+			throw new MyManagerException("系统异常，无法评论，文章不存在");
+		if(comment.getCommentType() == CommentType.REPLY 
+				&& StringUtils.hasText(comment.getParentCommentId())
+				&& !commentRepo.findById(comment.getParentCommentId()).isPresent())
+			throw new MyManagerException("系统异常，无法回复，原评论不存在");
+	}
+	
+	private void updateParentComment(Comment comment) {
+		if(comment.getCommentType() == CommentType.REPLY 
+				&& StringUtils.hasText(comment.getParentCommentId())
+				&& commentRepo.findById(comment.getParentCommentId()).isPresent()) {
+			//TODO 多线程并发计数
+		}
 	}
 }
