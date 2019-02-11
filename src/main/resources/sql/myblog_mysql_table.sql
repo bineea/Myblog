@@ -29,6 +29,7 @@ CREATE TABLE `blog_comment` (
   `comment_status` varchar(32) NOT NULL COMMENT '评论的状态',
   `vote_up` int(11) unsigned DEFAULT '0' COMMENT '“顶”的数量',
   `vote_down` int(11) unsigned DEFAULT '0' COMMENT '“踩”的数量',
+  `notify` bit(1) NOT NULL COMMENT '后续回复是否通知该评论作者' ,
   `flag` varchar(256) DEFAULT NULL COMMENT '标识',
   `lat` decimal(20,16) DEFAULT NULL COMMENT '纬度',
   `lng` decimal(20,16) DEFAULT NULL COMMENT '经度',
