@@ -56,4 +56,9 @@ public class WebTools extends WebUtils {
 		}
 		return ip;
 	}
+	
+	public static String getAgentInfo(HttpServletRequest request) {
+		//TODO 获取浏览器信息，系统信息；依赖UserAgentUtils-1.2.4.jar
+		return null;
+	}
 }
