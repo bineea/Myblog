@@ -25,5 +25,10 @@ hs_err_pid*
 target/
 
 # 2018-01-14
-# all files in the .settings directory
+# all files in the .settings directory（eclipse配置文件）
 .settings/
+
+# 2019-03-01
+# all files in the .idea directory（idea配置文件）
+.idea/
+*.iml
