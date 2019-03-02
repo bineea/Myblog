@@ -20,8 +20,13 @@ public interface CommentManager {
 	List<CommentModel> allCommentsByContent(String contentId);
 	
 	/**
-	 * 添加评论
+	 * 添加评论/回复
 	 * @param comment
 	 */
 	void addComment(Comment comment, HttpServletRequest request) throws MyManagerException;
+
+	/*
+	删除评论/回复（删除评论将导致其下的回复全部删除，如果只是删除其中一条回复，对其他内容无影响）
+	 */
+	//void delComment();
 }
