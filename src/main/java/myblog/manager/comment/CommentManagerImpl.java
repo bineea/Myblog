@@ -143,7 +143,7 @@ public class CommentManagerImpl extends AbstractManager implements CommentManage
 		if(comment.getCommentType() == CommentType.REPLY 
 				&& StringUtils.hasText(comment.getParentCommentId())
 				&& commentRepo.findById(comment.getParentCommentId()).isPresent()) {
-			//TODO 多线程并发计数
+			//TODO 多线程并发计数（乐观锁是否适用，是否需要考虑ABA问题）
 		}
 	}
 }
