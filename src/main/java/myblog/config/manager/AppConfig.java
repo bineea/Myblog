@@ -56,7 +56,7 @@ public class AppConfig
 	@Value("#{databaseProperties.databaseType}")
 	private String databaseType;
 	
-	@Bean(name = "dataSource", destroyMethod = "close")
+	@Bean(name = "dataSource")
 	public DataSource initDataSource()
 	{
 		DruidDataSource dataSource = new DruidDataSource();
@@ -111,8 +111,7 @@ public class AppConfig
 	}
 	
 	@Bean(name = "annotationTransactionAspect")
-	public AnnotationTransactionAspect annotationTransactionAspect() throws Exception
-	{
+	public AnnotationTransactionAspect annotationTransactionAspect() {
 		AnnotationTransactionAspect aspect = AnnotationTransactionAspect.aspectOf();
 		aspect.setTransactionManager(transactionManager());
 		return aspect;
