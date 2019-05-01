@@ -16,8 +16,52 @@
 	            </configuration>  
 	        </plugin>  
 	    </plugins>  
-	</build> 
+	</build>
+	
+	<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+	
 	<dependencies>
+	
+		<!-- JDK8升级JDK11，JDK11中删除了Java EE、CORBA、JavaFX模块 -->
+		<!-- Java EE 包括： -->
+		<!-- 	JAX-WS (Java API for XML-Based Web Services),
+				JAXB (Java Architecture for XML Binding)
+				JAF (the JavaBeans Activation Framework)
+				Common Annotations 
+		-->
+		<!-- https://mvnrepository.com/artifact/javax.jws/javax.jws-api -->
+		<dependency>
+		    <groupId>javax.jws</groupId>
+		    <artifactId>javax.jws-api</artifactId>
+		    <version>1.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+		<dependency>
+		    <groupId>javax.xml.bind</groupId>
+		    <artifactId>jaxb-api</artifactId>
+		    <version>2.3.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-core -->
+		<dependency>
+		    <groupId>com.sun.xml.bind</groupId>
+		    <artifactId>jaxb-core</artifactId>
+		    <version>2.3.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl -->
+		<dependency>
+		    <groupId>com.sun.xml.bind</groupId>
+		    <artifactId>jaxb-impl</artifactId>
+		    <version>2.3.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.xml.ws/jaxws-api -->
+		<dependency>
+		    <groupId>javax.xml.ws</groupId>
+		    <artifactId>jaxws-api</artifactId>
+		    <version>2.3.1</version>
+		</dependency>
+		
 		<!-- 引用本地jar包 -->
 		<dependency> 
 	      	<groupId>CKFinder</groupId> 
