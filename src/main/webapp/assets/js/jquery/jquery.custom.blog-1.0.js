@@ -149,6 +149,7 @@
 	        success: function (responseText, status, xhr) { //提交成功的回调函数
 	        	var $responseText = $(responseText);
 	        	//处理分页
+	        	//FIXME ID定义需要调整
 	        	$._bindPager($responseText.find("#page_query_pager"));
 	        	//显示列表
 	        	$._handleSearchReasult(null,$responseText);
